@@ -1,0 +1,489 @@
+---
+title: "Troubleshooting Common Issues"
+description: "Fix common Looksy virtual try-on issues including button visibility, upload problems, rendering errors, and integration challenges."
+---
+
+## Quick Troubleshooting Guide
+
+Most issues can be resolved quickly with these common solutions. If you need additional help, contact [support@looksy.ai](mailto:support@looksy.ai).
+
+## Button Not Appearing
+
+### Issue: "Try it on" button doesn't show on product pages
+
+<AccordionGroup>
+  <Accordion title="Solution 1: Check App Embed">
+    **Most common cause**
+
+    1. Go to **Online Store → Themes** in Shopify admin
+    2. Click **"Customize"** on your active theme
+    3. Find **"App embeds"** in the left sidebar
+    4. Ensure **"Looksy Virtual Try-On"** is toggled **ON**
+    5. Click **"Save"**
+
+    The button should appear within 1-2 minutes.
+  </Accordion>
+
+  <Accordion title="Solution 2: Verify Product is Enabled">
+    **Check Looksy dashboard**
+
+    1. Open your Looksy dashboard
+    2. Go to **"Products"** or **"Collections"**
+    3. Verify the product is enabled for virtual try-on
+    4. If not, enable it and save
+
+    Button appears only on enabled products.
+  </Accordion>
+
+  <Accordion title="Solution 3: Clear Cache">
+    **Browser caching issue**
+
+    1. Clear your browser cache
+    2. Test in incognito/private mode
+    3. Try a different browser
+    4. Check on mobile device
+
+    If button appears in incognito, it's a caching issue.
+  </Accordion>
+
+  <Accordion title="Solution 4: Check Theme Compatibility">
+    **Theme conflict**
+
+    1. Test with a default Shopify theme (Dawn)
+    2. If button appears, your theme may have conflicts
+    3. Contact support with your theme name
+    4. We'll provide theme-specific guidance
+
+    Most themes work fine, but custom themes may need adjustments.
+  </Accordion>
+</AccordionGroup>
+
+<Check>
+**95% of "button not appearing" issues are solved by checking app embed status.**
+</Check>
+
+## Upload Problems
+
+### Issue: Can't upload photos or camera doesn't work
+
+<AccordionGroup>
+  <Accordion title="Camera Permission Denied">
+    **On mobile devices:**
+
+    1. Check browser/app permissions
+    2. **iOS:** Settings → Safari → Camera → Allow
+    3. **Android:** Settings → Apps → Browser → Permissions → Camera → Allow
+    4. Reload the page and try again
+
+    **Alternative:** Use "Upload from library" instead of camera
+  </Accordion>
+
+  <Accordion title="Upload Fails or Hangs">
+    **Possible causes:**
+
+    - **Large file size** (> 5MB): Compress photo before uploading
+    - **Slow internet**: Wait longer or try on better connection
+    - **Browser issue**: Try different browser
+    - **Image format**: Use JPG or PNG (not HEIC, WebP, etc.)
+
+    **Solution:** Resize image to < 2MB and retry.
+  </Accordion>
+
+  <Accordion title="Photo Format Not Supported">
+    **Supported formats:** JPG, JPEG, PNG
+
+    **Not supported:** HEIC, WebP, GIF, BMP
+
+    **Solution:**
+    1. Convert photo to JPG/PNG
+    2. On iPhone: Settings → Camera → Formats → Most Compatible
+    3. Use online converters (e.g., convertio.co)
+  </Accordion>
+
+  <Accordion title="Upload Button Doesn't Respond">
+    **Possible causes:**
+
+    - JavaScript error on page
+    - Ad blocker interference
+    - Browser extension conflict
+
+    **Solution:**
+    1. Disable ad blockers and extensions
+    2. Check browser console for errors (F12)
+    3. Try incognito/private mode
+    4. Contact support with error details
+  </Accordion>
+</AccordionGroup>
+
+## Poor Try-On Results
+
+### Issue: Virtual try-on looks inaccurate or unrealistic
+
+<AccordionGroup>
+  <Accordion title="Result Doesn't Look Realistic">
+    **Possible causes:**
+
+    - Poor product image quality (busy background, bad lighting)
+    - Low-quality selfie (dark, angled, blurry)
+    - Product type not ideal for try-on
+
+    **Solution:**
+    1. Check product image meets requirements (plain background, good lighting)
+    2. Retake selfie in better lighting, facing camera directly
+    3. Review [image requirements guide](/product-setup/image-requirements)
+  </Accordion>
+
+  <Accordion title="Colors Don't Match">
+    **Possible causes:**
+
+    - Screen color calibration differences
+    - Lighting in selfie affects color perception
+    - Product image has poor color accuracy
+
+    **Solution:**
+    1. Use selfie taken in neutral lighting (not yellow/blue tinted)
+    2. Verify product image colors are accurate
+    3. Consider this a visualization tool, not exact color match
+  </Accordion>
+
+  <Accordion title="Garment Placement is Off">
+    **Possible causes:**
+
+    - Angled selfie (not facing camera)
+    - Product image not front-facing
+    - Garment type has limitations (very drapey, oversized)
+
+    **Solution:**
+    1. Retake selfie facing camera directly
+    2. Check product image is front-facing and centered
+    3. Test with different products to isolate issue
+  </Accordion>
+
+  <Accordion title="Result Has Artifacts or Distortion">
+    **Possible causes:**
+
+    - Very low resolution photos (selfie or product)
+    - Complex garment details
+    - Heavy compression
+
+    **Solution:**
+    1. Use higher resolution photos (min 800px)
+    2. Avoid zoomed/cropped selfies
+    3. Ensure product images are high quality
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+If try-on results consistently look poor for a specific product, that product may not be suitable for virtual try-on. Consider disabling it.
+</Warning>
+
+## Mobile Issues
+
+### Issue: Problems specific to mobile devices
+
+<AccordionGroup>
+  <Accordion title="Button Too Small to Tap">
+    **Solution:**
+
+    1. Check button size in theme settings
+    2. Increase minimum touch target to 48px
+    3. Use custom CSS if needed:
+    ```css
+    @media (max-width: 768px) {
+      .looksy-try-on-button {
+        min-height: 48px !important;
+        padding: 14px 24px !important;
+      }
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Modal Doesn't Fit Screen">
+    **Solution:**
+
+    1. Clear mobile browser cache
+    2. Update browser to latest version
+    3. Test on different mobile browser
+    4. Contact support if issue persists
+  </Accordion>
+
+  <Accordion title="Slow Performance on Mobile">
+    **Solution:**
+
+    1. Test on WiFi vs cellular (network issue?)
+    2. Check if other site elements are slow too
+    3. Optimize product images (compress large images)
+    4. Review [performance troubleshooting](/troubleshooting/performance)
+  </Accordion>
+</AccordionGroup>
+
+## Integration Issues
+
+### Issue: Conflicts with theme or other apps
+
+<AccordionGroup>
+  <Accordion title="Button Styling Looks Wrong">
+    **Solution:**
+
+    1. Check theme CSS for conflicts
+    2. Add custom CSS to fix styling
+    3. Use theme editor to adjust settings
+    4. See [custom styling guide](/integration/custom-styling)
+  </Accordion>
+
+  <Accordion title="Conflicts with Quick View">
+    **Solution:**
+
+    1. Ensure Looksy is added to quick view template
+    2. Test without quick view to isolate issue
+    3. Contact support with theme details
+  </Accordion>
+
+  <Accordion title="Works on Desktop but Not Mobile">
+    **Solution:**
+
+    1. Check if mobile template is different from desktop
+    2. Manually add Looksy app block to mobile template
+    3. Use app embed (works on both automatically)
+  </Accordion>
+
+  <Accordion title="Conflicts with Other Apps">
+    **Possible app conflicts:**
+
+    - Page builders (PageFly, Shogun)
+    - Wishlist apps
+    - Quick view apps
+    - Custom product page apps
+
+    **Solution:**
+    1. Disable other apps temporarily to test
+    2. If conflict identified, contact both app supports
+    3. Most conflicts can be resolved with CSS adjustments
+  </Accordion>
+</AccordionGroup>
+
+## Error Messages
+
+### Common Error Messages and Solutions
+
+<AccordionGroup>
+  <Accordion title="Error: 'No Face Detected'">
+    **Meaning:** AI couldn't find a face in the uploaded photo
+
+    **Solution:**
+    1. Ensure selfie shows your face clearly
+    2. Face the camera directly (not profile)
+    3. Remove sunglasses or hats
+    4. Use better lighting
+    5. Don't crop face out of frame
+  </Accordion>
+
+  <Accordion title="Error: 'Image Too Large'">
+    **Meaning:** File size exceeds 5MB
+
+    **Solution:**
+    1. Compress image before uploading
+    2. Use online tools (TinyPNG, Compressor.io)
+    3. On iPhone: Settings → Camera → High Efficiency
+  </Accordion>
+
+  <Accordion title="Error: 'Upload Failed'">
+    **Meaning:** Connection or server issue
+
+    **Solution:**
+    1. Check internet connection
+    2. Retry upload
+    3. Try different photo
+    4. Clear browser cache
+    5. Contact support if persistent
+  </Accordion>
+
+  <Accordion title="Error: 'Product Not Enabled'">
+    **Meaning:** This product doesn't have try-on enabled
+
+    **Solution:**
+    1. Go to Looksy dashboard
+    2. Enable product or collection
+    3. Save and refresh product page
+  </Accordion>
+
+  <Accordion title="Error: 'Processing Timeout'">
+    **Meaning:** Server took too long to render
+
+    **Solution:**
+    1. Check internet connection
+    2. Retry (servers may have been busy)
+    3. Try during off-peak hours
+    4. Contact support if happens repeatedly
+  </Accordion>
+</AccordionGroup>
+
+## Analytics Not Showing
+
+### Issue: Dashboard shows no data or incorrect data
+
+<AccordionGroup>
+  <Accordion title="No Data in Dashboard">
+    **Possible causes:**
+
+    - Recently installed (wait 24 hours for data)
+    - No customers have used try-on yet
+    - Analytics not properly initialized
+
+    **Solution:**
+    1. Wait 24 hours after first try-on
+    2. Test try-on yourself to generate data
+    3. Check date range filter in dashboard
+    4. Contact support if no data after 48 hours
+  </Accordion>
+
+  <Accordion title="Data Seems Inaccurate">
+    **Solution:**
+
+    1. Verify date range selected
+    2. Check if products were recently enabled (only counts from then)
+    3. Compare with Shopify analytics
+    4. Contact support with specific discrepancies
+  </Accordion>
+</AccordionGroup>
+
+## Performance Issues
+
+### Issue: Slow loading or rendering
+
+See the dedicated [Performance Troubleshooting Guide](/troubleshooting/performance) for detailed solutions.
+
+**Quick checks:**
+- Test internet speed
+- Check product image sizes (compress if > 1MB)
+- Review total apps installed (> 20 can slow store)
+- Use Google PageSpeed Insights to identify bottlenecks
+
+## Browser-Specific Issues
+
+### Issue: Works in one browser but not another
+
+<AccordionGroup>
+  <Accordion title="Safari Issues">
+    **Common Safari problems:**
+
+    - Camera permission handling
+    - Modal display issues
+    - Older Safari versions (< 13)
+
+    **Solution:**
+    1. Update Safari to latest version
+    2. Check camera permissions
+    3. Try Chrome for comparison
+    4. Contact support if Safari-specific
+  </Accordion>
+
+  <Accordion title="Internet Explorer Issues">
+    **Looksy doesn't support IE**
+
+    Modern browsers only:
+    - Chrome, Firefox, Safari, Edge
+
+    **Solution:** Use a modern browser
+  </Accordion>
+
+  <Accordion title="Mobile Browser Issues">
+    **Supported mobile browsers:**
+
+    - Safari (iOS)
+    - Chrome (Android, iOS)
+    - Samsung Internet
+    - Firefox
+
+    **Solution:**
+    1. Update browser to latest version
+    2. Switch to Chrome if using unsupported browser
+  </Accordion>
+</AccordionGroup>
+
+## Uninstalling and Reinstalling
+
+### Issue: Nothing else works, need to start fresh
+
+**Steps:**
+
+1. **Uninstall Looksy:**
+   - Go to **Apps** in Shopify admin
+   - Find Looksy
+   - Click **"Delete"**
+
+2. **Clear cache:**
+   - Clear browser cache
+   - Wait 5 minutes
+
+3. **Reinstall:**
+   - Visit Shopify App Store
+   - Search for Looksy
+   - Click **"Add app"**
+
+4. **Reconfigure:**
+   - Enable products
+   - Turn on app embed
+   - Test
+
+<Warning>
+Uninstalling removes all settings and analytics data. Only do this as a last resort.
+</Warning>
+
+## Getting Help from Support
+
+### When to Contact Support
+
+Contact [support@looksy.ai](mailto:support@looksy.ai) when:
+
+- Solutions above don't fix the issue
+- You're seeing consistent errors
+- Integration issues with your specific theme
+- Questions about advanced customization
+
+### What to Include
+
+Help us help you faster by including:
+
+1. **Issue description:** What's happening vs. what should happen
+2. **Product URL:** Link to a product with the issue
+3. **Screenshots:** Show the problem visually
+4. **Browser/device:** What browser and device you're using
+5. **Error messages:** Any error text or console errors (F12)
+6. **Steps to reproduce:** How to trigger the issue
+
+**Response time:** Typically within 24 hours
+
+## Diagnostic Checklist
+
+Before contacting support, verify:
+
+- [ ] App embed is enabled in theme settings
+- [ ] Product is enabled in Looksy dashboard
+- [ ] Browser is up to date
+- [ ] Tested in incognito/private mode
+- [ ] Cleared browser cache
+- [ ] Tested on different device/browser
+- [ ] Product images meet quality standards
+- [ ] No conflicting apps or theme customizations
+
+<Check>
+Following this checklist resolves 80% of issues without needing support.
+</Check>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Image Quality Issues" icon="image" href="/troubleshooting/image-quality">
+    Fix inaccurate or poor-quality try-on results
+  </Card>
+  <Card title="Performance Troubleshooting" icon="gauge" href="/troubleshooting/performance">
+    Resolve slow loading or rendering issues
+  </Card>
+  <Card title="Theme Integration" icon="palette" href="/integration/theme-setup">
+    Complete integration guide for your theme
+  </Card>
+  <Card title="Contact Support" icon="envelope" href="mailto:support@looksy.ai">
+    Get personalized help from our team
+  </Card>
+</CardGroup>

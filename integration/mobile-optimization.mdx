@@ -1,0 +1,409 @@
+---
+title: "Mobile Optimization Guide"
+description: "Optimize Looksy virtual try-on for mobile devices. With 70%+ of Shopify traffic coming from mobile, mobile optimization is critical for success."
+---
+
+## Mobile is Where Your Customers Shop
+
+Over **70% of Shopify traffic** comes from mobile devices. If your virtual try-on experience isn't optimized for mobile, you're missing the majority of your potential users.
+
+## Why Mobile Optimization Matters
+
+<CardGroup cols={2}>
+  <Card title="70%+ Mobile Traffic" icon="mobile-screen">
+    Most shoppers browse on smartphones and tablets
+  </Card>
+  <Card title="2x Higher Engagement" icon="arrow-trend-up">
+    Mobile users engage more with visual, interactive features
+  </Card>
+  <Card title="Lower Friction" icon="camera">
+    Taking selfies is easier on mobile than desktop
+  </Card>
+  <Card title="Better Conversion" icon="cart-shopping">
+    Optimized mobile experience drives higher sales
+  </Card>
+</CardGroup>
+
+## Mobile-Specific Best Practices
+
+### 1. Button Placement for Mobile
+
+**Recommended placements:**
+
+**Option A: Sticky Bar at Bottom**
+- Always visible while scrolling
+- Easy thumb access
+- Doesn't obscure product photos
+- Clear call to action
+
+**Option B: Near Add to Cart**
+- Part of natural purchase flow
+- Prominent without being intrusive
+- Familiar positioning
+
+<Tip>
+Test both placements. Sticky bars often drive 20-30% higher engagement on mobile.
+</Tip>
+
+### 2. Button Size & Touch Targets
+
+**Minimum touch target:** 44x44 pixels (Apple iOS guidelines)
+
+**Recommended:** 48x48 pixels or larger
+
+**Why it matters:** Small buttons are frustrating to tap on mobile screens, leading to user drop-off.
+
+```css
+/* Mobile-optimized button */
+@media (max-width: 768px) {
+  .looksy-try-on-button {
+    min-width: 200px;
+    min-height: 48px;
+    font-size: 16px;
+    padding: 14px 24px;
+  }
+}
+```
+
+### 3. Simplified Mobile Flow
+
+The mobile try-on flow should be:
+1. **Tap "Try it on"**
+2. **Take selfie or upload photo**
+3. **See result**
+
+**That's it. No extra steps, no complications.**
+
+<Check>
+Every additional step reduces mobile conversions by 10-15%. Keep it simple.
+</Check>
+
+## Camera Access Optimization
+
+### Make Taking Selfies Easy
+
+**Best practices:**
+
+1. **Request camera permission clearly**
+   - Explain why you need access
+   - "Take a selfie to see how this looks on you"
+
+2. **Provide clear instructions**
+   - "Face the camera directly"
+   - "Use good lighting"
+   - Visual guides if possible
+
+3. **Offer upload alternative**
+   - Not everyone wants to grant camera access
+   - "Take a photo" OR "Upload from library"
+
+### Handling Permission Denials
+
+If a user denies camera access:
+- Immediately offer upload option
+- Don't show error messages
+- Make upload equally prominent
+
+<Note>
+About 30% of users prefer uploading existing photos rather than taking new selfies. Support both flows equally.
+</Note>
+
+## Mobile Performance Optimization
+
+### Fast Loading is Critical
+
+Mobile users expect instant responsiveness:
+
+**Target metrics:**
+- **Button load time:** < 1 second
+- **Modal open time:** < 0.5 seconds
+- **Try-on render time:** 3-5 seconds
+- **Total interaction time:** < 10 seconds
+
+### Optimizing for Mobile Networks
+
+**Considerations:**
+- 4G/5G: Fast, no issues
+- 3G: Need optimization
+- Slow connections: Graceful degradation
+
+**How Looksy handles it:**
+- Lazy loading (button loads only when needed)
+- Optimized image processing
+- Async JavaScript (doesn't block page load)
+- CDN delivery for fast global loading
+
+### Testing Mobile Performance
+
+**Tools to use:**
+- Google PageSpeed Insights (mobile score)
+- Shopify Online Store Speed Report
+- Real device testing (iPhone, Android)
+
+**What to check:**
+- Page load time remains fast
+- Button appears quickly
+- Modal opens smoothly
+- No janky animations or lag
+
+## Device-Specific Optimization
+
+### iOS (iPhone & iPad)
+
+**Considerations:**
+- Safari browser (most common)
+- iOS camera permissions
+- iOS 13+ required for best performance
+
+**Optimization:**
+- Test in Safari specifically
+- Ensure camera permission flow works
+- Check on older devices (iPhone 8, etc.)
+
+### Android Devices
+
+**Considerations:**
+- Wide variety of devices and screen sizes
+- Multiple browsers (Chrome, Samsung Internet, Firefox)
+- Android 8+ supported
+
+**Optimization:**
+- Test on multiple Android devices
+- Verify Chrome and Samsung browsers work
+- Check various screen resolutions
+
+### Tablets
+
+**Considerations:**
+- Larger screens (iPad, Android tablets)
+- Sometimes treated as desktop, sometimes mobile
+- May use front or rear camera
+
+**Optimization:**
+- Test button placement on tablet sizes
+- Ensure camera flow works on tablets
+- Check both portrait and landscape
+
+## Responsive Design Best Practices
+
+### Breakpoints
+
+Configure different layouts for:
+
+- **Mobile:** < 768px
+- **Tablet:** 768px - 1024px
+- **Desktop:** > 1024px
+
+**Example:**
+
+```css
+/* Mobile: Full-width sticky button */
+@media (max-width: 767px) {
+  .looksy-try-on-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+/* Tablet: Near Add to Cart */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .looksy-try-on-button {
+    margin: 12px 0;
+  }
+}
+
+/* Desktop: Standard placement */
+@media (min-width: 1025px) {
+  .looksy-try-on-button {
+    margin: 16px 0;
+  }
+}
+```
+
+### Text and Copy Adjustments
+
+**Mobile considerations:**
+- Shorter button text ("Try on" vs. "Try it on virtually")
+- Smaller explanatory text
+- Concise instructions
+
+**Example:**
+- **Desktop:** "Try it on virtually – see how this looks on you"
+- **Mobile:** "Try it on"
+
+## Mobile UX Enhancements
+
+### Loading States
+
+Show clear feedback during processing:
+- Spinner or progress indicator
+- "Processing your try-on..."
+- Time estimate if possible
+
+### Error Handling
+
+Mobile-friendly error messages:
+- **Too dark:** "Try a brighter photo for best results"
+- **Upload failed:** "Check your connection and try again"
+- **No face detected:** "Face the camera directly"
+
+### Result Display
+
+Optimize how results appear on mobile:
+- **Full screen view** for best visibility
+- **Pinch to zoom** for detail inspection
+- **Easy share options** (save, share via social)
+- **Quick retake** if result isn't satisfactory
+
+## Testing Checklist for Mobile
+
+### Pre-Launch Testing
+
+- [ ] Test on iPhone (Safari)
+- [ ] Test on Android (Chrome)
+- [ ] Test on tablet (iPad, Android tablet)
+- [ ] Test camera access flow
+- [ ] Test photo upload flow
+- [ ] Verify button is easily tappable
+- [ ] Check sticky positioning (if used)
+- [ ] Ensure fast page load
+- [ ] Test on slow 3G connection
+- [ ] Verify result displays correctly
+- [ ] Check mobile portrait and landscape
+
+### Ongoing Monitoring
+
+- [ ] Track mobile engagement rate
+- [ ] Monitor mobile conversion rate
+- [ ] Check mobile error rates
+- [ ] Review mobile performance metrics
+- [ ] Test on new device releases
+
+## Common Mobile Issues and Solutions
+
+<AccordionGroup>
+  <Accordion title="Button is too small to tap easily">
+    **Solution:** Increase button size to minimum 48x48px. Use media queries to make it larger on mobile:
+
+    ```css
+    @media (max-width: 768px) {
+      .looksy-try-on-button {
+        min-height: 48px;
+        padding: 14px 24px;
+      }
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Camera permission is denied">
+    **Solution:** Immediately show upload option. Don't rely solely on camera access. Provide clear instructions on how to enable permissions in browser settings if user changes their mind.
+  </Accordion>
+
+  <Accordion title="Try-on is slow on mobile">
+    **Solution:**
+    1. Check page load speed with Google PageSpeed Insights
+    2. Optimize product images (compress, use WebP)
+    3. Test on 3G connection to identify bottlenecks
+    4. Contact support if issues persist
+  </Accordion>
+
+  <Accordion title="Results don't display correctly on mobile">
+    **Solution:**
+    1. Clear mobile browser cache
+    2. Update browser to latest version
+    3. Test in incognito/private mode
+    4. Check if device meets minimum requirements (iOS 13+, Android 8+)
+  </Accordion>
+
+  <Accordion title="Button disappears on mobile">
+    **Solution:**
+    1. Verify app embed is enabled in theme settings
+    2. Check if theme has mobile-specific templates
+    3. Use app block to manually add to mobile template
+    4. Test with theme default settings
+  </Accordion>
+</AccordionGroup>
+
+## Mobile Conversion Optimization
+
+### Strategies to Increase Mobile Engagement
+
+1. **Prominent button placement** - Sticky bar or above fold
+2. **Clear, concise copy** - "Try it on" not "Try this product on yourself virtually"
+3. **Fast performance** - Optimize page speed
+4. **Easy camera access** - Streamlined permission flow
+5. **Instant results** - 3-5 second rendering
+
+### Mobile-Specific Promotion
+
+Promote virtual try-on on mobile:
+- **Banner on mobile homepage:** "Try clothes on with your phone"
+- **In-app messaging:** "Tap to see it on you"
+- **SMS/push notifications:** "New items available for virtual try-on"
+- **Social media:** "Try on our new collection from your phone"
+
+## Mobile Analytics to Track
+
+Monitor these mobile-specific metrics:
+
+- **Mobile engagement rate** vs. desktop
+- **Mobile conversion rate** with try-on
+- **Device breakdown** (iPhone vs. Android)
+- **Camera vs. upload** usage rates
+- **Mobile error rates**
+- **Time to complete** try-on on mobile
+- **Mobile return rates** (should decrease)
+
+<Check>
+Successful mobile optimization typically results in mobile engagement rates matching or exceeding desktop (40-50%+).
+</Check>
+
+## Progressive Web App (PWA) Considerations
+
+If your Shopify store is a PWA:
+
+- Looksy works seamlessly with PWAs
+- Camera access functions the same
+- May load even faster due to service workers
+- Offline mode: Try-on requires internet connection
+
+## Mobile Best Practices Summary
+
+**Do:**
+- Make button large and tappable (48px+ height)
+- Use sticky positioning on mobile
+- Optimize for camera access
+- Keep flow simple (3 steps max)
+- Test on real devices
+- Monitor mobile performance
+- Provide both camera and upload options
+
+**Don't:**
+- Use tiny buttons (< 44px)
+- Hide button below the fold
+- Require unnecessary permissions
+- Add extra steps to mobile flow
+- Only test on desktop
+- Ignore mobile analytics
+- Rely solely on camera (support uploads)
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Custom Styling" icon="palette" href="/integration/custom-styling">
+    Customize button appearance for your brand
+  </Card>
+  <Card title="Button Placement" icon="location-dot" href="/integration/button-placement">
+    Optimize button positioning for engagement
+  </Card>
+  <Card title="Performance Troubleshooting" icon="gauge" href="/troubleshooting/performance">
+    Fix mobile performance issues
+  </Card>
+  <Card title="Analytics Dashboard" icon="chart-line" href="/analytics/dashboard-overview">
+    Track mobile engagement and conversions
+  </Card>
+</CardGroup>

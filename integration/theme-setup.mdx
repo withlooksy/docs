@@ -1,0 +1,354 @@
+---
+title: "Theme Integration Guide"
+description: "Learn how to integrate Looksy virtual try-on with any Shopify theme, customize placement, and ensure seamless compatibility."
+---
+
+## Looksy Works with All Shopify Themes
+
+Looksy is built to integrate seamlessly with any Shopify theme, whether you're using a popular theme from the Theme Store or a custom-built theme.
+
+## Integration Methods
+
+### Method 1: App Embed (Recommended)
+
+The **app embed** is the easiest and most reliable way to add Looksy to your store.
+
+**Benefits:**
+- Works with any theme automatically
+- No code changes required
+- Updates automatically
+- Theme updates won't break it
+- Takes 30 seconds to enable
+
+**How to enable:**
+
+1. Go to **Online Store → Themes** in your Shopify admin
+2. Click **"Customize"** on your active theme
+3. In the theme editor, find **"App embeds"** in the left sidebar
+4. Locate **"Looksy Virtual Try-On"** and toggle it **ON**
+5. Click **"Save"**
+
+<Check>
+The try-on button will now appear on all enabled product pages automatically.
+</Check>
+
+### Method 2: App Block (Advanced Control)
+
+For more control over button placement, use the **app block** method.
+
+**Benefits:**
+- Precise placement control
+- Custom positioning on product pages
+- Can adjust styling and layout
+- Per-template customization
+
+**How to add:**
+
+1. Go to **Online Store → Themes → Customize**
+2. Navigate to a **Product page** template
+3. Click **"Add block"** or **"Add section"**
+4. Select **"Looksy Virtual Try-On"** from Apps
+5. Drag the block to your preferred location
+6. Click **"Save"**
+
+<Tip>
+Best placement: Near the "Add to Cart" button, above product description, or in the product details section.
+</Tip>
+
+## Theme Compatibility
+
+### Supported Theme Types
+
+Looksy works with:
+- **Shopify Theme Store themes** (Dawn, Debut, Brooklyn, etc.)
+- **Custom themes** (built by developers)
+- **Sectioned themes** (Shopify 2.0 and newer)
+- **Vintage themes** (pre-2.0 themes)
+- **Headless/custom frontends** (with API integration)
+
+### Theme Requirements
+
+**Minimal requirements:**
+- Shopify-compatible theme
+- Product pages enabled
+- JavaScript enabled (standard for all Shopify themes)
+
+**No special requirements for:**
+- Theme version
+- Theme framework
+- Custom code
+- Developer involvement
+
+## Popular Theme Integrations
+
+<AccordionGroup>
+  <Accordion title="Dawn (Shopify's Default Theme)">
+    **Integration:** Seamless, no adjustments needed
+
+    **Recommended placement:**
+    - Use app embed for automatic integration
+    - Or add app block between product form and description
+
+    **Best practices:**
+    - Keep button in default position for mobile optimization
+    - Test on both desktop and mobile
+  </Accordion>
+
+  <Accordion title="Debut">
+    **Integration:** Works perfectly out of the box
+
+    **Recommended placement:**
+    - App embed automatically places button correctly
+    - For custom placement, add block above "Add to Cart"
+
+    **Best practices:**
+    - Ensure button is visible above the fold
+  </Accordion>
+
+  <Accordion title="Brooklyn">
+    **Integration:** Full compatibility
+
+    **Recommended placement:**
+    - App embed handles placement automatically
+    - Custom block can go in product sidebar
+
+    **Best practices:**
+    - Test both sidebar and main column placements
+  </Accordion>
+
+  <Accordion title="Custom Themes">
+    **Integration:** App embed works with any custom theme
+
+    **Recommended placement:**
+    - Start with app embed
+    - Adjust with app block if needed
+    - Consult developer for precise positioning
+
+    **Best practices:**
+    - Test thoroughly before launch
+    - Verify mobile responsiveness
+  </Accordion>
+</AccordionGroup>
+
+## Customizing Button Appearance
+
+### Theme Editor Customization
+
+In the Shopify theme editor:
+
+1. Click on the **Looksy block** on your product page
+2. Adjust available settings:
+   - Button text (e.g., "Try it on", "See it on you")
+   - Button color (uses theme colors by default)
+   - Button size
+   - Alignment (left, center, right)
+
+### CSS Customization (Advanced)
+
+For custom styling beyond theme editor options:
+
+```css
+/* Target Looksy button */
+.looksy-try-on-button {
+  background-color: #0D9373 !important;
+  border-radius: 8px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+}
+
+/* Hover state */
+.looksy-try-on-button:hover {
+  background-color: #0A7A5E !important;
+}
+```
+
+Add this to your theme's custom CSS section (Theme → Edit code → Assets → theme.css).
+
+<Warning>
+Custom CSS may be overridden by theme updates. Document your changes for easy reapplication.
+</Warning>
+
+## Multi-Template Setup
+
+If your store uses multiple product page templates:
+
+### For Each Template:
+
+1. Navigate to the specific template in the theme editor
+2. Add the Looksy app block to that template
+3. Position it consistently across templates
+4. Save each template
+
+**Common templates:**
+- Default product template
+- Featured product template
+- Product quick view
+- Collection product cards (if applicable)
+
+## Headless/Custom Frontend Integration
+
+For headless Shopify setups or custom frontends:
+
+### API Integration
+
+Looksy provides API endpoints for custom integrations:
+
+```javascript
+// Example: Initialize Looksy on product page
+window.LooksyAPI.init({
+  productId: '{{ product.id }}',
+  variantId: '{{ variant.id }}',
+  shopDomain: '{{ shop.domain }}'
+});
+```
+
+Contact [support@looksy.ai](mailto:support@looksy.ai) for API documentation and integration assistance.
+
+## Testing Your Integration
+
+### Pre-Launch Checklist
+
+- [ ] Button appears on product pages
+- [ ] Button is visible above the fold (mobile and desktop)
+- [ ] Clicking button opens try-on modal
+- [ ] Upload flow works smoothly
+- [ ] Results render correctly
+- [ ] Mobile experience is optimized
+- [ ] Button styling matches your brand
+- [ ] Works on all product page templates
+
+### Device Testing
+
+Test on:
+- **Desktop:** Chrome, Safari, Firefox, Edge
+- **Mobile:** iOS Safari, Android Chrome
+- **Tablet:** iPad, Android tablets
+
+### Theme Update Safety
+
+When updating your theme:
+- **App embed:** Automatically persists (no action needed)
+- **App block:** May need to be re-added if template structure changes
+- **Custom CSS:** May be overridden, check and reapply if needed
+
+## Troubleshooting Integration Issues
+
+<AccordionGroup>
+  <Accordion title="Button doesn't appear on product pages">
+    **Possible causes:**
+    - App embed not enabled
+    - Product not enabled in Looksy dashboard
+    - Theme conflict or JavaScript error
+
+    **Solutions:**
+    1. Verify app embed is ON in theme settings
+    2. Check product is enabled in Looksy dashboard
+    3. Clear browser cache and test in incognito mode
+    4. Check browser console for JavaScript errors
+  </Accordion>
+
+  <Accordion title="Button placement looks wrong">
+    **Possible causes:**
+    - Theme CSS conflicts
+    - Default positioning doesn't fit your layout
+
+    **Solutions:**
+    1. Switch from app embed to app block for manual placement
+    2. Adjust positioning in theme editor
+    3. Add custom CSS to fine-tune appearance
+  </Accordion>
+
+  <Accordion title="Button works on desktop but not mobile">
+    **Possible causes:**
+    - Mobile template doesn't include app block
+    - CSS hiding button on mobile
+    - JavaScript not loading on mobile
+
+    **Solutions:**
+    1. Use app embed (handles mobile automatically)
+    2. Check mobile-specific theme settings
+    3. Test on actual mobile device, not just browser resize
+  </Accordion>
+
+  <Accordion title="Try-on modal doesn't open">
+    **Possible causes:**
+    - JavaScript conflict with other apps
+    - Browser blocking modals
+    - Theme JavaScript errors
+
+    **Solutions:**
+    1. Disable other apps temporarily to isolate conflict
+    2. Check browser console for errors
+    3. Test in incognito mode
+    4. Contact support with error details
+  </Accordion>
+</AccordionGroup>
+
+## Advanced Integration Scenarios
+
+### Multi-Currency Stores
+
+Looksy works with multi-currency setups:
+- Button displays in any currency
+- No special configuration needed
+- Currency apps don't affect try-on functionality
+
+### Multi-Language Stores
+
+For stores with multiple languages:
+- Button text can be customized per language
+- Configure in theme editor for each language
+- Looksy supports international characters
+
+### Markets and International Stores
+
+Looksy works across Shopify Markets:
+- Single installation covers all markets
+- Button appears in all regions
+- No market-specific setup required
+
+## Performance Optimization
+
+### Ensuring Fast Page Loads
+
+Looksy is optimized for minimal performance impact:
+
+- **Lazy loading:** Button loads only when needed
+- **Async JavaScript:** Doesn't block page rendering
+- **Minimal file size:** Optimized code bundle
+- **CDN delivery:** Fast global loading
+
+**Your store's PageSpeed score should not decrease with Looksy installed.**
+
+### Monitoring Performance
+
+Track these metrics:
+- Page load time (should remain unchanged)
+- Time to interactive (minimal impact)
+- Core Web Vitals (should stay in "Good" range)
+
+Use Google PageSpeed Insights before and after installation to verify.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Button Placement Optimization" icon="location-dot" href="/integration/button-placement">
+    Strategies for maximum engagement with button positioning
+  </Card>
+  <Card title="Mobile Optimization" icon="mobile" href="/integration/mobile-optimization">
+    Ensure seamless mobile experience for 70%+ of traffic
+  </Card>
+  <Card title="Custom Styling" icon="palette" href="/integration/custom-styling">
+    Advanced customization and branding options
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/troubleshooting/common-issues">
+    Fix common integration issues
+  </Card>
+</CardGroup>
+
+## Need Integration Help?
+
+- **In-app chat:** Click support in your Looksy dashboard
+- **Email:** [support@looksy.ai](mailto:support@looksy.ai)
+- **Developer docs:** Request API documentation
+- **Response time:** Typically within 24 hours

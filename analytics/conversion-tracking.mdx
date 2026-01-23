@@ -1,0 +1,411 @@
+---
+title: "Conversion Tracking Setup"
+description: "Set up conversion tracking for Looksy virtual try-on to measure sales impact, ROI, and customer behavior in your Shopify store."
+---
+
+## Why Track Conversions
+
+Conversion tracking proves the business value of virtual try-on by measuring:
+- Sales attributed to try-on
+- Revenue impact
+- Return on investment
+- Customer behavior patterns
+
+## Automatic Tracking (Built-In)
+
+Looksy tracks conversions automatically when installed. **No additional setup required.**
+
+### What's Tracked Automatically
+
+<CardGroup cols={2}>
+  <Card title="Try-On Events" icon="camera">
+    Every time a customer uses virtual try-on
+  </Card>
+  <Card title="Product Views" icon="eye">
+    Product page visits on try-on enabled products
+  </Card>
+  <Card title="Add to Cart" icon="cart-plus">
+    When try-on users add products to cart
+  </Card>
+  <Card title="Purchases" icon="check">
+    Completed orders from customers who used try-on
+  </Card>
+</CardGroup>
+
+### Attribution Model
+
+**Last-touch attribution within session:**
+- Customer uses try-on on Product A
+- Customer completes purchase within same session
+- Order is attributed to virtual try-on
+
+**Attribution window:** 24 hours
+- Customer uses try-on today
+- Customer returns tomorrow and purchases
+- Order is still attributed (if within 24 hours)
+
+<Note>
+Looksy uses conservative attribution. If customer doesn't purchase within 24 hours, the order is not attributed to try-on.
+</Note>
+
+## Viewing Conversion Data
+
+### In Looksy Dashboard
+
+1. Go to **Looksy Dashboard** in Shopify admin
+2. Navigate to **Analytics** tab
+3. View conversion metrics:
+   - Conversion rate
+   - Revenue impact
+   - Orders attributed to try-on
+   - Average order value
+
+### Key Conversion Metrics
+
+**Engagement-to-Purchase Rate:**
+```
+(Orders with Try-On / Total Try-Ons) × 100
+```
+
+Typical range: 20-30%
+
+**Conversion Rate Lift:**
+```
+((Conversion Rate with Try-On - Baseline Conversion Rate) /
+ Baseline Conversion Rate) × 100
+```
+
+Target: 15-25% lift
+
+**Revenue Per Try-On:**
+```
+Total Revenue from Try-On Orders / Total Try-Ons
+```
+
+Use this to calculate ROI per engagement
+
+<Check>
+These metrics appear automatically in your dashboard once customers start using virtual try-on.
+</Check>
+
+## Integrating with Google Analytics
+
+### Set Up Enhanced Tracking
+
+For deeper analysis, connect Looksy events to Google Analytics:
+
+**Step 1: Verify GA4 is Installed**
+
+1. Check if Google Analytics 4 is set up on your store
+2. Find your Measurement ID (G-XXXXXXXXXX)
+
+**Step 2: Enable GA4 Integration in Looksy**
+
+1. Go to **Looksy Dashboard → Settings**
+2. Find **Google Analytics Integration**
+3. Enter your Measurement ID
+4. Click **Save**
+
+**Step 3: Verify Events are Tracking**
+
+1. Use GA4 DebugView or Realtime report
+2. Test try-on on your store
+3. Check for these events:
+   - `looksy_try_on_start`
+   - `looksy_try_on_complete`
+   - `looksy_add_to_cart`
+
+### Custom Events Sent to GA4
+
+| Event Name | When it Fires | Parameters |
+|------------|---------------|------------|
+| `looksy_try_on_start` | User clicks "Try it on" | product_id, product_name |
+| `looksy_try_on_complete` | User sees try-on result | product_id, product_name, time_taken |
+| `looksy_add_to_cart` | User adds to cart after try-on | product_id, product_name, value |
+
+<Tip>
+These events allow you to build custom funnels and segments in Google Analytics for advanced analysis.
+</Tip>
+
+## Integrating with Facebook Pixel
+
+### Track Try-On Events in Facebook
+
+**Why track in Facebook:**
+- Optimize ad campaigns
+- Build custom audiences
+- Track ROI from Facebook ads
+
+**Setup:**
+
+1. Verify Facebook Pixel is installed on your store
+2. Go to **Looksy Dashboard → Settings → Facebook Pixel**
+3. Toggle **Enable Facebook Tracking**
+4. Events will automatically fire
+
+**Events sent to Facebook:**
+- `ViewContent` (with try-on flag)
+- `AddToCart` (when try-on user adds to cart)
+- `Purchase` (when try-on user completes order)
+
+**Custom parameter:**
+```javascript
+{ try_on_used: true }
+```
+
+Use this to create audiences of "customers who used virtual try-on."
+
+## Shopify Analytics Integration
+
+### Looksy Data in Shopify Reports
+
+Looksy automatically tags orders that came from virtual try-on:
+
+**Order tag:** `looksy-try-on`
+
+**Use in Shopify:**
+
+1. **Orders report:**
+   - Filter by tag: `looksy-try-on`
+   - See all orders attributed to virtual try-on
+
+2. **Customer reports:**
+   - Identify customers who use try-on
+   - Analyze lifetime value
+   - Build segments for marketing
+
+3. **Product reports:**
+   - See which products drive most try-on sales
+   - Calculate revenue per product
+
+<Check>
+No setup required – orders are automatically tagged when customers use virtual try-on before purchasing.
+</Check>
+
+## Advanced Tracking Scenarios
+
+### Multi-Product Try-On
+
+**Scenario:** Customer tries on 3 products, purchases 2
+
+**How it's tracked:**
+- All 3 try-ons are counted
+- 2 orders attributed to virtual try-on
+- Revenue from both orders is counted
+
+### Cross-Session Tracking
+
+**Scenario:** Customer tries on today, purchases tomorrow
+
+**How it's tracked:**
+- If within 24-hour attribution window: Order is attributed
+- If beyond 24 hours: Order is not attributed (conservative approach)
+- You can adjust attribution window in settings (Pro plan)
+
+### Partial Cart Try-On
+
+**Scenario:** Customer has 3 items in cart, used try-on on 1
+
+**How it's tracked:**
+- Entire order is attributed to virtual try-on
+- AOV may be higher than product try-on value
+- This is normal and expected behavior
+
+<Note>
+Attribution is order-level, not product-level. If try-on contributes to a purchase decision, the entire order is attributed.
+</Note>
+
+## Setting Up Conversion Goals
+
+### Define Your Goals
+
+**Recommended goals:**
+
+1. **Engagement goal:**
+   - Metric: 35% of visitors use try-on
+   - Timeframe: Within 90 days of launch
+
+2. **Conversion goal:**
+   - Metric: 15% conversion rate lift
+   - Timeframe: Within 60 days of launch
+
+3. **Revenue goal:**
+   - Metric: $10,000 additional monthly revenue
+   - Timeframe: Within 6 months
+
+4. **ROI goal:**
+   - Metric: 5x return on investment
+   - Timeframe: Within 3 months
+
+### Tracking Progress
+
+**Weekly check:**
+- Are you on track to hit monthly goals?
+- What's blocking progress?
+- What can be optimized?
+
+**Monthly review:**
+- Did you hit goals?
+- What worked well?
+- What needs improvement next month?
+
+## Cohort Analysis
+
+### Compare Customer Segments
+
+**Segment 1: Customers who used try-on**
+- Conversion rate
+- Average order value
+- Lifetime value
+- Return rate
+
+**Segment 2: Customers who didn't use try-on**
+- Same metrics for comparison
+
+**Typical findings:**
+- Try-on users have 15-25% higher conversion
+- Try-on users have 5-10% higher AOV
+- Try-on users have 20-30% lower return rate
+- Try-on users may have higher LTV
+
+<Tip>
+Export cohort data monthly to track long-term value of try-on users.
+</Tip>
+
+## Troubleshooting Tracking Issues
+
+### Conversions Not Being Tracked
+
+<AccordionGroup>
+  <Accordion title="Orders show in Shopify but not in Looksy dashboard">
+    **Possible causes:**
+    - Customer didn't actually use try-on (order tag would be missing)
+    - Attribution window expired (> 24 hours)
+    - Browser cookies disabled or cleared
+
+    **Solution:**
+    1. Check order for `looksy-try-on` tag
+    2. Verify try-on was used in same session
+    3. Confirm cookies are enabled
+  </Accordion>
+
+  <Accordion title="GA4 events not showing">
+    **Possible causes:**
+    - GA4 Measurement ID incorrect
+    - GA4 not properly installed
+    - Ad blockers interfering
+
+    **Solution:**
+    1. Verify Measurement ID in Looksy settings
+    2. Check GA4 installation on store
+    3. Test in browser without extensions
+    4. Use GA4 DebugView to troubleshoot
+  </Accordion>
+
+  <Accordion title="Facebook Pixel events not firing">
+    **Possible causes:**
+    - Pixel not installed correctly
+    - Looksy Facebook integration not enabled
+    - Ad blockers
+
+    **Solution:**
+    1. Verify Pixel is installed via Facebook Pixel Helper extension
+    2. Enable Facebook tracking in Looksy settings
+    3. Test in incognito mode
+  </Accordion>
+</AccordionGroup>
+
+## Privacy and Compliance
+
+### GDPR and CCPA Compliance
+
+**Looksy tracking is privacy-compliant:**
+- No personal data stored beyond Shopify's standard
+- Respects user consent preferences
+- Honors Do Not Track signals (optional)
+
+**Cookie consent:**
+- Looksy uses first-party cookies only
+- Respects cookie consent banners
+- No tracking if consent is denied
+
+**Data retention:**
+- Aggregate analytics: 2 years
+- Individual session data: 30 days
+- Customer photos: Not stored (processed and discarded)
+
+<Check>
+Looksy is GDPR and CCPA compliant by default. No additional configuration needed.
+</Check>
+
+## Reporting and Dashboards
+
+### Automated Reports
+
+**Weekly email summary:**
+- Total try-ons
+- Engagement rate
+- Conversion rate
+- Revenue impact
+
+**Monthly performance report:**
+- Detailed metrics
+- Trend analysis
+- Top products
+- Recommendations
+
+**Quarterly business review (Pro plan):**
+- Strategic insights
+- Competitive benchmarks
+- Optimization roadmap
+
+### Custom Dashboards
+
+**Create dashboards for:**
+- **Executives:** High-level ROI and revenue
+- **Marketing:** Traffic sources and campaigns
+- **Product team:** Feature usage and engagement
+- **Customer success:** Satisfaction and return rates
+
+**Export options:**
+- PDF for presentations
+- CSV for analysis
+- API for custom integrations
+
+## Advanced: Custom Conversion Events
+
+### Pro Plan Feature
+
+Define custom conversion goals beyond purchases:
+
+**Examples:**
+- Email signups during try-on
+- Social shares of try-on results
+- Multi-product try-ons per session
+- Wishlist additions after try-on
+
+**Setup:**
+1. Go to **Looksy Dashboard → Settings → Custom Events**
+2. Define event name and trigger
+3. Track in custom dashboard
+
+<Note>
+Custom events available on Pro plan only. Contact support for setup assistance.
+</Note>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Calculating ROI" icon="calculator" href="/analytics/calculating-roi">
+    Calculate your return on investment
+  </Card>
+  <Card title="A/B Testing" icon="flask" href="/analytics/ab-testing">
+    Run experiments to optimize performance
+  </Card>
+  <Card title="Dashboard Overview" icon="chart-line" href="/analytics/dashboard-overview">
+    Understand your analytics dashboard
+  </Card>
+  <Card title="Increase Conversions" icon="arrow-trend-up" href="/benefits/increase-conversions">
+    Learn how to drive more sales with try-on
+  </Card>
+</CardGroup>

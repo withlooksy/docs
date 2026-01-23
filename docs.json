@@ -1,0 +1,106 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Looksy Documentation",
+  "logo": {
+    "light": "/looksy_logo.svg",
+    "dark": "/looksy_logo.svg"
+  },
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373"
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:support@looksy.ai"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Install App",
+    "url": "https://apps.shopify.com/looksy"
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Getting Started",
+        "pages": [
+          "getting-started/how-to-install",
+          "getting-started/quick-setup",
+          "getting-started/first-try-on"
+        ]
+      },
+      {
+        "group": "Product Setup",
+        "pages": [
+          "product-setup/choosing-products",
+          "product-setup/image-requirements",
+          "product-setup/best-practices",
+          "product-setup/supported-products"
+        ]
+      },
+      {
+        "group": "Integration & Customization",
+        "pages": [
+          "integration/theme-setup",
+          "integration/button-placement",
+          "integration/mobile-optimization",
+          "integration/custom-styling"
+        ]
+      },
+      {
+        "group": "Analytics & ROI",
+        "pages": [
+          "analytics/dashboard-overview",
+          "analytics/conversion-tracking",
+          "analytics/calculating-roi",
+          "analytics/ab-testing"
+        ]
+      },
+      {
+        "group": "Use Cases & Benefits",
+        "pages": [
+          "benefits/increase-conversions",
+          "benefits/reduce-returns",
+          "benefits/roi-calculator",
+          "benefits/case-studies"
+        ]
+      },
+      {
+        "group": "Troubleshooting & FAQs",
+        "pages": [
+          "troubleshooting/common-issues",
+          "troubleshooting/image-quality",
+          "troubleshooting/performance",
+          "faq/does-it-work-on-mobile",
+          "faq/which-products-work",
+          "faq/how-accurate-is-it",
+          "faq/will-it-slow-my-store",
+          "faq/pricing-and-plans"
+        ]
+      },
+      {
+        "group": "About Looksy",
+        "pages": [
+          "about/what-makes-looksy-different",
+          "about/technology-explained",
+          "about/limitations"
+        ]
+      }
+    ]
+  },
+  "footerSocials": {
+    "website": "https://withlooksy.com",
+    "twitter": "https://twitter.com/withlooksy",
+    "linkedin": "https://www.linkedin.com/company/withlooksy"
+  },
+  "seo": {
+    "indexHiddenPages": false
+  },
+  "metadata": {
+    "og:site_name": "Looksy Documentation",
+    "og:type": "website",
+    "twitter:site": "@withlooksy"
+  }
+}

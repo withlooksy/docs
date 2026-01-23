@@ -1,0 +1,499 @@
+---
+title: "Performance Troubleshooting"
+description: "Fix slow page loads, optimize virtual try-on speed, and improve Core Web Vitals for your Shopify store with Looksy."
+---
+
+## Diagnosing Performance Issues
+
+If your store feels slow after installing Looksy, this guide will help you identify and fix performance bottlenecks.
+
+## Quick Performance Check
+
+Before diving into troubleshooting, establish baseline metrics:
+
+### Run Google PageSpeed Insights
+
+1. Visit [PageSpeed Insights](https://pagespeed.web.dev/)
+2. Test a product page URL
+3. Note your scores:
+   - Performance score (target: 90+)
+   - Largest Contentful Paint (target: < 2.5s)
+   - First Input Delay (target: < 100ms)
+   - Cumulative Layout Shift (target: < 0.1)
+
+<Check>
+If your scores are in the "Good" range (green), Looksy is not causing performance issues.
+</Check>
+
+## Common Performance Issues
+
+### Issue: Page Load Time Increased
+
+<AccordionGroup>
+  <Accordion title="Solution 1: Verify Looksy is Not the Cause">
+    **Test:**
+    1. Disable Looksy app temporarily
+    2. Clear cache and test page speed
+    3. Re-enable Looksy and test again
+    4. Compare results
+
+    **If speed is the same:** Looksy is not causing the slowdown
+    **If speed improves:** Contact [support@looksy.ai](mailto:support@looksy.ai) with details
+  </Accordion>
+
+  <Accordion title="Solution 2: Optimize Product Images">
+    **Most common culprit for slow pages**
+
+    **Check:**
+    - Are product images > 1MB? (Too large)
+    - Are they high resolution but uncompressed?
+
+    **Fix:**
+    1. Compress images with TinyPNG or Shopify's image optimizer
+    2. Use WebP format (Shopify supports this)
+    3. Target file size: 100-300KB per image
+    4. Resize to max 2048px width
+
+    **Expected improvement:** 1-3 seconds faster page load
+  </Accordion>
+
+  <Accordion title="Solution 3: Review Other Apps">
+    **Too many apps slow down stores**
+
+    **Check:**
+    - How many apps do you have installed? (> 20 is concerning)
+    - Are there apps you're not actively using?
+
+    **Fix:**
+    1. Go to Shopify Admin → Apps
+    2. Uninstall apps you don't need
+    3. Test page speed after each removal
+    4. Keep only essential apps
+
+    **Expected improvement:** 0.5-2 seconds faster per app removed
+  </Accordion>
+
+  <Accordion title="Solution 4: Check Theme Performance">
+    **Heavy themes impact speed**
+
+    **Test:**
+    1. Switch to Dawn (Shopify's free, fast theme)
+    2. Test page speed
+    3. If significantly faster, your theme is the issue
+
+    **Fix:**
+    - Use a performance-optimized theme
+    - Remove unused theme features
+    - Hire developer to optimize custom theme
+  </Accordion>
+</AccordionGroup>
+
+### Issue: Virtual Try-On Rendering is Slow
+
+<AccordionGroup>
+  <Accordion title="Solution 1: Check Internet Connection">
+    **User's connection affects speed**
+
+    **Test:**
+    - Try on fast WiFi vs. cellular
+    - Test with speedtest.net
+    - Target: 10+ Mbps for smooth experience
+
+    **If connection is slow:**
+    - Try-on will take longer (5-10 seconds vs. 3-5 seconds)
+    - This is network-dependent, not Looksy's fault
+  </Accordion>
+
+  <Accordion title="Solution 2: Optimize Selfie Size">
+    **Large selfies take longer to upload**
+
+    **Instruct customers:**
+    - Use photos < 2MB
+    - Don't upload ultra-high-res images (8K phone photos)
+    - Compress before uploading if possible
+
+    **Expected improvement:** 1-2 seconds faster upload
+  </Accordion>
+
+  <Accordion title="Solution 3: Check Server Status">
+    **Rare server issues**
+
+    **If try-on is consistently slow:**
+    1. Check Looksy status page (if available)
+    2. Contact support to verify server status
+    3. Try during different times of day
+
+    **Note:** Processing should be 3-5 seconds consistently
+  </Accordion>
+</AccordionGroup>
+
+### Issue: Core Web Vitals Failing
+
+<AccordionGroup>
+  <Accordion title="Largest Contentful Paint (LCP) > 2.5s">
+    **What it measures:** Time until largest element loads
+
+    **Common causes (not Looksy):**
+    - Large, unoptimized hero images
+    - Slow server response time
+    - Render-blocking JavaScript
+
+    **Fix:**
+    1. Compress product images
+    2. Use lazy loading for images
+    3. Optimize hero/banner images
+    4. Enable Shopify CDN
+
+    **Looksy impact:** None (button loads after LCP element)
+  </Accordion>
+
+  <Accordion title="First Input Delay (FID) > 100ms">
+    **What it measures:** Time until page becomes interactive
+
+    **Common causes:**
+    - Too much JavaScript executing
+    - Multiple apps loading synchronously
+    - Heavy theme JavaScript
+
+    **Fix:**
+    1. Remove unnecessary apps
+    2. Minimize third-party scripts
+    3. Use async loading for non-critical scripts
+
+    **Looksy impact:** < 10ms (async loading)
+  </Accordion>
+
+  <Accordion title="Cumulative Layout Shift (CLS) > 0.1">
+    **What it measures:** Unexpected layout shifts
+
+    **Common causes:**
+    - Images without width/height attributes
+    - Dynamic content insertion
+    - Web fonts loading
+
+    **Fix:**
+    1. Set image dimensions in HTML
+    2. Reserve space for dynamic content
+    3. Use font-display: swap for web fonts
+
+    **Looksy impact:** None (button has reserved space)
+  </Accordion>
+</AccordionGroup>
+
+## Mobile Performance Optimization
+
+### Issue: Slow performance on mobile devices
+
+<AccordionGroup>
+  <Accordion title="Mobile-Specific Image Optimization">
+    **Serve smaller images to mobile**
+
+    **Shopify supports responsive images:**
+    - Automatically serves appropriate sizes
+    - Verify theme uses responsive image tags
+
+    **Check:**
+    ```html
+    <!-- Good (responsive) -->
+    <img srcset="image_small.jpg 400w, image_large.jpg 800w">
+
+    <!-- Bad (fixed size) -->
+    <img src="image_large.jpg">
+    ```
+  </Accordion>
+
+  <Accordion title="Reduce Mobile JavaScript">
+    **Mobile devices have less processing power**
+
+    **Fix:**
+    1. Minimize app usage on mobile
+    2. Disable non-essential features on mobile
+    3. Use lazy loading aggressively
+  </Accordion>
+
+  <Accordion title="Test on Real Devices">
+    **Browser testing isn't enough**
+
+    **Test on:**
+    - iPhone (older models like iPhone 8)
+    - Android mid-range devices
+    - Both WiFi and 4G connections
+
+    **Identify:** Where does it slow down?
+  </Accordion>
+</AccordionGroup>
+
+## Advanced Diagnostics
+
+### Using Browser DevTools
+
+<AccordionGroup>
+  <Accordion title="Network Tab Analysis">
+    **Identify slow-loading resources**
+
+    **Steps:**
+    1. Open Chrome DevTools (F12)
+    2. Go to Network tab
+    3. Reload page
+    4. Sort by "Time" column (largest first)
+    5. Identify bottlenecks
+
+    **What to look for:**
+    - Files > 1MB (compress these)
+    - Long wait times (server issues)
+    - Many small requests (concatenate if possible)
+  </Accordion>
+
+  <Accordion title="Performance Tab Analysis">
+    **See what's blocking rendering**
+
+    **Steps:**
+    1. Open Chrome DevTools (F12)
+    2. Go to Performance tab
+    3. Click Record
+    4. Reload page
+    5. Stop recording
+    6. Analyze timeline
+
+    **What to look for:**
+    - Long tasks (> 50ms)
+    - JavaScript execution time
+    - Layout thrashing
+  </Accordion>
+
+  <Accordion title="Lighthouse Audit">
+    **Comprehensive performance audit**
+
+    **Steps:**
+    1. Open Chrome DevTools (F12)
+    2. Go to Lighthouse tab
+    3. Select "Performance"
+    4. Run audit
+    5. Review recommendations
+
+    **Focus on:**
+    - Opportunities (biggest impact)
+    - Diagnostics (specific issues)
+  </Accordion>
+</AccordionGroup>
+
+## Shopify-Specific Optimizations
+
+### Shopify Online Store Speed Report
+
+**Access:**
+1. Shopify Admin → Online Store → Themes
+2. Click "..." → View speed report
+3. Review metrics and comparisons
+
+**What it shows:**
+- Your store's speed vs. similar stores
+- Top issues to fix
+- Historical performance
+
+### Enable Shopify CDN
+
+**Should be enabled by default**
+
+**Verify:**
+1. Check if images load from cdn.shopify.com
+2. If not, contact Shopify support
+
+**Benefits:**
+- Faster global image delivery
+- Reduced server load
+- Better performance worldwide
+
+### Use Shopify's Image Optimization
+
+**Automatic optimization:**
+- Shopify resizes images automatically
+- Serves WebP to supported browsers
+- Lazy loads images
+
+**Ensure your theme uses:**
+```liquid
+{{ product.featured_image | image_url: width: 800 | image_tag }}
+```
+
+## App Compatibility Issues
+
+### Issue: Conflicts with other apps slowing performance
+
+<AccordionGroup>
+  <Accordion title="Identify Conflicting Apps">
+    **Process:**
+    1. Note current page speed
+    2. Disable apps one by one
+    3. Test page speed after each
+    4. Identify which app(s) cause slowdowns
+
+    **Common culprits:**
+    - Page builders (heavy JavaScript)
+    - Review apps (external API calls)
+    - Chat widgets (constant polling)
+    - Personalization apps (complex logic)
+  </Accordion>
+
+  <Accordion title="Resolve Conflicts">
+    **Options:**
+    1. Find lighter alternatives to heavy apps
+    2. Configure apps for lazy loading
+    3. Load apps only on specific pages
+    4. Contact app developer for optimization
+
+    **Looksy is optimized:** Minimal conflict potential
+  </Accordion>
+</AccordionGroup>
+
+## Server Response Time
+
+### Issue: Slow Time to First Byte (TTFB)
+
+**What it measures:** Server response time
+
+**Target:** < 600ms
+
+**Common causes:**
+- Shopify server issues (rare)
+- DNS problems
+- Too many redirects
+- Heavy backend processing
+
+**Fix:**
+1. Check Shopify status page
+2. Contact Shopify support if consistently slow
+3. Reduce redirects
+4. Optimize Liquid code in theme
+
+**Looksy impact:** None (runs on separate servers)
+
+## Performance Monitoring
+
+### Set Up Ongoing Monitoring
+
+<AccordionGroup>
+  <Accordion title="Google Search Console">
+    **Free performance monitoring**
+
+    **Setup:**
+    1. Verify site in Google Search Console
+    2. Navigate to "Core Web Vitals" report
+    3. Monitor ongoing performance
+
+    **Benefits:** See real user metrics, not just lab tests
+  </Accordion>
+
+  <Accordion title="Shopify Analytics">
+    **Built-in monitoring**
+
+    **Track:**
+    - Online Store Speed report (weekly)
+    - Session duration (slower = shorter sessions)
+    - Bounce rate (slower = higher bounce rate)
+  </Accordion>
+
+  <Accordion title="Third-Party Tools">
+    **Options:**
+    - GTmetrix (free, detailed reports)
+    - Pingdom (uptime + performance)
+    - WebPageTest (advanced analysis)
+
+    **Use:** Monthly check-ins to catch regressions
+  </Accordion>
+</AccordionGroup>
+
+## Performance Best Practices
+
+### Checklist for Fast Store
+
+- [ ] Product images compressed (< 300KB each)
+- [ ] Using WebP format where possible
+- [ ] < 15 apps installed
+- [ ] Performance-optimized theme
+- [ ] Shopify CDN enabled
+- [ ] Lazy loading images enabled
+- [ ] Minimal third-party scripts
+- [ ] Regular performance audits
+- [ ] Core Web Vitals in "Good" range
+
+<Check>
+Following these practices ensures your store stays fast with or without Looksy.
+</Check>
+
+## When to Contact Looksy Support
+
+Contact [support@looksy.ai](mailto:support@looksy.ai) if:
+
+- Page speed decreased immediately after installing Looksy
+- Disabling Looksy significantly improves performance
+- Try-on rendering takes > 10 seconds consistently
+- You see JavaScript errors related to Looksy
+
+**Include in your message:**
+- Product page URL
+- PageSpeed Insights results (before/after Looksy)
+- Browser console errors (F12)
+- Steps taken to troubleshoot
+
+## Expected Performance Impact
+
+### Normal Looksy Performance
+
+**Page Load:**
+- Impact: < 0.1 seconds
+- Core Web Vitals: No change
+
+**Button Load:**
+- Time: < 1 second after page load
+- Async: Doesn't block rendering
+
+**Try-On Rendering:**
+- Time: 3-5 seconds (server-side processing)
+- Network-dependent: Slower on poor connections
+
+**Mobile:**
+- Same as desktop
+- Works well on 4G/5G
+- Graceful degradation on 3G
+
+<Note>
+If you're seeing worse performance than this, something else is likely the cause. Use the diagnostics above to identify the real bottleneck.
+</Note>
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="Will Looksy slow down my store?">
+    No. Looksy is optimized for minimal performance impact (< 0.1s). If your store is slow, it's likely due to large images, too many apps, or theme issues.
+  </Accordion>
+
+  <Accordion title="How can I verify Looksy isn't causing slowdowns?">
+    Disable Looksy temporarily, run PageSpeed Insights, then re-enable and test again. If scores are the same, Looksy is not the cause.
+  </Accordion>
+
+  <Accordion title="What's the biggest performance bottleneck for most stores?">
+    Unoptimized product images (> 1MB). Compress images to 100-300KB for dramatic speed improvements.
+  </Accordion>
+
+  <Accordion title="Can I use Looksy on a slow store?">
+    Yes, but fix underlying performance issues first. Looksy won't make a slow store slower, but customers expect fast experiences overall.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Will It Slow My Store?" icon="gauge" href="/faq/will-it-slow-my-store">
+    Learn about Looksy's performance optimization
+  </Card>
+  <Card title="Common Issues" icon="wrench" href="/troubleshooting/common-issues">
+    Fix other common problems
+  </Card>
+  <Card title="Mobile Optimization" icon="mobile" href="/integration/mobile-optimization">
+    Optimize for mobile performance
+  </Card>
+  <Card title="Image Quality" icon="image" href="/troubleshooting/image-quality">
+    Optimize product images for speed and accuracy
+  </Card>
+</CardGroup>

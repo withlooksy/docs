@@ -1,0 +1,455 @@
+---
+title: "Calculating Virtual Try-On ROI"
+description: "Calculate the return on investment for Looksy virtual try-on. Measure revenue impact, cost savings, and profitability for your Shopify store."
+---
+
+## Understanding Virtual Try-On ROI
+
+ROI (Return on Investment) measures the financial benefit of virtual try-on compared to its cost. Most stores see **5-10x ROI** within the first month.
+
+## ROI Formula
+
+```
+ROI = (Total Benefit - Total Cost) / Total Cost × 100
+```
+
+**Example:**
+- Total Benefit: $5,000
+- Total Cost: $500
+- ROI: ($5,000 - $500) / $500 × 100 = **900% ROI** (or 9x return)
+
+<Check>
+Even conservative estimates typically show 500-1000% ROI (5-10x return) for virtual try-on.
+</Check>
+
+## Components of ROI
+
+### Total Benefit
+
+**1. Increased Revenue from Conversion Lift**
+**2. Cost Savings from Reduced Returns**
+**3. Increased Average Order Value**
+**4. Improved Customer Lifetime Value**
+
+### Total Cost
+
+**1. Looksy Subscription** ($99-$499/month)
+**2. Implementation Time** (minimal, usually 1-2 hours)
+**3. Ongoing Management** (minimal, 1-2 hours/month)
+
+## Step-by-Step ROI Calculation
+
+### Step 1: Calculate Revenue Impact
+
+**Formula:**
+```
+Revenue Impact = (Orders with Try-On - Expected Orders without Try-On) × AOV
+```
+
+**Example calculation:**
+
+**Your store metrics:**
+- Monthly product page visitors: 10,000
+- Baseline conversion rate: 2% (without try-on)
+- Try-on engagement rate: 35% (3,500 use try-on)
+- Try-on conversion rate: 3% (25% lift)
+- Average order value: $75
+
+**Orders without try-on:**
+- Non-try-on visitors: 6,500
+- Expected orders: 6,500 × 2% = 130 orders
+
+**Orders with try-on:**
+- Try-on users: 3,500
+- Orders: 3,500 × 3% = 105 orders
+
+**Total orders:** 130 + 105 = 235 orders
+**Baseline orders (without feature):** 10,000 × 2% = 200 orders
+
+**Additional orders:** 235 - 200 = 35 orders
+**Revenue impact:** 35 × $75 = **$2,625/month**
+
+<Tip>
+Use your Looksy dashboard to get actual conversion rate lift instead of estimating.
+</Tip>
+
+### Step 2: Calculate Return Reduction Savings
+
+**Formula:**
+```
+Return Savings = Returns Prevented × (Cost per Return)
+```
+
+**Example calculation:**
+
+**Your store metrics:**
+- Monthly orders: 235
+- Baseline return rate: 25%
+- Return rate with try-on: 18% (28% reduction)
+- Cost per return: $20 (shipping + processing + devaluation)
+
+**Returns without try-on:**
+- Expected returns: 235 × 25% = 59 returns
+
+**Returns with try-on:**
+- Try-on orders: 105
+- Returns: 105 × 18% = 19 returns
+- Non-try-on orders: 130
+- Returns: 130 × 25% = 33 returns
+- Total returns: 52 returns
+
+**Returns prevented:** 59 - 52 = 7 returns
+**Cost savings:** 7 × $20 = **$140/month**
+
+### Step 3: Calculate Total Benefit
+
+```
+Total Benefit = Revenue Impact + Return Savings
+              = $2,625 + $140
+              = $2,765/month
+```
+
+### Step 4: Calculate Total Cost
+
+**Looksy subscription:** $99/month (Starter plan)
+
+**One-time setup:**
+- Implementation time: 1 hour @ $50/hour = $50
+- Amortized over 12 months: $50 / 12 = $4.17/month
+
+**Monthly management:**
+- Monitoring and optimization: 1 hour @ $50/hour = $50/month
+
+**Total monthly cost:** $99 + $4.17 + $50 = **$153.17/month**
+
+<Note>
+Most stores don't count internal time as a cost since setup is minimal. This calculation is conservative.
+</Note>
+
+### Step 5: Calculate ROI
+
+```
+ROI = ($2,765 - $153.17) / $153.17 × 100
+    = $2,611.83 / $153.17 × 100
+    = 1,705% ROI (or 17x return)
+```
+
+**Annual impact:**
+- Monthly profit: $2,611.83
+- Annual profit: $2,611.83 × 12 = **$31,342/year**
+
+## ROI Calculator Template
+
+### Use This Spreadsheet Formula
+
+**Inputs:**
+- A1: Monthly visitors
+- A2: Baseline conversion rate (%)
+- A3: Try-on engagement rate (%)
+- A4: Conversion rate lift (%)
+- A5: Average order value ($)
+- A6: Baseline return rate (%)
+- A7: Return rate reduction (%)
+- A8: Cost per return ($)
+- A9: Monthly Looksy cost ($)
+
+**Calculations:**
+
+**Additional orders per month:**
+```excel
+=(A1 * A3 * (A2 * (1 + A4))) - (A1 * A2)
+```
+
+**Revenue impact:**
+```excel
+=Additional_Orders * A5
+```
+
+**Returns prevented:**
+```excel
+=(A1 * A2 * A6) - (A1 * A2 * (A6 * (1 - A7)))
+```
+
+**Return savings:**
+```excel
+=Returns_Prevented * A8
+```
+
+**Total benefit:**
+```excel
+=Revenue_Impact + Return_Savings
+```
+
+**ROI:**
+```excel
+=(Total_Benefit - A9) / A9 * 100
+```
+
+<Tip>
+Download our ROI calculator spreadsheet from the Looksy dashboard for easy calculation.
+</Tip>
+
+## ROI by Store Size
+
+### Small Store (< 10K monthly visitors)
+
+**Typical metrics:**
+- Visitors: 5,000/month
+- Baseline conversion: 2%
+- Try-on lift: 15%
+- AOV: $60
+- Looksy cost: $99/month
+
+**Typical ROI:** 500-800% (5-8x)
+**Monthly profit:** $400-$700
+**Annual profit:** $4,800-$8,400
+
+### Mid-Size Store (10K-50K monthly visitors)
+
+**Typical metrics:**
+- Visitors: 25,000/month
+- Baseline conversion: 2.5%
+- Try-on lift: 18%
+- AOV: $75
+- Looksy cost: $249/month
+
+**Typical ROI:** 800-1,200% (8-12x)
+**Monthly profit:** $2,000-$3,000
+**Annual profit:** $24,000-$36,000
+
+### Large Store (50K+ monthly visitors)
+
+**Typical metrics:**
+- Visitors: 100,000/month
+- Baseline conversion: 3%
+- Try-on lift: 20%
+- AOV: $85
+- Looksy cost: $499/month
+
+**Typical ROI:** 1,000-1,500% (10-15x)
+**Monthly profit:** $5,000-$7,500
+**Annual profit:** $60,000-$90,000
+
+<Check>
+Virtual try-on typically becomes more profitable as store size increases due to fixed costs.
+</Check>
+
+## Hidden Benefits (Not in ROI Calculation)
+
+Beyond direct financial ROI, virtual try-on provides:
+
+### Brand Perception
+- **Innovation signal:** Shows you're a modern, tech-forward brand
+- **Customer experience:** Differentiates from competitors
+- **Trust building:** Demonstrates commitment to customer satisfaction
+
+**Value:** Hard to quantify, but significant for brand building
+
+### Marketing Content
+- **Social sharing:** Customers share try-on results
+- **User-generated content:** Real customers using your products
+- **Viral potential:** Unique feature worth talking about
+
+**Value:** Free marketing and word-of-mouth
+
+### Customer Data
+- **Engagement insights:** Which products generate most interest
+- **Preference data:** What styles resonate with customers
+- **Behavioral patterns:** How customers interact with products
+
+**Value:** Informs product development and inventory decisions
+
+### Competitive Advantage
+- **First-mover advantage:** Many competitors don't offer try-on yet
+- **Barrier to switching:** Customers prefer stores with try-on
+- **Market positioning:** Premium, innovative brand perception
+
+**Value:** Increased market share and customer loyalty
+
+## Improving Your ROI
+
+### Strategies to Maximize Returns
+
+<AccordionGroup>
+  <Accordion title="1. Increase Engagement Rate">
+    **Current:** 30% engagement
+    **Target:** 45% engagement
+
+    **How:**
+    - Optimize button placement (above the fold)
+    - Make button more prominent (larger, contrasting color)
+    - Add messaging: "See it on you in seconds"
+    - Promote feature on homepage and emails
+
+    **Impact:** 50% more try-ons → 50% more additional revenue
+  </Accordion>
+
+  <Accordion title="2. Expand to More Products">
+    **Current:** 50 products enabled
+    **Target:** 200 products enabled
+
+    **How:**
+    - Enable entire collections at once
+    - Focus on products with good images
+    - Test new categories (activewear, outerwear)
+
+    **Impact:** 4x more products → 2-3x more revenue (not all products perform equally)
+  </Accordion>
+
+  <Accordion title="3. Improve Image Quality">
+    **Current:** Mixed image quality
+    **Target:** All images meet standards
+
+    **How:**
+    - Audit product images for quality
+    - Re-shoot or edit low-quality images
+    - Remove busy backgrounds
+    - Improve lighting
+
+    **Impact:** 10-20% higher conversion rate on improved products
+  </Accordion>
+
+  <Accordion title="4. Optimize for Mobile">
+    **Current:** Lower mobile engagement than desktop
+    **Target:** Equal or higher mobile engagement
+
+    **How:**
+    - Use sticky mobile button
+    - Ensure fast mobile page speed
+    - Simplify mobile upload flow
+    - Test on real devices
+
+    **Impact:** 20-30% more try-ons from mobile (70% of traffic)
+  </Accordion>
+
+  <Accordion title="5. Promote the Feature">
+    **Current:** Passive discovery
+    **Target:** Active promotion
+
+    **How:**
+    - Homepage banner: "Try clothes on virtually"
+    - Email campaigns featuring try-on
+    - Social media posts demonstrating feature
+    - Abandoned cart emails: "Still unsure? Try it on"
+
+    **Impact:** 20-40% increase in awareness and usage
+  </Accordion>
+</AccordionGroup>
+
+## Payback Period
+
+### How Long Until You Break Even?
+
+**Typical payback period:** Less than 1 month
+
+**Example:**
+- Looksy cost: $99/month
+- Monthly benefit: $2,765
+- Monthly profit: $2,666
+
+**Payback time:** $99 / $2,765 (daily benefit) = **1.1 days**
+
+<Check>
+Most stores recover their investment in the first week, then profit for the rest of the month.
+</Check>
+
+## Long-Term ROI
+
+### Compounding Benefits Over Time
+
+**Month 1-3: Initial impact**
+- Immediate conversion lift
+- Return reduction starts
+- ROI: 5-8x
+
+**Month 4-6: Optimization**
+- Higher engagement as awareness grows
+- Better product selection
+- Improved images
+- ROI: 8-12x
+
+**Month 7-12: Maturity**
+- Expanded product coverage
+- Refined strategy
+- Customer expectations set
+- ROI: 10-15x
+
+**Year 2+: Long-term value**
+- Competitive advantage solidified
+- Customer loyalty increased
+- Brand perception improved
+- ROI continues growing
+
+## Reporting ROI to Stakeholders
+
+### Monthly ROI Report Template
+
+**Executive Summary:**
+- Total ROI: X%
+- Monthly profit: $X
+- Projected annual impact: $X
+
+**Key Metrics:**
+- Try-on engagement: X%
+- Conversion rate lift: X%
+- Additional orders: X
+- Revenue impact: $X
+- Return reduction: X%
+- Cost savings: $X
+
+**Trends:**
+- Month-over-month growth
+- Top performing products
+- Optimization opportunities
+
+**Recommendations:**
+- Actions to increase ROI
+- Products to enable next
+- Marketing initiatives
+
+<Tip>
+Use Looksy's automated monthly report feature to generate this report automatically.
+</Tip>
+
+## Common ROI Questions
+
+<AccordionGroup>
+  <Accordion title="What if my ROI is lower than expected?">
+    **Possible causes:**
+    - Low engagement (button not visible)
+    - Poor image quality (inaccurate results)
+    - Small sample size (wait longer for data)
+    - Low baseline conversion (try-on can't fix other issues)
+
+    **Solution:** Review optimization strategies above and implement improvements.
+  </Accordion>
+
+  <Accordion title="Can I calculate ROI before installing?">
+    Yes, use the formulas above with estimated metrics. Most stores see 15-20% conversion lift and 20-30% return reduction. Use conservative estimates.
+  </Accordion>
+
+  <Accordion title="How does seasonality affect ROI?">
+    ROI may be higher during peak seasons (holidays, back-to-school) due to increased traffic and higher purchase intent. Track ROI by season for accurate comparison.
+  </Accordion>
+
+  <Accordion title="Should I count internal time as a cost?">
+    It depends on your accounting. For ROI presented to executives, include all costs. For quick calculations, you can exclude minimal internal time.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="ROI Calculator Tool" icon="calculator" href="/benefits/roi-calculator">
+    Use our interactive ROI calculator
+  </Card>
+  <Card title="Dashboard Overview" icon="chart-line" href="/analytics/dashboard-overview">
+    Track your actual ROI in real-time
+  </Card>
+  <Card title="Increase Conversions" icon="arrow-trend-up" href="/benefits/increase-conversions">
+    Strategies to maximize revenue impact
+  </Card>
+  <Card title="Case Studies" icon="book" href="/benefits/case-studies">
+    See real merchant ROI examples
+  </Card>
+</CardGroup>

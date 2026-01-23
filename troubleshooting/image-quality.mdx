@@ -1,0 +1,458 @@
+---
+title: "Image Quality Troubleshooting"
+description: "Fix inaccurate or poor-quality virtual try-on results by optimizing product photos and selfie quality for Looksy."
+---
+
+## Why Image Quality Matters
+
+Virtual try-on accuracy depends heavily on **image quality**. Poor photos lead to inaccurate results, while high-quality images deliver realistic, helpful visualizations.
+
+## Product Image Issues
+
+### Issue: Try-on results look unrealistic
+
+<AccordionGroup>
+  <Accordion title="Busy or Patterned Background">
+    **Problem:** AI struggles to isolate garment from complex backgrounds
+
+    **What it looks like:**
+    - Background elements appear in try-on
+    - Garment edges are fuzzy or incorrect
+    - Color bleeding from background
+
+    **Solution:**
+    1. Re-shoot product on plain white or gray background
+    2. Use background removal tools (Remove.bg, Photoshop)
+    3. Ensure high contrast between garment and background
+    4. See [image requirements guide](/product-setup/image-requirements)
+
+    **Quick fix:** Use editing software to replace background with solid color.
+  </Accordion>
+
+  <Accordion title="Poor Lighting">
+    **Problem:** Dark,shadowy, or unevenly lit product photos
+
+    **What it looks like:**
+    - Colors appear darker than actual product
+    - Details lost in shadows
+    - Inaccurate rendering
+
+    **Solution:**
+    1. Re-shoot with soft, even lighting (studio lights or natural light)
+    2. Avoid harsh shadows
+    3. Use photo editing to increase brightness and reduce shadows
+    4. Aim for consistent lighting across all product images
+
+    **Quick fix:** Use photo editor to adjust exposure +20-30% and increase shadows.
+  </Accordion>
+
+  <Accordion title="Low Resolution">
+    **Problem:** Pixelated or blurry product images
+
+    **What it looks like:**
+    - Fuzzy try-on results
+    - Loss of detail
+    - Artifacts in rendering
+
+    **Solution:**
+    1. Use minimum 800px width images (1200px+ recommended)
+    2. Don't upscale small images (will be blurry)
+    3. Re-shoot products at higher resolution
+    4. Export at high quality (90%+ JPEG quality)
+
+    **Quick fix:** If you must use existing images, ensure they're at least 800px wide.
+  </Accordion>
+
+  <Accordion title="Garment Not Centered or Cropped">
+    **Problem:** Product is off-center, angled, or partially cropped
+
+    **What it looks like:**
+    - Garment positioned incorrectly on body
+    - Incomplete rendering (missing sleeves, neckline)
+    - Distorted placement
+
+    **Solution:**
+    1. Center garment in frame (60-80% of image)
+    2. Include full neckline, sleeves, and hem
+    3. Shoot from straight-on angle (not above or below)
+    4. Crop strategically to remove unnecessary space
+
+    **Quick fix:** Re-crop image to center garment properly.
+  </Accordion>
+
+  <Accordion title="Garment Blends with Background">
+    **Problem:** Low contrast between product and background
+
+    **What it looks like:**
+    - AI can't determine garment edges
+    - Parts of garment missing
+    - Inaccurate silhouette
+
+    **Solution:**
+    1. Use white background for dark garments
+    2. Use gray background for light garments
+    3. Increase contrast in photo editing
+    4. Add slight border/shadow to separate garment
+
+    **Quick fix:** Adjust contrast +20-30% in photo editor.
+  </Accordion>
+</AccordionGroup>
+
+## Selfie Quality Issues
+
+### Issue: Uploaded selfie causes poor results
+
+<AccordionGroup>
+  <Accordion title="Dark or Poorly Lit Selfie">
+    **Problem:** Selfie taken in low light
+
+    **What it looks like:**
+    - "No face detected" error
+    - Inaccurate rendering
+    - Poor skin tone representation
+
+    **Solution for merchants:**
+    1. Add instructions near try-on button: "Use good lighting for best results"
+    2. Show example good selfie vs. bad selfie
+    3. Provide tips on product page
+
+    **Solution for customers:**
+    1. Take selfie in natural light or bright indoor lighting
+    2. Face a window or light source
+    3. Avoid backlighting (light behind you)
+    4. Use phone's flash if needed
+  </Accordion>
+
+  <Accordion title="Angled or Profile Selfie">
+    **Problem:** Face not facing camera directly
+
+    **What it looks like:**
+    - "No face detected" error
+    - Garment positioned incorrectly
+    - Distorted rendering
+
+    **Solution:**
+    1. Add instructions: "Face the camera directly"
+    2. Show visual example (front-facing selfie icon)
+    3. Reject angled photos in upload flow (if possible)
+
+    **Customer guidance:** Face camera straight-on, not at an angle.
+  </Accordion>
+
+  <Accordion title="Sunglasses or Hat Obstructing Face">
+    **Problem:** Face partially obscured
+
+    **What it looks like:**
+    - "No face detected" error
+    - Inaccurate face mapping
+
+    **Solution:**
+    1. Add instructions: "Remove sunglasses and hats"
+    2. Show clear face example
+
+    **Customer guidance:** Remove accessories that cover face.
+  </Accordion>
+
+  <Accordion title="Cropped or Zoomed Selfie">
+    **Problem:** Face is too zoomed in or partially cropped
+
+    **What it looks like:**
+    - Face detection fails
+    - Body positioning is off
+
+    **Solution:**
+    1. Add instructions: "Include your head and shoulders"
+    2. Show proper framing example
+
+    **Customer guidance:** Don't zoom too close – show head and upper body.
+  </Accordion>
+
+  <Accordion title="Blurry or Low-Resolution Selfie">
+    **Problem:** Selfie is out of focus or very low quality
+
+    **What it looks like:**
+    - Fuzzy or inaccurate rendering
+    - Loss of detail
+
+    **Solution:**
+    1. Add minimum resolution requirement (recommend 800px+)
+    2. Reject very low-res photos
+
+    **Customer guidance:** Use phone's main camera, not front camera if quality is poor.
+  </Accordion>
+</AccordionGroup>
+
+## Color Accuracy Issues
+
+### Issue: Colors don't match expectations
+
+<AccordionGroup>
+  <Accordion title="Product Image Color is Inaccurate">
+    **Problem:** Source product photo has wrong colors
+
+    **Solution:**
+    1. Color-correct product images in photo editor
+    2. Use color-calibrated monitor for editing
+    3. Compare to physical product
+    4. Adjust white balance, saturation, hue
+
+    **Note:** Virtual try-on can only be as accurate as your product photos.
+  </Accordion>
+
+  <Accordion title="Selfie Lighting Affects Color Perception">
+    **Problem:** Colored lighting in selfie (yellow, blue tint)
+
+    **Solution:**
+    1. Instruct customers to use neutral lighting
+    2. Avoid selfies taken in direct sunlight (yellow)
+    3. Avoid indoor tungsten lighting (yellow)
+    4. Recommend natural daylight or neutral LED
+
+    **Cannot be fixed:** If selfie has colored lighting, result will reflect that.
+  </Accordion>
+
+  <Accordion title="Screen Color Differences">
+    **Problem:** Different devices show colors differently
+
+    **Solution:**
+    1. Accept this as normal variance
+    2. Add disclaimer: "Colors may vary by screen"
+    3. Focus on visualizing style, not exact color match
+
+    **Cannot be fixed:** Screen color calibration is device-specific.
+  </Accordion>
+</AccordionGroup>
+
+## Product-Specific Image Issues
+
+### Issue: Certain product types don't render well
+
+<AccordionGroup>
+  <Accordion title="Highly Textured Fabrics">
+    **Problem:** Cable knits, bouclé, heavy textures
+
+    **What it looks like:**
+    - Texture is flattened or simplified
+    - Less realistic fabric appearance
+
+    **Solution:**
+    1. Accept this as a limitation for very textured items
+    2. Test product first before enabling try-on
+    3. If result doesn't meet standards, disable try-on for that product
+    4. Focus on simpler textures
+
+    **Note:** AI does its best, but very complex textures are challenging.
+  </Accordion>
+
+  <Accordion title="Sheer or Transparent Fabrics">
+    **Problem:** See-through materials, mesh panels
+
+    **What it looks like:**
+    - Transparency not accurately rendered
+    - Solid appearance instead of sheer
+
+    **Solution:**
+    1. Use product images with high contrast
+    2. Show sheer elements clearly
+    3. Test result quality before enabling
+    4. Consider disabling if result is misleading
+
+    **Workaround:** Layer sheer items over solid base in product photo.
+  </Accordion>
+
+  <Accordion title="Heavy Embellishments">
+    **Problem:** Sequins, beading, 3D details
+
+    **What it looks like:**
+    - Fine details simplified or missing
+    - Flatter appearance than actual product
+
+    **Solution:**
+    1. Test these products individually
+    2. If result quality is acceptable, enable
+    3. If details are lost, consider disabling
+    4. Focus on overall style visualization, not exact detail
+
+    **Note:** Overall garment appearance is more important than tiny details.
+  </Accordion>
+</AccordionGroup>
+
+## Improving Product Images
+
+### Quick Fixes You Can Do Now
+
+<AccordionGroup>
+  <Accordion title="Remove Background">
+    **Tools:**
+    - Remove.bg (free, automatic)
+    - Photoshop (manual, precise)
+    - Canva (easy, web-based)
+
+    **Steps:**
+    1. Upload product image
+    2. Remove background automatically
+    3. Replace with solid white or gray
+    4. Download and re-upload to Shopify
+  </Accordion>
+
+  <Accordion title="Adjust Lighting">
+    **Tools:**
+    - Photoshop, Lightroom
+    - Free: GIMP, Photopea
+    - Mobile: Snapseed, VSCO
+
+    **Adjustments:**
+    - Increase exposure: +20-30%
+    - Reduce shadows: +30-40%
+    - Increase contrast: +10-20%
+    - Adjust white balance: To neutral
+  </Accordion>
+
+  <Accordion title="Crop and Center">
+    **Tools:**
+    - Shopify image editor
+    - Canva
+    - Any image editor
+
+    **Best practices:**
+    - Center garment in frame
+    - Include full product (neckline to hem)
+    - Remove excess whitespace
+    - Maintain aspect ratio
+  </Accordion>
+
+  <Accordion title="Increase Resolution">
+    **Warning:** Don't artificially upscale
+
+    **If image is too small:**
+    - Re-shoot at higher resolution
+    - Use higher quality source files
+    - Export from design software at higher resolution
+
+    **Don't:**
+    - Upscale small images (creates blur)
+    - Use AI upscalers (can introduce artifacts)
+  </Accordion>
+</AccordionGroup>
+
+## Image Quality Checklist
+
+Before enabling try-on, verify each product image:
+
+**Background:**
+- [ ] Plain white, gray, or solid neutral color
+- [ ] No patterns, textures, or busy elements
+- [ ] High contrast with garment
+
+**Lighting:**
+- [ ] Soft, even illumination
+- [ ] No harsh shadows
+- [ ] Bright enough to see all details
+
+**Composition:**
+- [ ] Garment centered in frame
+- [ ] Front-facing, straight-on angle
+- [ ] Full product visible (not cropped)
+- [ ] 60-80% of frame occupied by garment
+
+**Technical:**
+- [ ] Minimum 800px width (1200px+ recommended)
+- [ ] High-quality JPEG (90%+) or PNG
+- [ ] File size < 5MB
+- [ ] Sharp focus, not blurry
+
+<Check>
+Products meeting all these criteria will deliver the best virtual try-on experience.
+</Check>
+
+## Testing Image Quality
+
+### Process:
+
+1. **Upload test selfie** in good lighting, facing camera
+2. **Try on the product** on your live store
+3. **Evaluate result:**
+   - Does it look realistic?
+   - Are colors accurate?
+   - Is placement correct?
+   - Would this help a customer decide?
+
+4. **If result is good:** Enable for customers
+5. **If result is poor:** Improve image and retest
+
+### Example Comparison:
+
+**Poor Image:**
+- Busy background (retail store)
+- Uneven lighting (shadows on left)
+- Low resolution (600px)
+- Angled product (not facing forward)
+
+**Result:** Inaccurate rendering, fuzzy edges
+
+**Good Image:**
+- Plain white background
+- Soft, even lighting
+- High resolution (1500px)
+- Centered, front-facing product
+
+**Result:** Realistic, accurate rendering
+
+## When to Disable Try-On
+
+If you can't improve image quality enough:
+
+**Consider disabling try-on for products with:**
+- Very complex textures that don't render well
+- Heavy embellishments that lose detail
+- Sheer fabrics that don't translate
+- Low-quality source images you can't replace
+
+**Why disable:** It's better to not offer try-on than to offer poor-quality try-on that doesn't help customers.
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="Can I use model photos or must I use flat lays?">
+    Both work. Model photos often perform better for dresses and structured garments. Flat lays work well for simple tops. Choose based on what you have available.
+  </Accordion>
+
+  <Accordion title="Do I need professional photography?">
+    Not necessarily, but you need good lighting, plain backgrounds, and decent resolution. DIY photos with proper setup can work great.
+  </Accordion>
+
+  <Accordion title="Can Looksy fix poor product images automatically?">
+    No. Looksy uses your images as-is. If you provide poor images, results will be poor. "Garbage in, garbage out" applies to AI.
+  </Accordion>
+
+  <Accordion title="What if I have thousands of products with varying image quality?">
+    Start by enabling try-on on products with the best images. Gradually improve and add more products over time. Don't enable everything at once.
+  </Accordion>
+</AccordionGroup>
+
+## Getting Help
+
+If you've optimized images but still see poor results:
+
+**Contact support:**
+- Email [support@looksy.ai](mailto:support@looksy.ai)
+- Include product URL and sample selfie
+- Describe the issue
+- We'll review and provide specific guidance
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Image Requirements" icon="image" href="/product-setup/image-requirements">
+    Complete guide to product photo standards
+  </Card>
+  <Card title="Common Issues" icon="wrench" href="/troubleshooting/common-issues">
+    Fix other common problems
+  </Card>
+  <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
+    Optimize your overall setup
+  </Card>
+  <Card title="Supported Products" icon="check" href="/product-setup/supported-products">
+    Which product types work best
+  </Card>
+</CardGroup>

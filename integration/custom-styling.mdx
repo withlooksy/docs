@@ -1,0 +1,599 @@
+---
+title: "Custom Styling Guide"
+description: "Customize the Looksy virtual try-on button and modal to match your brand. Learn CSS customization and theme-specific styling options."
+---
+
+## Make Looksy Match Your Brand
+
+Looksy is designed to integrate seamlessly with your store's aesthetic. Customize colors, fonts, sizing, and more to create a cohesive brand experience.
+
+## Theme Editor Customization (No Code)
+
+### Basic Settings
+
+Available in the Shopify theme editor when you click on the Looksy block:
+
+<AccordionGroup>
+  <Accordion title="Button Text">
+    **Default:** "Try it on"
+
+    **Alternatives:**
+    - "See it on you"
+    - "Virtual try-on"
+    - "Preview on yourself"
+    - "Try on virtually"
+    - Custom text of your choice
+
+    **Best practice:** Keep it short (2-4 words) and action-oriented.
+  </Accordion>
+
+  <Accordion title="Button Color">
+    **Options:**
+    - Use theme primary color (default)
+    - Use theme secondary color
+    - Custom hex color (#0D9373)
+
+    **Best practice:** Choose a color that contrasts with your background for visibility.
+  </Accordion>
+
+  <Accordion title="Button Size">
+    **Options:**
+    - Small
+    - Medium (recommended)
+    - Large
+
+    **Best practice:** Match the size of your "Add to Cart" button for consistency.
+  </Accordion>
+
+  <Accordion title="Alignment">
+    **Options:**
+    - Left
+    - Center
+    - Right
+
+    **Best practice:** Match the alignment of other buttons on your product page.
+  </Accordion>
+</AccordionGroup>
+
+## CSS Customization (Advanced)
+
+For more control, add custom CSS to your theme.
+
+### Accessing Theme CSS
+
+1. Go to **Online Store → Themes**
+2. Click **"Actions" → "Edit code"**
+3. Find **Assets → theme.css** (or custom CSS file)
+4. Add your custom styles at the bottom
+
+### Button Styling
+
+#### Basic Button Customization
+
+```css
+/* Primary button styling */
+.looksy-try-on-button {
+  background-color: #0D9373 !important;
+  color: white !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Hover state */
+.looksy-try-on-button:hover {
+  background-color: #0A7A5E !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Active/pressed state */
+.looksy-try-on-button:active {
+  transform: translateY(0) !important;
+}
+```
+
+#### Outlined Button Style
+
+```css
+.looksy-try-on-button {
+  background-color: transparent !important;
+  color: #0D9373 !important;
+  border: 2px solid #0D9373 !important;
+  font-weight: 600 !important;
+  padding: 10px 22px !important;
+  border-radius: 6px !important;
+}
+
+.looksy-try-on-button:hover {
+  background-color: #0D9373 !important;
+  color: white !important;
+}
+```
+
+#### Rounded Button Style
+
+```css
+.looksy-try-on-button {
+  background-color: #0D9373 !important;
+  color: white !important;
+  border-radius: 50px !important;
+  padding: 14px 32px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(13, 147, 115, 0.3) !important;
+}
+```
+
+#### Minimalist Button Style
+
+```css
+.looksy-try-on-button {
+  background-color: #f5f5f5 !important;
+  color: #333 !important;
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+  padding: 12px 20px !important;
+  font-size: 14px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.looksy-try-on-button:hover {
+  background-color: #e8e8e8 !important;
+}
+```
+
+<Tip>
+Use `!important` to ensure your styles override theme defaults. While not ideal in general CSS, it's necessary for reliable customization of app components.
+</Tip>
+
+### Modal Styling
+
+Customize the try-on modal appearance:
+
+```css
+/* Modal background overlay */
+.looksy-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Modal container */
+.looksy-modal {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Modal header */
+.looksy-modal-header {
+  background-color: #0D9373 !important;
+  color: white !important;
+  padding: 20px !important;
+}
+
+/* Close button */
+.looksy-modal-close {
+  color: white !important;
+  font-size: 24px !important;
+}
+```
+
+### Upload Area Styling
+
+```css
+/* Upload button in modal */
+.looksy-upload-button {
+  background-color: #0D9373 !important;
+  color: white !important;
+  padding: 16px 32px !important;
+  border-radius: 8px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+
+/* Upload area */
+.looksy-upload-area {
+  border: 2px dashed #0D9373 !important;
+  border-radius: 12px !important;
+  padding: 40px !important;
+  background-color: #f9f9f9 !important;
+}
+```
+
+## Typography Customization
+
+### Custom Fonts
+
+Match your brand's typography:
+
+```css
+/* Button font */
+.looksy-try-on-button {
+  font-family: 'Your Brand Font', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Modal text */
+.looksy-modal {
+  font-family: 'Your Brand Font', sans-serif !important;
+}
+
+/* Instructions text */
+.looksy-instructions {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  color: #666 !important;
+}
+```
+
+### Text Transforms
+
+```css
+/* Uppercase button text */
+.looksy-try-on-button {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+/* Capitalize modal headings */
+.looksy-modal-header h2 {
+  text-transform: capitalize !important;
+}
+```
+
+## Icon Customization
+
+### Adding Icons to Button
+
+```css
+/* Add camera icon before text */
+.looksy-try-on-button::before {
+  content: "📷 " !important;
+  margin-right: 8px !important;
+}
+
+/* Or use Font Awesome icon */
+.looksy-try-on-button::before {
+  font-family: "Font Awesome 5 Free" !important;
+  content: "\f030" !important; /* camera icon */
+  margin-right: 8px !important;
+  font-weight: 900 !important;
+}
+```
+
+## Responsive Styling
+
+### Mobile-Specific Styles
+
+```css
+/* Desktop styles */
+.looksy-try-on-button {
+  padding: 12px 24px !important;
+  font-size: 16px !important;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .looksy-try-on-button {
+    padding: 14px 20px !important;
+    font-size: 14px !important;
+    width: 100% !important;
+  }
+
+  /* Sticky mobile button */
+  .looksy-try-on-button.sticky {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    border-radius: 0 !important;
+    z-index: 999 !important;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .looksy-try-on-button {
+    padding: 12px 20px !important;
+    font-size: 15px !important;
+  }
+}
+```
+
+## Dark Mode Support
+
+If your theme supports dark mode:
+
+```css
+/* Light mode (default) */
+.looksy-try-on-button {
+  background-color: #0D9373 !important;
+  color: white !important;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .looksy-try-on-button {
+    background-color: #07C983 !important;
+    color: #1a1a1a !important;
+  }
+
+  .looksy-modal {
+    background-color: #1a1a1a !important;
+    color: white !important;
+  }
+}
+
+/* Theme-specific dark mode class */
+.dark-mode .looksy-try-on-button {
+  background-color: #07C983 !important;
+}
+```
+
+## Animation Effects
+
+### Subtle Animations
+
+```css
+/* Fade in animation */
+.looksy-try-on-button {
+  animation: fadeIn 0.5s ease-in !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Pulse animation on hover */
+.looksy-try-on-button:hover {
+  animation: pulse 1s infinite !important;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+```
+
+### Loading States
+
+```css
+/* Loading spinner during processing */
+.looksy-loading::after {
+  content: "" !important;
+  display: inline-block !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: 2px solid white !important;
+  border-top-color: transparent !important;
+  border-radius: 50% !important;
+  animation: spin 0.6s linear infinite !important;
+  margin-left: 10px !important;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+```
+
+## Brand-Specific Examples
+
+### Minimalist/Clean Brands
+
+```css
+.looksy-try-on-button {
+  background-color: black !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 14px 28px !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  font-weight: 400 !important;
+}
+```
+
+### Vibrant/Fun Brands
+
+```css
+.looksy-try-on-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  border-radius: 25px !important;
+  padding: 16px 32px !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+  text-transform: none !important;
+}
+
+.looksy-try-on-button:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
+}
+```
+
+### Luxury/Premium Brands
+
+```css
+.looksy-try-on-button {
+  background-color: #2c2c2c !important;
+  color: #d4af37 !important; /* Gold */
+  border: 1px solid #d4af37 !important;
+  border-radius: 2px !important;
+  padding: 12px 24px !important;
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  font-weight: 300 !important;
+  font-family: 'Didot', serif !important;
+}
+
+.looksy-try-on-button:hover {
+  background-color: #d4af37 !important;
+  color: #2c2c2c !important;
+}
+```
+
+## Testing Your Customization
+
+### Visual Checklist
+
+- [ ] Button matches your brand colors
+- [ ] Typography is consistent with your theme
+- [ ] Button size is appropriate (not too small)
+- [ ] Hover states work correctly
+- [ ] Mobile styling looks good
+- [ ] Dark mode (if applicable) works
+- [ ] Animations are subtle and professional
+- [ ] Modal styling matches button
+
+### Browser Testing
+
+Test your custom styles in:
+- Chrome (desktop and mobile)
+- Safari (desktop and iOS)
+- Firefox
+- Edge
+- Samsung Internet (Android)
+
+## Common Styling Issues
+
+<AccordionGroup>
+  <Accordion title="My styles aren't being applied">
+    **Possible causes:**
+    - Missing `!important` flag
+    - Incorrect CSS selector
+    - Theme CSS loaded after your custom CSS
+
+    **Solutions:**
+    1. Add `!important` to your styles
+    2. Use browser dev tools to inspect correct selector
+    3. Add styles to theme.css or custom CSS file at the end
+  </Accordion>
+
+  <Accordion title="Button looks different on mobile">
+    **Possible causes:**
+    - No mobile-specific styles defined
+    - Theme has mobile overrides
+
+    **Solutions:**
+    1. Add `@media` queries for mobile
+    2. Check theme's mobile CSS
+    3. Use `!important` to override theme styles
+  </Accordion>
+
+  <Accordion title="Hover effects don't work on mobile">
+    **Expected behavior:** Touch devices don't have hover states
+
+    **Solutions:**
+    Use `:active` state for touch feedback:
+    ```css
+    .looksy-try-on-button:active {
+      background-color: #0A7A5E !important;
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Custom font doesn't load">
+    **Possible causes:**
+    - Font not loaded in theme
+    - Incorrect font-family name
+
+    **Solutions:**
+    1. Ensure font is loaded in theme settings
+    2. Use exact font-family name from theme
+    3. Provide fallback fonts
+  </Accordion>
+</AccordionGroup>
+
+## CSS Variables for Easy Maintenance
+
+Set up CSS variables for easier updates:
+
+```css
+:root {
+  --looksy-primary: #0D9373;
+  --looksy-hover: #0A7A5E;
+  --looksy-text: white;
+  --looksy-radius: 8px;
+  --looksy-padding: 12px 24px;
+}
+
+.looksy-try-on-button {
+  background-color: var(--looksy-primary) !important;
+  color: var(--looksy-text) !important;
+  border-radius: var(--looksy-radius) !important;
+  padding: var(--looksy-padding) !important;
+}
+
+.looksy-try-on-button:hover {
+  background-color: var(--looksy-hover) !important;
+}
+```
+
+**Benefits:** Change one variable to update all instances.
+
+## Performance Considerations
+
+### Keep It Lightweight
+
+- Avoid heavy animations (impacts performance)
+- Don't add large background images to buttons
+- Use CSS transforms instead of position changes
+- Minimize use of box-shadows
+
+### Optimize for Speed
+
+```css
+/* Use transform instead of top/left for animations */
+.looksy-try-on-button:hover {
+  transform: translateY(-2px) !important; /* Better performance */
+  /* top: -2px; -- Avoid this */
+}
+
+/* Use will-change for animated elements */
+.looksy-try-on-button {
+  will-change: transform !important;
+}
+```
+
+## Accessibility Considerations
+
+### Ensure Good Contrast
+
+Use tools like WebAIM Contrast Checker to verify:
+- Button text is readable (4.5:1 contrast minimum)
+- Focus states are visible
+- Color isn't the only indicator of interactivity
+
+```css
+/* Visible focus state for keyboard navigation */
+.looksy-try-on-button:focus {
+  outline: 3px solid #0D9373 !important;
+  outline-offset: 2px !important;
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Theme Integration" icon="palette" href="/integration/theme-setup">
+    Complete theme setup and integration guide
+  </Card>
+  <Card title="Button Placement" icon="location-dot" href="/integration/button-placement">
+    Optimize button positioning for engagement
+  </Card>
+  <Card title="Mobile Optimization" icon="mobile" href="/integration/mobile-optimization">
+    Ensure great mobile experience
+  </Card>
+  <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
+    Comprehensive optimization strategies
+  </Card>
+</CardGroup>
