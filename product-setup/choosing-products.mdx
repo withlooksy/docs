@@ -1,6 +1,6 @@
 ---
 title: "Choosing Products for Virtual Try-On"
-description: "Learn which products work best with Looksy virtual try-on and how to select items for maximum conversion impact."
+description: "Learn how to manage products with Looksy virtual try-on. The app works on all products by default."
 ---
 
 ## Product Management
@@ -17,7 +17,7 @@ Most stores can leave all products enabled. Disable products only if:
 
 1. **Revealing garments** – Lingerie, swimwear, and very revealing clothing may fail to generate results (protection against misuse)
 2. **Poor image quality** – Products with very low-quality images produce poor results
-3. **Non-apparel** – Items that aren't clothing (accessories, shoes, etc.)
+3. **Non-fashion items** – Products where visualization doesn't add value
 
 ### How to Disable Specific Products
 
@@ -42,93 +42,146 @@ If you prefer to enable try-on on only certain products:
 The app uses up to 4 product images per item when generating try-on results. More images give the AI more context.
 </Tip>
 
-## Recommended Product Categories
+## What Works with Looksy
 
-Looksy works best with **upper body apparel**:
+Looksy works on **all product types**:
 
-<CardGroup cols={2}>
-  <Card title="Tops & Shirts" icon="shirt">
-    T-shirts, blouses, button-ups, sweaters, and hoodies
-  </Card>
-  <Card title="Dresses" icon="person-dress">
-    Casual dresses, formal dresses, maxi dresses, and midi dresses
-  </Card>
-  <Card title="Outerwear" icon="vest">
-    Jackets, coats, blazers, and cardigans
-  </Card>
-  <Card title="Activewear" icon="dumbbell">
-    Sports tops, yoga wear, and athletic shirts
-  </Card>
-</CardGroup>
+- **Apparel** – Tops, dresses, outerwear, activewear
+- **Accessories** – Jewelry, bags, scarves
+- **Footwear** – Shoes, boots, sneakers
+- **Any fashion item** – The AI adapts to any product
 
-## Products That Work Best
+<Check>
+The model delivers realistic results across all categories. Better product images produce better try-on results.
+</Check>
 
-### Garments with Clear Structure
+## Which Products Benefit Most
 
-Virtual try-on delivers the best results for products with:
-- **Defined shapes and silhouettes** (not overly drapey or loose)
-- **Visible necklines and armholes**
-- **Clear patterns and graphics** that can be accurately displayed
-- **Solid construction** (structured tops perform better than sheer fabrics)
+Focus virtual try-on on products where customers struggle with visualization:
 
-### Products with High Return Rates
+### High-Impact Categories
 
-Focus on products where customers struggle with fit visualization:
 - Items with unique cuts or styles
-- Size-dependent garments
-- Products with above-average return rates due to fit issues
-- New styles that customers haven't seen on real people yet
+- Products customers haven't seen on real people
+- New releases or seasonal collections
+- Products with above-average return rates (style-related, not sizing)
 
-## Products That Need Consideration
+### Style vs. Sizing
 
-### Revealing Garments
+<Note>
+**Important:** Looksy helps customers visualize **style** (how it looks on them), not sizing (whether it will fit). Always provide size charts and fit descriptions alongside virtual try-on.
+</Note>
 
-These products may fail to generate results (protection against misuse):
-- Lingerie
-- Swimwear
-- Very revealing clothing
+Virtual try-on reduces **style-related returns** (doesn't look as expected, color doesn't suit, style doesn't match). It doesn't solve sizing issues.
 
-Disable these products in your Looksy admin if you encounter issues.
+## Product Selection Strategy
 
-### Accessories and Non-Apparel
+### Start with Everything Enabled
 
-Currently, Looksy is optimized for apparel worn on the upper body. The following categories have limitations:
-- Jewelry and accessories
-- Hats and headwear
-- Pants and bottoms (coming soon)
-- Shoes and footwear
+The easiest approach:
 
-## Testing Your Product Selection
+1. Enable the app embed
+2. Let try-on work on all products
+3. Monitor which products get the most engagement
+4. Disable only products that don't benefit (if any)
 
-After enabling products:
+### Disable Revealing Products
 
-1. **Visit the product page** on your live store
-2. **Click "Try it on"** and upload a test selfie
-3. **Evaluate the result** – Does it look realistic? Would it help a shopper make a decision?
-4. **Adjust as needed** – If certain products don't meet your standards, disable them individually
+If you sell revealing garments:
+
+1. Go to **Products** in admin
+2. Find lingerie, swimwear, or revealing items
+3. Disable them individually
+
+This prevents generation failures due to misuse protection.
+
+## Testing Your Products
+
+After enabling try-on:
+
+1. Visit product pages on your live store
+2. Click **"Try On"** and test with your own photo
+3. Check that results look realistic
+4. Verify the button appears where expected
 
 <Tip>
-Start with your 10-20 bestselling products in categories that work well (tops, dresses, jackets). This gives you quick wins and valuable data before expanding to more products.
+The app works on all products out of the box. You're testing the button placement and user experience, not whether the AI works.
 </Tip>
 
-## Performance Indicators
+## Optimizing by Category
 
-Track these metrics to identify which products benefit most from virtual try-on:
+### Track Performance
 
-- **Engagement rate** – What percentage of visitors click "Try it on"?
-- **Conversion lift** – Do products with try-on convert better?
-- **Return rate** – Are returns lower for products with virtual try-on?
-- **Time on page** – Do shoppers spend more time on products with try-on enabled?
+Use your analytics dashboard to see:
+- Which products get the most try-ons
+- Which categories drive the most engagement
+- Conversion rates by product type
 
-Use this data to refine your product selection strategy over time.
+### Scale Based on Data
+
+- Focus promotion on high-engagement categories
+- Add new products to collections that perform well
+- Consider disabling products with very low engagement (if any)
+
+## Product Image Guidelines
+
+Better images = better results. Optimize your product photos:
+
+### Image Quality
+
+- **High resolution** – Clear, detailed photos
+- **Good lighting** – Avoid shadows and dark images
+- **Plain backgrounds** – Help the AI isolate the product
+- **Multiple angles** – Up to 4 images per product
+
+### What the AI Needs
+
+The model works with any images, but quality improves with:
+- Front-facing product views
+- Consistent lighting across images
+- Clear product details visible
+
+<Check>
+There are no strict requirements. Poor images work but produce lower-quality results. Input quality = output quality.
+</Check>
+
+## Common Questions
+
+<AccordionGroup>
+  <Accordion title="Does it work on accessories and jewelry?">
+    Yes. Looksy works on all fashion products including accessories, jewelry, and footwear.
+  </Accordion>
+
+  <Accordion title="Does it help with sizing?">
+    No. Looksy shows customers how products **look** (style), not whether they'll **fit** (sizing). Always provide size charts alongside virtual try-on.
+  </Accordion>
+
+  <Accordion title="Do I need to test each product?">
+    No. The app works on all products. You're only testing that the button appears and the user experience is smooth.
+  </Accordion>
+
+  <Accordion title="What if I only sell a few product types?">
+    Enable try-on on everything and let customers use it where they find it valuable. They'll naturally use it on products where visualization helps.
+  </Accordion>
+
+  <Accordion title="Should I disable products with complex patterns?">
+    No. The model handles all patterns, textures, and styles. Only disable revealing products if needed.
+  </Accordion>
+</AccordionGroup>
 
 ## Next Steps
 
 <CardGroup cols={2}>
   <Card title="Image Requirements" icon="image" href="/product-setup/image-requirements">
-    Learn what makes a great product photo for virtual try-on
+    Optimize your product photos for better results
   </Card>
   <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
-    Optimize your virtual try-on for maximum conversions
+    Get the most out of virtual try-on
+  </Card>
+  <Card title="Supported Products" icon="check" href="/product-setup/supported-products">
+    See what works with Looksy
+  </Card>
+  <Card title="Analytics" icon="chart-line" href="/analytics/dashboard-overview">
+    Track which products perform best
   </Card>
 </CardGroup>
