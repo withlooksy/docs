@@ -26,7 +26,6 @@
       {
         "group": "Getting Started",
         "pages": [
-          "getting-started/how-to-install",
           "getting-started/quick-setup",
           "getting-started/first-try-on"
         ]
@@ -102,5 +101,10 @@
     "og:site_name": "Looksy Documentation",
     "og:type": "website",
     "twitter:site": "@withlooksy"
+  },
+  "integrations": {
+    "intercom": {
+      "appId": "plxfysj3"
+    }
   }
 }
