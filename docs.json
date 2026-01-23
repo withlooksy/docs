@@ -7,9 +7,9 @@
     "dark": "/looksy_logo.svg"
   },
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373"
+    "primary": "#1e9fff",
+    "light": "#1e9fff",
+    "dark": "#1e9fff"
   },
   "topbarLinks": [
     {
