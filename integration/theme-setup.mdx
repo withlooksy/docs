@@ -32,28 +32,28 @@ The **app embed** is the easiest and most reliable way to add Looksy to your sto
 The try-on button will now appear on all enabled product pages automatically.
 </Check>
 
-### Method 2: App Block (Advanced Control)
+### Method 2: Theme Customization (Advanced)
 
-For more control over button placement, use the **app block** method.
+For theme-specific customizations, access theme settings.
 
-**Benefits:**
-- Precise placement control
-- Custom positioning on product pages
-- Can adjust styling and layout
-- Per-template customization
+**What you can customize:**
+- Button styling (colors, fonts, sizes)
+- Button corner position (top left or top right)
+- Custom CSS for advanced styling
+- Per-template button visibility
 
-**How to add:**
+**How to customize:**
 
 1. Go to **Online Store → Themes → Customize**
 2. Navigate to a **Product page** template
-3. Click **"Add block"** or **"Add section"**
-4. Select **"Looksy Virtual Try-On"** from Apps
-5. Drag the block to your preferred location
+3. Click **Theme settings** or **App embeds**
+4. Find **"Looksy Try-On Button"** settings
+5. Adjust colors, text, styling
 6. Click **"Save"**
 
-<Tip>
-Best placement: Near the "Add to Cart" button, above product description, or in the product details section.
-</Tip>
+<Note>
+The button appears on product images automatically once the app embed is enabled. You cannot change where the button is located—only its styling and corner position.
+</Note>
 
 ## Theme Compatibility
 
@@ -247,15 +247,16 @@ When updating your theme:
     4. Check browser console for JavaScript errors
   </Accordion>
 
-  <Accordion title="Button placement looks wrong">
+  <Accordion title="Button styling looks wrong">
     **Possible causes:**
     - Theme CSS conflicts
-    - Default positioning doesn't fit your layout
+    - Default theme colors clash with button
 
     **Solutions:**
-    1. Switch from app embed to app block for manual placement
-    2. Adjust positioning in theme editor
-    3. Add custom CSS to fine-tune appearance
+    1. Go to Looksy admin → Customize Button
+    2. Adjust colors, text, size to match your brand
+    3. Choose top left or top right corner position
+    4. Add custom CSS if needed for advanced styling
   </Accordion>
 
   <Accordion title="Button works on desktop but not mobile">
@@ -332,14 +333,14 @@ Use Google PageSpeed Insights before and after installation to verify.
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Button Placement Optimization" icon="location-dot" href="/integration/button-placement">
-    Strategies for maximum engagement with button positioning
+  <Card title="Custom Styling" icon="palette" href="/integration/custom-styling">
+    Advanced customization and branding options
   </Card>
   <Card title="Mobile Optimization" icon="mobile" href="/integration/mobile-optimization">
     Ensure seamless mobile experience for 70%+ of traffic
   </Card>
-  <Card title="Custom Styling" icon="palette" href="/integration/custom-styling">
-    Advanced customization and branding options
+  <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
+    Optimize virtual try-on for maximum conversions
   </Card>
   <Card title="Troubleshooting" icon="wrench" href="/troubleshooting/common-issues">
     Fix common integration issues

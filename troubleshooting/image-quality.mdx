@@ -1,458 +1,470 @@
 ---
-title: "Image Quality Troubleshooting"
-description: "Fix inaccurate or poor-quality virtual try-on results by optimizing product photos and selfie quality for Looksy."
+title: "Troubleshooting Virtual Try-On"
+description: "Fix common issues with Looksy virtual try-on. Troubleshoot technical problems, validation errors, and rendering issues."
 ---
 
-## Why Image Quality Matters
+## Looksy Works With Any Images
 
-Virtual try-on accuracy depends heavily on **image quality**. Poor photos lead to inaccurate results, while high-quality images deliver realistic, helpful visualizations.
-
-## Product Image Issues
-
-### Issue: Try-on results look unrealistic
-
-<AccordionGroup>
-  <Accordion title="Busy or Patterned Background">
-    **Problem:** AI struggles to isolate garment from complex backgrounds
-
-    **What it looks like:**
-    - Background elements appear in try-on
-    - Garment edges are fuzzy or incorrect
-    - Color bleeding from background
-
-    **Solution:**
-    1. Re-shoot product on plain white or gray background
-    2. Use background removal tools (Remove.bg, Photoshop)
-    3. Ensure high contrast between garment and background
-    4. See [image requirements guide](/product-setup/image-requirements)
-
-    **Quick fix:** Use editing software to replace background with solid color.
-  </Accordion>
-
-  <Accordion title="Poor Lighting">
-    **Problem:** Dark,shadowy, or unevenly lit product photos
-
-    **What it looks like:**
-    - Colors appear darker than actual product
-    - Details lost in shadows
-    - Inaccurate rendering
-
-    **Solution:**
-    1. Re-shoot with soft, even lighting (studio lights or natural light)
-    2. Avoid harsh shadows
-    3. Use photo editing to increase brightness and reduce shadows
-    4. Aim for consistent lighting across all product images
-
-    **Quick fix:** Use photo editor to adjust exposure +20-30% and increase shadows.
-  </Accordion>
-
-  <Accordion title="Low Resolution">
-    **Problem:** Pixelated or blurry product images
-
-    **What it looks like:**
-    - Fuzzy try-on results
-    - Loss of detail
-    - Artifacts in rendering
-
-    **Solution:**
-    1. Use minimum 800px width images (1200px+ recommended)
-    2. Don't upscale small images (will be blurry)
-    3. Re-shoot products at higher resolution
-    4. Export at high quality (90%+ JPEG quality)
-
-    **Quick fix:** If you must use existing images, ensure they're at least 800px wide.
-  </Accordion>
-
-  <Accordion title="Garment Not Centered or Cropped">
-    **Problem:** Product is off-center, angled, or partially cropped
-
-    **What it looks like:**
-    - Garment positioned incorrectly on body
-    - Incomplete rendering (missing sleeves, neckline)
-    - Distorted placement
-
-    **Solution:**
-    1. Center garment in frame (60-80% of image)
-    2. Include full neckline, sleeves, and hem
-    3. Shoot from straight-on angle (not above or below)
-    4. Crop strategically to remove unnecessary space
-
-    **Quick fix:** Re-crop image to center garment properly.
-  </Accordion>
-
-  <Accordion title="Garment Blends with Background">
-    **Problem:** Low contrast between product and background
-
-    **What it looks like:**
-    - AI can't determine garment edges
-    - Parts of garment missing
-    - Inaccurate silhouette
-
-    **Solution:**
-    1. Use white background for dark garments
-    2. Use gray background for light garments
-    3. Increase contrast in photo editing
-    4. Add slight border/shadow to separate garment
-
-    **Quick fix:** Adjust contrast +20-30% in photo editor.
-  </Accordion>
-</AccordionGroup>
-
-## Selfie Quality Issues
-
-### Issue: Uploaded selfie causes poor results
-
-<AccordionGroup>
-  <Accordion title="Dark or Poorly Lit Selfie">
-    **Problem:** Selfie taken in low light
-
-    **What it looks like:**
-    - "No face detected" error
-    - Inaccurate rendering
-    - Poor skin tone representation
-
-    **Solution for merchants:**
-    1. Add instructions near try-on button: "Use good lighting for best results"
-    2. Show example good selfie vs. bad selfie
-    3. Provide tips on product page
-
-    **Solution for customers:**
-    1. Take selfie in natural light or bright indoor lighting
-    2. Face a window or light source
-    3. Avoid backlighting (light behind you)
-    4. Use phone's flash if needed
-  </Accordion>
-
-  <Accordion title="Angled or Profile Selfie">
-    **Problem:** Face not facing camera directly
-
-    **What it looks like:**
-    - "No face detected" error
-    - Garment positioned incorrectly
-    - Distorted rendering
-
-    **Solution:**
-    1. Add instructions: "Face the camera directly"
-    2. Show visual example (front-facing selfie icon)
-    3. Reject angled photos in upload flow (if possible)
-
-    **Customer guidance:** Face camera straight-on, not at an angle.
-  </Accordion>
-
-  <Accordion title="Sunglasses or Hat Obstructing Face">
-    **Problem:** Face partially obscured
-
-    **What it looks like:**
-    - "No face detected" error
-    - Inaccurate face mapping
-
-    **Solution:**
-    1. Add instructions: "Remove sunglasses and hats"
-    2. Show clear face example
-
-    **Customer guidance:** Remove accessories that cover face.
-  </Accordion>
-
-  <Accordion title="Cropped or Zoomed Selfie">
-    **Problem:** Face is too zoomed in or partially cropped
-
-    **What it looks like:**
-    - Face detection fails
-    - Body positioning is off
-
-    **Solution:**
-    1. Add instructions: "Include your head and shoulders"
-    2. Show proper framing example
-
-    **Customer guidance:** Don't zoom too close – show head and upper body.
-  </Accordion>
-
-  <Accordion title="Blurry or Low-Resolution Selfie">
-    **Problem:** Selfie is out of focus or very low quality
-
-    **What it looks like:**
-    - Fuzzy or inaccurate rendering
-    - Loss of detail
-
-    **Solution:**
-    1. Add minimum resolution requirement (recommend 800px+)
-    2. Reject very low-res photos
-
-    **Customer guidance:** Use phone's main camera, not front camera if quality is poor.
-  </Accordion>
-</AccordionGroup>
-
-## Color Accuracy Issues
-
-### Issue: Colors don't match expectations
-
-<AccordionGroup>
-  <Accordion title="Product Image Color is Inaccurate">
-    **Problem:** Source product photo has wrong colors
-
-    **Solution:**
-    1. Color-correct product images in photo editor
-    2. Use color-calibrated monitor for editing
-    3. Compare to physical product
-    4. Adjust white balance, saturation, hue
-
-    **Note:** Virtual try-on can only be as accurate as your product photos.
-  </Accordion>
-
-  <Accordion title="Selfie Lighting Affects Color Perception">
-    **Problem:** Colored lighting in selfie (yellow, blue tint)
-
-    **Solution:**
-    1. Instruct customers to use neutral lighting
-    2. Avoid selfies taken in direct sunlight (yellow)
-    3. Avoid indoor tungsten lighting (yellow)
-    4. Recommend natural daylight or neutral LED
-
-    **Cannot be fixed:** If selfie has colored lighting, result will reflect that.
-  </Accordion>
-
-  <Accordion title="Screen Color Differences">
-    **Problem:** Different devices show colors differently
-
-    **Solution:**
-    1. Accept this as normal variance
-    2. Add disclaimer: "Colors may vary by screen"
-    3. Focus on visualizing style, not exact color match
-
-    **Cannot be fixed:** Screen color calibration is device-specific.
-  </Accordion>
-</AccordionGroup>
-
-## Product-Specific Image Issues
-
-### Issue: Certain product types don't render well
-
-<AccordionGroup>
-  <Accordion title="Highly Textured Fabrics">
-    **Problem:** Cable knits, bouclé, heavy textures
-
-    **What it looks like:**
-    - Texture is flattened or simplified
-    - Less realistic fabric appearance
-
-    **Solution:**
-    1. Accept this as a limitation for very textured items
-    2. Test product first before enabling try-on
-    3. If result doesn't meet standards, disable try-on for that product
-    4. Focus on simpler textures
-
-    **Note:** AI does its best, but very complex textures are challenging.
-  </Accordion>
-
-  <Accordion title="Sheer or Transparent Fabrics">
-    **Problem:** See-through materials, mesh panels
-
-    **What it looks like:**
-    - Transparency not accurately rendered
-    - Solid appearance instead of sheer
-
-    **Solution:**
-    1. Use product images with high contrast
-    2. Show sheer elements clearly
-    3. Test result quality before enabling
-    4. Consider disabling if result is misleading
-
-    **Workaround:** Layer sheer items over solid base in product photo.
-  </Accordion>
-
-  <Accordion title="Heavy Embellishments">
-    **Problem:** Sequins, beading, 3D details
-
-    **What it looks like:**
-    - Fine details simplified or missing
-    - Flatter appearance than actual product
-
-    **Solution:**
-    1. Test these products individually
-    2. If result quality is acceptable, enable
-    3. If details are lost, consider disabling
-    4. Focus on overall style visualization, not exact detail
-
-    **Note:** Overall garment appearance is more important than tiny details.
-  </Accordion>
-</AccordionGroup>
-
-## Improving Product Images
-
-### Quick Fixes You Can Do Now
-
-<AccordionGroup>
-  <Accordion title="Remove Background">
-    **Tools:**
-    - Remove.bg (free, automatic)
-    - Photoshop (manual, precise)
-    - Canva (easy, web-based)
-
-    **Steps:**
-    1. Upload product image
-    2. Remove background automatically
-    3. Replace with solid white or gray
-    4. Download and re-upload to Shopify
-  </Accordion>
-
-  <Accordion title="Adjust Lighting">
-    **Tools:**
-    - Photoshop, Lightroom
-    - Free: GIMP, Photopea
-    - Mobile: Snapseed, VSCO
-
-    **Adjustments:**
-    - Increase exposure: +20-30%
-    - Reduce shadows: +30-40%
-    - Increase contrast: +10-20%
-    - Adjust white balance: To neutral
-  </Accordion>
-
-  <Accordion title="Crop and Center">
-    **Tools:**
-    - Shopify image editor
-    - Canva
-    - Any image editor
-
-    **Best practices:**
-    - Center garment in frame
-    - Include full product (neckline to hem)
-    - Remove excess whitespace
-    - Maintain aspect ratio
-  </Accordion>
-
-  <Accordion title="Increase Resolution">
-    **Warning:** Don't artificially upscale
-
-    **If image is too small:**
-    - Re-shoot at higher resolution
-    - Use higher quality source files
-    - Export from design software at higher resolution
-
-    **Don't:**
-    - Upscale small images (creates blur)
-    - Use AI upscalers (can introduce artifacts)
-  </Accordion>
-</AccordionGroup>
-
-## Image Quality Checklist
-
-Before enabling try-on, verify each product image:
-
-**Background:**
-- [ ] Plain white, gray, or solid neutral color
-- [ ] No patterns, textures, or busy elements
-- [ ] High contrast with garment
-
-**Lighting:**
-- [ ] Soft, even illumination
-- [ ] No harsh shadows
-- [ ] Bright enough to see all details
-
-**Composition:**
-- [ ] Garment centered in frame
-- [ ] Front-facing, straight-on angle
-- [ ] Full product visible (not cropped)
-- [ ] 60-80% of frame occupied by garment
-
-**Technical:**
-- [ ] Minimum 800px width (1200px+ recommended)
-- [ ] High-quality JPEG (90%+) or PNG
-- [ ] File size < 5MB
-- [ ] Sharp focus, not blurry
+Virtual try-on works with your existing Shopify product images—no special photography or adjustments needed. Most issues are technical or configuration-related, not image quality problems.
 
 <Check>
-Products meeting all these criteria will deliver the best virtual try-on experience.
+The AI handles any background, lighting, angle, or photography style. Don't reshoot products or adjust images to fix try-on issues.
 </Check>
 
-## Testing Image Quality
+## Common Issues and Solutions
 
-### Process:
+### Try-On Button Doesn't Appear
 
-1. **Upload test selfie** in good lighting, facing camera
-2. **Try on the product** on your live store
-3. **Evaluate result:**
-   - Does it look realistic?
-   - Are colors accurate?
-   - Is placement correct?
-   - Would this help a customer decide?
+<AccordionGroup>
+  <Accordion title="App Embed Not Enabled">
+    **Problem:** The most common issue—app embed is disabled in theme settings
 
-4. **If result is good:** Enable for customers
-5. **If result is poor:** Improve image and retest
+    **Solution:**
+    1. Go to **Online Store → Themes → Customize**
+    2. Click **App embeds** in left sidebar
+    3. Find **Looksy Try-On Button**
+    4. Toggle it **ON**
+    5. Click **Save**
 
-### Example Comparison:
+    **Verify:** Visit a product page and check for the "Try On" button on the product image
+  </Accordion>
 
-**Poor Image:**
-- Busy background (retail store)
-- Uneven lighting (shadows on left)
-- Low resolution (600px)
-- Angled product (not facing forward)
+  <Accordion title="Browser Cache">
+    **Problem:** Old version of page is cached
 
-**Result:** Inaccurate rendering, fuzzy edges
+    **Solution:**
+    1. Hard refresh: Cmd+Shift+R (Mac) or Ctrl+Shift+R (Windows)
+    2. Clear browser cache
+    3. Try incognito/private window
+  </Accordion>
 
-**Good Image:**
-- Plain white background
-- Soft, even lighting
-- High resolution (1500px)
-- Centered, front-facing product
+  <Accordion title="Theme Compatibility">
+    **Problem:** Rare theme conflict
 
-**Result:** Realistic, accurate rendering
+    **Solution:**
+    1. Contact support at [support@looksy.ai](mailto:support@looksy.ai)
+    2. Include theme name and product URL
+    3. We'll investigate and provide custom integration if needed
+  </Accordion>
 
-## When to Disable Try-On
+  <Accordion title="Product Manually Disabled">
+    **Problem:** Product was disabled in Looksy admin
 
-If you can't improve image quality enough:
+    **Solution:**
+    1. Go to Looksy admin → **Products**
+    2. Find the product
+    3. Toggle it **ON**
+    4. Save changes
+  </Accordion>
+</AccordionGroup>
 
-**Consider disabling try-on for products with:**
-- Very complex textures that don't render well
-- Heavy embellishments that lose detail
-- Sheer fabrics that don't translate
-- Low-quality source images you can't replace
+## Upload and Validation Issues
 
-**Why disable:** It's better to not offer try-on than to offer poor-quality try-on that doesn't help customers.
+### Image Upload Fails or Shows Error
+
+<AccordionGroup>
+  <Accordion title="Not a Human Photo">
+    **Problem:** Uploaded image is not a person (cartoon, animal, illustration)
+
+    **Error message:** "Please upload a photo of a person"
+
+    **Solution:**
+    - Upload a real photo of a human
+    - No drawings, cartoons, animals, or illustrations
+    - Must be an actual person
+
+    **Why:** Protects your credits from misuse
+  </Accordion>
+
+  <Accordion title="Multiple People in Photo">
+    **Problem:** Image shows more than one person
+
+    **Error message:** "Please upload a photo with only one person"
+
+    **Solution:**
+    - Use a photo with a single person only
+    - Crop out additional people if needed
+    - Take a new selfie with just one person
+
+    **Why:** AI needs to identify one body for accurate rendering
+  </Accordion>
+
+  <Accordion title="Not Enough Body Visible">
+    **Problem:** Face-only photo or heavily cropped image
+
+    **Error message:** "Please show more of your body"
+
+    **Solution:**
+    - Upload a full body shot (works best)
+    - At minimum, show head and upper body
+    - Don't use extreme close-ups of just the face
+
+    **Why:** AI needs to see body structure to place garment accurately
+  </Accordion>
+
+  <Accordion title="File Too Large">
+    **Problem:** Image file exceeds size limit
+
+    **Solution:**
+    1. Compress the image before uploading
+    2. Use phone's camera app (automatically optimizes)
+    3. Try a different photo
+
+    **Note:** Most phone photos work fine—this is rare
+  </Accordion>
+
+  <Accordion title="Slow Upload or Timeout">
+    **Problem:** Slow internet connection
+
+    **Solution:**
+    1. Check internet connection
+    2. Try again on WiFi (if on cellular)
+    3. Use a smaller file size photo
+    4. Wait and retry
+
+    **Note:** Mobile networks (4G/5G) work fine—3G may be slower
+  </Accordion>
+</AccordionGroup>
+
+## Processing and Rendering Issues
+
+### Try-On Takes Too Long
+
+<AccordionGroup>
+  <Accordion title="Normal Processing Time">
+    **Expected time:** 15-20 seconds
+
+    **Why it takes time:**
+    - AI processes both your photo and product images
+    - Runs complex rendering calculations
+    - Delivers high-quality realistic results
+
+    **Not a problem:** 15-20 seconds is normal and expected
+  </Accordion>
+
+  <Accordion title="Slow Internet Connection">
+    **Problem:** Results take longer than 30 seconds
+
+    **Solution:**
+    1. Check internet speed
+    2. Try WiFi instead of cellular
+    3. Wait for processing to complete (customer can continue browsing)
+
+    **Note:** Customers can explore the product page while try-on generates
+  </Accordion>
+
+  <Accordion title="Server Load During Peak Times">
+    **Problem:** Occasional slower processing during high traffic
+
+    **Solution:**
+    - Wait for completion (may take 30-40 seconds during peak)
+    - Retry if it fails
+
+    **Note:** Rare issue; most requests complete in 15-20 seconds
+  </Accordion>
+</AccordionGroup>
+
+### Result Doesn't Appear or Shows Error
+
+<AccordionGroup>
+  <Accordion title="Revealing Product Protection">
+    **Problem:** Very revealing garments (lingerie, extreme swimwear) may fail to generate
+
+    **Error message:** "Unable to generate try-on for this product"
+
+    **Why:** Protection against misuse
+
+    **Solution:**
+    1. Go to Looksy admin → **Products**
+    2. Disable try-on for revealing products
+    3. This is expected behavior for these product types
+  </Accordion>
+
+  <Accordion title="Network Interruption">
+    **Problem:** Connection dropped during processing
+
+    **Solution:**
+    1. Check internet connection
+    2. Click "Try On" again to restart
+    3. Ensure stable connection
+  </Accordion>
+
+  <Accordion title="Insufficient Credits">
+    **Problem:** Account has run out of credits
+
+    **Error message:** "No credits remaining"
+
+    **Solution:**
+    1. Go to Looksy admin → **Billing**
+    2. Upgrade plan or purchase more credits
+    3. Free plan includes 25 credits to test
+
+    **Note:** Each try-on uses 1 credit
+  </Accordion>
+</AccordionGroup>
+
+## Mobile-Specific Issues
+
+### Button Doesn't Work on Mobile
+
+<AccordionGroup>
+  <Accordion title="Mobile Cache">
+    **Problem:** Old cached version on mobile browser
+
+    **Solution:**
+    1. Close and reopen browser
+    2. Clear mobile browser cache
+    3. Try different browser (Safari vs. Chrome)
+  </Accordion>
+
+  <Accordion title="Tap Target Too Small">
+    **Problem:** Button is hard to tap on mobile
+
+    **Solution:**
+    1. Go to Looksy admin → **Customize Button**
+    2. Increase **Button Padding** (try 20-24px)
+    3. Increase **Text Font Size** (try 18px)
+    4. Save and test again
+  </Accordion>
+</AccordionGroup>
+
+### Camera Not Working
+
+<AccordionGroup>
+  <Accordion title="Camera Permission Denied">
+    **Problem:** Browser doesn't have camera access
+
+    **Solution:**
+    1. Check browser settings → Permissions
+    2. Allow camera access for your store
+    3. Reload page and try again
+
+    **Alternative:** Use "Upload Photo" instead of "Take Photo"
+  </Accordion>
+
+  <Accordion title="Camera Hardware Issue">
+    **Problem:** Device camera not functioning
+
+    **Solution:**
+    - Use "Upload Photo" option instead
+    - Upload existing photo from gallery
+    - Take photo with camera app first, then upload
+  </Accordion>
+</AccordionGroup>
+
+## Color and Appearance Issues
+
+### Colors Look Different Than Expected
+
+<AccordionGroup>
+  <Accordion title="Product Photo Color Is Inaccurate">
+    **Problem:** Source product image has wrong colors
+
+    **Solution:**
+    - Color-correct your product images in Shopify
+    - Virtual try-on shows colors as they appear in product photos
+    - If product photo is inaccurate, try-on will match that inaccuracy
+
+    **Note:** Try-on renders what it sees in your product images
+  </Accordion>
+
+  <Accordion title="Selfie Lighting Affects Perception">
+    **Problem:** Colored lighting in selfie (yellow/blue tint)
+
+    **Why it happens:**
+    - Indoor tungsten lighting adds yellow tint
+    - Blue outdoor light adds cool tint
+    - AI compensates but can't fully eliminate colored lighting
+
+    **Solution for customers:**
+    - Suggest using neutral lighting when possible
+    - Natural daylight works well
+    - Neutral white LEDs work well
+
+    **Cannot fix:** If selfie has strong colored lighting, result will reflect that
+  </Accordion>
+
+  <Accordion title="Screen Display Differences">
+    **Problem:** Different devices show colors differently
+
+    **Why it happens:**
+    - Each screen has different color calibration
+    - Mobile vs. desktop displays vary
+    - Brightness settings affect perception
+
+    **Solution:**
+    - Accept as normal variance
+    - Add disclaimer: "Colors may vary by screen"
+    - Focus on style visualization, not exact color matching
+
+    **Cannot fix:** Device-specific color calibration is out of our control
+  </Accordion>
+</AccordionGroup>
+
+## Technical Configuration Issues
+
+### Button Styling Doesn't Match Theme
+
+<AccordionGroup>
+  <Accordion title="Default Theme Styling">
+    **How it works:**
+    - Looksy uses your theme's fonts and colors by default
+    - Automatically matches your store design
+
+    **If you want custom styling:**
+    1. Go to Looksy admin → **Customize Button**
+    2. Adjust colors, fonts, sizes
+    3. Save changes
+  </Accordion>
+
+  <Accordion title="Button Position">
+    **How it works:**
+    - Button appears on product image
+    - Position options: Top Left or Top Right
+
+    **To change position:**
+    1. Go to Looksy admin → **Customize Button**
+    2. Select **Button Position**: Top Left or Top Right
+    3. Save
+
+    **Note:** Button location on product image is fixed—only corner position (left/right) is customizable
+  </Accordion>
+</AccordionGroup>
+
+## When Results Don't Look Realistic
+
+### Understanding AI Limitations
+
+**Important:** The AI model is highly realistic across all product types. If results don't look good, the issue is likely:
+
+1. **Product photos need more angles** – Upload up to 4 images showing different views, textures, and details
+2. **Technical issue** – See troubleshooting sections above
+3. **Revealing product protection** – Very revealing garments may fail (by design)
+
+**Not image quality issues:** The AI works with any background, lighting, or photography style.
+
+### What Actually Helps Results
+
+If you want to maximize accuracy:
+
+1. **Add multiple product images** – Show different angles (max 4 images)
+2. **Include detail shots** – Close-ups of texture, material, patterns
+3. **Showcase garment details** – Clear views of design elements
+
+**Don't:**
+- ❌ Reshoot on plain backgrounds
+- ❌ Adjust lighting or shadows
+- ❌ Remove backgrounds
+- ❌ Change angles to front-facing only
+- ❌ Re-crop or re-frame products
+
+**The AI handles all of that automatically.**
+
+## Analytics and Tracking Issues
+
+### No Data in Dashboard
+
+<AccordionGroup>
+  <Accordion title="Not Enough Activity Yet">
+    **Problem:** Very few customers have used try-on
+
+    **Solution:**
+    - Wait for more usage
+    - Promote the feature to customers
+    - Check back after 1-2 weeks
+
+    **Note:** Dashboard needs activity to display metrics
+  </Accordion>
+
+  <Accordion title="Wrong Date Range Selected">
+    **Problem:** Viewing a period with no activity
+
+    **Solution:**
+    - Check date range filter in dashboard
+    - Expand to "All time" or "Last 30 days"
+  </Accordion>
+</AccordionGroup>
+
+### Return Rate Not Showing
+
+<AccordionGroup>
+  <Accordion title="Not Available in Looksy Dashboard">
+    **Clarification:** Looksy does NOT track return rates
+
+    **Why:** Return data lives in Shopify, not Looksy
+
+    **Solution:**
+    - Use Shopify analytics to track returns
+    - Compare return rates before/after enabling try-on
+    - Track style-related vs. sizing-related returns manually
+
+    **What Looksy tracks:** Try-on usage, engagement, conversions
+  </Accordion>
+</AccordionGroup>
+
+## Getting Support
+
+If you've tried these solutions and still have issues:
+
+**Contact Looksy Support:**
+- Email: [support@looksy.ai](mailto:support@looksy.ai)
+- In-app chat: Available in Looksy admin dashboard
+
+**Include in your message:**
+- Product URL where issue occurs
+- Description of the problem
+- Screenshots if applicable
+- Steps you've already tried
+
+**Response time:** Usually within 24 hours
 
 ## Common Questions
 
 <AccordionGroup>
-  <Accordion title="Can I use model photos or must I use flat lays?">
-    Both work. Model photos often perform better for dresses and structured garments. Flat lays work well for simple tops. Choose based on what you have available.
+  <Accordion title="Do I need to improve my product photos?">
+    No. Looksy works with your existing product images. The AI handles any background, lighting, or photography style. Don't reshoot or adjust images to fix try-on issues.
   </Accordion>
 
-  <Accordion title="Do I need professional photography?">
-    Not necessarily, but you need good lighting, plain backgrounds, and decent resolution. DIY photos with proper setup can work great.
+  <Accordion title="Why do some products work better than others?">
+    Products with multiple angles and detail shots (max 4 images) give the AI more context. This improves accuracy. It's not about image quality—it's about variety of views.
   </Accordion>
 
-  <Accordion title="Can Looksy fix poor product images automatically?">
-    No. Looksy uses your images as-is. If you provide poor images, results will be poor. "Garbage in, garbage out" applies to AI.
+  <Accordion title="Can Looksy fix poor product photography?">
+    Looksy works with any images but can't improve source photo quality. If your product images show wrong colors or are very low resolution, try-on will reflect that. The AI doesn't need "good" photos—it just renders what it sees.
   </Accordion>
 
-  <Accordion title="What if I have thousands of products with varying image quality?">
-    Start by enabling try-on on products with the best images. Gradually improve and add more products over time. Don't enable everything at once.
+  <Accordion title="Should I disable try-on for certain products?">
+    Only disable if:
+    - Very revealing garments (protection against misuse)
+    - You specifically don't want try-on available for that product
+
+    Don't disable based on image quality or product type—the AI works on everything.
+  </Accordion>
+
+  <Accordion title="How do I know if it's working correctly?">
+    Test it yourself:
+    1. Visit a product page
+    2. Click "Try On"
+    3. Upload a selfie
+    4. Check if result looks realistic (15-20 seconds)
+
+    If button appears and try-on generates, it's working correctly.
   </Accordion>
 </AccordionGroup>
-
-## Getting Help
-
-If you've optimized images but still see poor results:
-
-**Contact support:**
-- Email [support@looksy.ai](mailto:support@looksy.ai)
-- Include product URL and sample selfie
-- Describe the issue
-- We'll review and provide specific guidance
 
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Image Requirements" icon="image" href="/product-setup/image-requirements">
-    Complete guide to product photo standards
-  </Card>
   <Card title="Common Issues" icon="wrench" href="/troubleshooting/common-issues">
     Fix other common problems
+  </Card>
+  <Card title="Image Requirements" icon="image" href="/product-setup/image-requirements">
+    Learn what helps with try-on accuracy
   </Card>
   <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
     Optimize your overall setup
   </Card>
-  <Card title="Supported Products" icon="check" href="/product-setup/supported-products">
-    Which product types work best
+  <Card title="Support" icon="life-ring" href="mailto:support@looksy.ai">
+    Contact support for help
   </Card>
 </CardGroup>

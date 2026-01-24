@@ -18,26 +18,26 @@ A/B testing helps you optimize virtual try-on for maximum impact. Small changes 
 ### High-Impact Tests (Do These First)
 
 <CardGroup cols={2}>
-  <Card title="Button Placement" icon="location-dot">
-    Test where the "Try On" button appears on product pages
-  </Card>
   <Card title="Button Copy" icon="pen">
     Test different call-to-action text
   </Card>
   <Card title="Button Styling" icon="palette">
-    Test colors, sizes, and visual prominence
+    Test colors, sizes, and visual styling
   </Card>
   <Card title="Supporting Messaging" icon="message">
     Test explanatory text around the button
+  </Card>
+  <Card title="Product Selection" icon="check-circle">
+    Test which product categories benefit most
   </Card>
 </CardGroup>
 
 ### Medium-Impact Tests
 
 - Product selection strategy (which products to enable)
-- Mobile vs. desktop button placement
+- Mobile vs. desktop button styling
 - Promotional tactics (homepage banners, emails)
-- Image quality improvements
+- Multiple product image angles (max 4 per product)
 
 ### Low-Impact Tests (Nice to Have)
 
@@ -47,48 +47,10 @@ A/B testing helps you optimize virtual try-on for maximum impact. Small changes 
 - Advanced customization
 
 <Tip>
-Start with button placement and copy tests – they typically deliver the biggest wins with minimal effort.
+Start with button copy and styling tests – they typically deliver the biggest wins with minimal effort.
 </Tip>
 
-## Test 1: Button Placement
-
-### Hypothesis
-
-**Question:** Where should the "Try On" button be placed for maximum engagement?
-
-**Hypothesis:** Placing the button directly above "Add to Cart" will drive higher engagement than below product description.
-
-### Test Setup
-
-**Variant A (Control):** Button below product description
-**Variant B:** Button above "Add to Cart"
-**Variant C:** Sticky mobile bar (mobile only)
-
-**Traffic split:** 33% / 33% / 34%
-**Duration:** 2 weeks (minimum 1,000 visitors per variant)
-
-### Success Metrics
-
-**Primary:** Try-on engagement rate (% of visitors who click button)
-**Secondary:**
-- Add-to-cart rate after try-on
-- Conversion rate
-- Time on page
-
-### Expected Results
-
-**Typical outcome:**
-- Variant A: 28% engagement
-- Variant B: 38% engagement (+36%)
-- Variant C (mobile): 42% engagement (+50%)
-
-**Winner:** Variant B for desktop, Variant C for mobile
-
-<Check>
-Button placement above the fold typically increases engagement by 30-50%.
-</Check>
-
-## Test 2: Button Copy
+## Test 1: Button Copy
 
 ### Hypothesis
 
@@ -127,7 +89,7 @@ Button placement above the fold typically increases engagement by 30-50%.
 Copy performance varies by audience. Test what resonates with YOUR customers.
 </Note>
 
-## Test 3: Button Styling
+## Test 2: Button Styling
 
 ### Hypothesis
 
@@ -171,7 +133,7 @@ Copy performance varies by audience. Test what resonates with YOUR customers.
 
 **Winner:** Variant B (prominent but not excessive)
 
-## Test 4: Supporting Messaging
+## Test 3: Supporting Messaging
 
 ### Hypothesis
 
@@ -212,7 +174,7 @@ Copy performance varies by audience. Test what resonates with YOUR customers.
 
 **Winner:** Variant B (benefit-focused, addresses speed concern)
 
-## Test 5: Product Selection Strategy
+## Test 4: Product Selection Strategy
 
 ### Hypothesis
 
@@ -234,7 +196,7 @@ Copy performance varies by audience. Test what resonates with YOUR customers.
 
 **Primary:** Conversion rate lift %
 **Secondary:**
-- Return rate reduction %
+- Return rate reduction % (track via Shopify analytics, not Looksy dashboard)
 - ROI per segment
 
 ### Expected Results
@@ -254,9 +216,9 @@ Products with fit/style uncertainty benefit most from virtual try-on.
 
 ### Using Shopify Theme Editor
 
-**For button placement and styling:**
+**For button copy and styling:**
 
-1. Create multiple product page templates
+1. Create multiple product page templates with different button configurations
 2. Assign products randomly to each template
 3. Track performance via Looksy analytics
 4. Compare engagement rates
@@ -278,8 +240,8 @@ Products with fit/style uncertainty benefit most from virtual try-on.
 ### Native Looksy Testing (Pro Plan)
 
 **Built-in A/B testing features:**
-- Button placement variants
-- Copy testing
+- Button copy variants
+- Button styling tests
 - Automated winner selection
 - Statistical significance calculation
 
