@@ -185,17 +185,7 @@ If try-on results consistently look poor for a specific product, that product ma
   <Accordion title="Button Too Small to Tap">
     **Solution:**
 
-    1. Check button size in theme settings
-    2. Increase minimum touch target to 48px
-    3. Use custom CSS if needed:
-    ```css
-    @media (max-width: 768px) {
-      .looksy-try-on-button {
-        min-height: 48px !important;
-        padding: 14px 24px !important;
-      }
-    }
-    ```
+    The button is automatically optimized for mobile tap targets. If you're experiencing issues, it may be a theme conflict. Contact support@looksy.ai for assistance.
   </Accordion>
 
   <Accordion title="Modal Doesn't Fit Screen">
@@ -242,9 +232,10 @@ If try-on results consistently look poor for a specific product, that product ma
   <Accordion title="Works on Desktop but Not Mobile">
     **Solution:**
 
-    1. Check if mobile template is different from desktop
-    2. Manually add Looksy app block to mobile template
-    3. Use app embed (works on both automatically)
+    1. Verify app embed is enabled in theme settings
+    2. Clear mobile browser cache
+    3. Test on actual device (not just browser resize)
+    4. Contact support if issue persists - app embed works automatically on mobile
   </Accordion>
 
   <Accordion title="Conflicts with Other Apps">
