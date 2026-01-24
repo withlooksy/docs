@@ -92,7 +92,8 @@
       {
         "group": "Compare Solutions",
         "pages": [
-          "comparison/virtual-try-on-apps"
+          "comparison/virtual-try-on-apps",
+          "comparison/ai-vs-ar-virtual-try-on"
         ]
       },
       {
