@@ -43,7 +43,6 @@
         "group": "Integration & Customization",
         "pages": [
           "integration/theme-setup",
-          "integration/button-placement",
           "integration/mobile-optimization",
           "integration/custom-styling"
         ]
