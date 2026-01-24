@@ -27,7 +27,10 @@
         "group": "Getting Started",
         "pages": [
           "getting-started/quick-setup",
-          "getting-started/first-try-on"
+          "getting-started/how-to-install",
+          "getting-started/first-try-on",
+          "getting-started/first-24-hours",
+          "getting-started/understanding-credits"
         ]
       },
       {
@@ -84,6 +87,29 @@
           "about/what-makes-looksy-different",
           "about/technology-explained",
           "about/limitations"
+        ]
+      },
+      {
+        "group": "Compare Solutions",
+        "pages": [
+          "comparison/virtual-try-on-apps"
+        ]
+      },
+      {
+        "group": "Use Cases by Industry",
+        "pages": [
+          "use-cases/fashion-retailers",
+          "use-cases/activewear-brands",
+          "use-cases/luxury-brands",
+          "use-cases/swimwear"
+        ]
+      },
+      {
+        "group": "Solutions & Guides",
+        "pages": [
+          "solutions/reduce-return-rates",
+          "solutions/increase-conversion-rate",
+          "solutions/improve-customer-confidence"
         ]
       }
     ]
