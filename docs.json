@@ -26,6 +26,7 @@
       {
         "group": "Getting Started",
         "pages": [
+          "index",
           "getting-started/quick-setup",
           "getting-started/how-to-install",
           "getting-started/first-try-on",
