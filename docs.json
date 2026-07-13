@@ -46,6 +46,7 @@
       {
         "group": "Integration & Customization",
         "pages": [
+          "integration/gorgias",
           "integration/theme-setup",
           "integration/mobile-optimization",
           "integration/custom-styling"
