@@ -1,146 +1,47 @@
 ---
 title: "Theme Integration Guide"
-description: "Enable Looksy virtual try-on in 30 seconds with the app embed. Works with all Shopify themes automatically."
+description: "Enable Looksy in Shopify, choose placement, and verify the shopper flow on your current theme and representative products."
 ---
 
-<Note>
-**Choose your setup guide:**
-- **Need basic installation help?** See [Quick Install Guide](/getting-started/how-to-install) (2 minutes)
-- **Want comprehensive setup?** See [Complete Setup Guide](/getting-started/quick-setup) (10 minutes)
-- **Have theme-specific questions?** You're on the right page – this covers theme integration
-</Note>
+## How do I add Looksy to my Shopify theme?
 
-## Looksy Works with All Shopify Themes
+Enable the Looksy app embed in the Shopify theme editor, save the theme, and test representative product pages. Theme structures and app interactions vary, so verify compatibility on the exact theme you plan to publish.
 
-Looksy is built to integrate seamlessly with any Shopify theme, whether you're using a popular theme from the Theme Store or a custom-built theme.
+## Enable the app embed
 
-## How to Enable Looksy
+1. Open **Online Store → Themes** in Shopify.
+2. Choose the theme you want to test and open **Customize**.
+3. Open **App embeds**.
+4. Enable Looksy and save.
+5. Preview a representative product page.
 
-### App Embed (Only Method)
+<Warning>
+  Test on an unpublished or development theme before changing a live storefront when your workflow allows it.
+</Warning>
 
-Enable Looksy in 30 seconds with the app embed:
+## What should I verify?
 
-1. Go to **Online Store → Themes** in your Shopify admin
-2. Click **"Customize"** on your active theme
-3. In the theme editor, find **"App embeds"** in the left sidebar
-4. Locate **"Looksy Try-On Button"** and toggle it **ON**
-5. Click **"Save"**
+- the entry point appears in the intended location;
+- product and variant selection still work;
+- the complete try-on flow works on mobile and desktop;
+- dialogs are not hidden behind theme elements;
+- there is no unexpected layout movement or blocked interaction;
+- products without the expected data fail clearly;
+- other app blocks continue to work.
 
-<Check>
-The try-on button will now appear on all product pages automatically. Works with all themes.
-</Check>
+## Does Looksy work with every theme?
 
-## Customizing the Button
+Theme compatibility cannot be guaranteed without testing. Standard Shopify theme patterns may require less adjustment than heavily customized themes, but both should be verified before publication.
 
-You can customize the button appearance in your Looksy dashboard:
+## What should I include in a support request?
 
-**What you can customize:**
-- Button text (default: "Try On")
-- Button colors
-- Button corner position (top left or top right)
-- Button styling (fonts, size)
-
-**How to customize:**
-
-1. Go to your **Looksy dashboard**
-2. Click **"Customize Button"**
-3. Adjust text, colors, and corner position
-4. Click **"Save"**
-
-<Note>
-The button appears on product images automatically. You can only change the styling and corner position—not the location.
-</Note>
-
-## Theme Compatibility
-
-### Supported Theme Types
-
-Looksy works with:
-- **Shopify Theme Store themes** (Dawn, Debut, Brooklyn, etc.)
-- **Custom themes** (built by developers)
-- **Sectioned themes** (Shopify 2.0 and newer)
-- **Vintage themes** (pre-2.0 themes)
-- **Headless/custom frontends** (with API integration)
-
-### Theme Requirements
-
-**Minimal requirements:**
-- Shopify-compatible theme
-- Product pages enabled
-- JavaScript enabled (standard for all Shopify themes)
-
-**No special requirements for:**
-- Theme version
-- Theme framework
-- Custom code
-- Developer involvement
-
-## Works with All Themes
-
-Looksy works automatically with:
-- Dawn, Debut, Brooklyn, and all Shopify Theme Store themes
-- Custom themes built by developers
-- Shopify 2.0 and older themes
-- No special setup or adjustments needed
-
-<Check>
-Enable the app embed once and it works on all themes. No theme-specific configuration required.
-</Check>
-
-## Testing Your Integration
-
-After enabling the app embed:
-
-1. Visit a product page on your live store
-2. Click the "Try On" button
-3. Upload a selfie and verify results
-
-<Check>
-If the button appears and try-on works, you're done. It works automatically on desktop, mobile, and tablet.
-</Check>
-
-### Theme Updates
-
-When updating your theme:
-- App embed automatically persists
-- No action needed after theme updates
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title="Button doesn't appear on product pages">
-    **Solution:**
-    1. Verify app embed is ON in theme settings (Online Store → Themes → Customize → App embeds)
-    2. Check product is enabled in Looksy dashboard
-    3. Clear browser cache
-  </Accordion>
-
-  <Accordion title="Button styling looks wrong">
-    **Solution:**
-    Go to Looksy dashboard → Customize Button and adjust colors, text, and corner position to match your brand.
-  </Accordion>
-
-  <Accordion title="Try-on doesn't work">
-    **Solution:**
-    1. Test in incognito mode
-    2. Try a different browser
-    3. Contact support@looksy.ai with details
-  </Accordion>
-</AccordionGroup>
-
-## Next Steps
+Send the theme name and version, preview URL, affected product URL, device and browser, screenshots or a recording, and the exact steps that reproduce the issue.
 
 <CardGroup cols={2}>
-  <Card title="Custom Styling" icon="palette" href="/integration/custom-styling">
-    Customize button appearance for your brand
+  <Card title="Custom Styling" icon="palette" href="https://withlooksy.com/docs/integration/custom-styling">
+    Adjust the presentation after compatibility is verified.
   </Card>
-  <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
-    Optimize virtual try-on for maximum conversions
-  </Card>
-  <Card title="Troubleshooting" icon="wrench" href="/troubleshooting/common-issues">
-    Fix common issues
-  </Card>
-  <Card title="Analytics" icon="chart-line" href="/analytics/dashboard-overview">
-    Track performance and engagement
+  <Card title="Common Issues" icon="wrench" href="https://withlooksy.com/docs/troubleshooting/common-issues">
+    Diagnose installation and storefront problems.
   </Card>
 </CardGroup>

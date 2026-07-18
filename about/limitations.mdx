@@ -1,391 +1,53 @@
 ---
-title: "Virtual Try-On Limitations"
-description: "Understand the limitations of Looksy virtual try-on. Learn what the technology can and cannot do to set realistic expectations."
+title: "Looksy Virtual Try-On Limitations"
+description: "Understand the main limits of generated try-on results and how to test products, shopper inputs, themes, and business outcomes responsibly."
 ---
 
-## Being Transparent About Limitations
+## What are the limitations of Looksy virtual try-on?
 
-Virtual try-on is a powerful tool, but it's not magic. Understanding its limitations helps set realistic expectations and ensures the best customer experience.
+Looksy provides a generated product visualization. It is not an exact fit predictor, a body-measurement tool, or a guarantee of colour, texture, drape, sizing, or purchase outcome.
 
-## Core Limitations
+## Input limitations
 
-### 1. Style, Not Sizing
+Results can be affected by lighting, pose, framing, image resolution, occlusion, multiple people, and whether the shopper image provides enough relevant context.
 
-**What virtual try-on shows:**
-- How the style looks on you
-- Color and pattern visualization
-- Overall garment appearance
-- How the product looks on different body types
+## Product limitations
 
-**What virtual try-on does NOT show:**
-- Whether a size will fit
-- Precise sizing recommendations
-- Fit predictions
+Product imagery, variants, unusual construction, layering, fine details, reflective or transparent materials, and non-standard product types can affect the experience. Test actual products rather than assuming category-wide support.
 
-<Warning>
-Looksy helps customers see how products **look** (style), not whether they'll **fit** (sizing). Always provide size charts and fit descriptions alongside virtual try-on.
-</Warning>
+## Storefront limitations
 
-Virtual try-on reduces **style-related returns** (doesn't look as expected, color doesn't suit). It doesn't solve sizing issues.
+Themes, custom product templates, other apps, device and browser differences, permissions, and network conditions may change placement or behavior. Verify the current storefront before publication.
 
-### 2. Visual Representation
+## Interpretation limitations
 
-The AI model delivers highly realistic results across all product types.
+The generated result should help a shopper visualize a style. Keep accurate product images, descriptions, materials, sizing, delivery, and return information available.
 
-**What customers see:**
-- Realistic garment rendering
-- Accurate colors and patterns
-- Natural placement on their body
-- All textures, embellishments, and details
+Avoid claims such as:
 
-**What's not represented:**
-- Physical sensation (fabric feel, weight, breathability)
-- How the fabric moves
-- Tactile properties
+- “perfect fit”;
+- “100% accurate”;
+- “exactly how it will look”;
+- “guaranteed to increase conversion”;
+- “guaranteed to reduce returns.”
+
+## Measurement limitations
+
+Try-on users may differ from other shoppers. A conversion or return-rate change after installation does not by itself prove causation. Use a controlled test or a clearly documented comparison and report sample sizes and confounding factors.
+
+## What should I do when a product performs poorly?
+
+Record the product, variant, source image, shopper input conditions, device, browser, and exact steps. Exclude the item from rollout until the issue is understood and the experience meets your standard.
 
 <Note>
-Better product images and selfies produce better results. Quality in = quality out.
+  Product behavior and capabilities can change. Re-test after significant app, model, theme, browser, or product-data changes.
 </Note>
-
-### 3. Product Coverage
-
-**Fully supported:**
-- All apparel (tops, dresses, outerwear, activewear, swimwear, pants, shorts, skirts)
-- Accessories (jewelry, bags, scarves, hats, belts, sunglasses)
-- Footwear (sneakers, boots, heels, sandals, all shoe types)
-
-**Coming soon:**
-- Multi-item try-on (try on multiple products simultaneously)
-
-<Check>
-Looksy works on all fashion products. The AI adapts to any product type.
-</Check>
-
-## Revealing Products
-
-**Only product limitation:** Very revealing garments may fail to generate results.
-
-**Examples:**
-- Lingerie
-- Very revealing swimwear
-- Extremely revealing clothing
-
-**Why:** Protection against misuse.
-
-**Recommendation:** Disable these products in your Looksy admin if you encounter issues.
-
-## Image Quality Dependencies
-
-### Virtual Try-On is Only as Good as Your Images
-
-**Input matters:**
-- Poor product images → Poor try-on results
-- Low-quality selfies → Inaccurate rendering
-- Busy backgrounds → Garment isolation issues
-
-**Cannot fix:**
-- Fundamentally poor photography
-- Very low resolution images
-- Extremely bad lighting
-
-**Can help:**
-- Modest lighting issues (brightening, contrast)
-- Simple background removal
-- Minor quality enhancements
-
-<Check>
-If you invest in high-quality product photography, virtual try-on will deliver great results. Garbage in, garbage out.
-</Check>
-
-## Technical Limitations
-
-### Internet Connection Required
-
-**Why:** AI processing happens on cloud servers
-
-**Impact:**
-- Won't work offline
-- Slow connections = slower results
-- No connection = feature unavailable
-
-**Mitigation:** Looksy is optimized for mobile networks (4G/5G work great, 3G is slower but functional)
-
-### Device Requirements
-
-**Minimum:**
-- iOS 13+ or Android 8+
-- Modern browser (Chrome, Safari, Firefox, Edge)
-- Camera for taking selfies (or ability to upload photos)
-
-**Not supported:**
-- Very old devices (iPhone 6 and older, Android 7 and older)
-- Internet Explorer
-- Severely outdated browsers
-
-**Impact:** Small percentage of users (< 5%) may not be able to use the feature
-
-### Processing Time
-
-**Typical:** 15-20 seconds
-
-**Factors that increase time:**
-- Slow internet connection
-- Large image file sizes
-- Server load during peak times
-
-**Limitation:** Not instant (unlike viewing product photos)
-
-**Mitigation:** Looksy optimizes for speed, but physics prevents instant results. Most customers find 15-20 seconds acceptable.
-
-## Accuracy Limitations
-
-### Body Type Diversity
-
-**Supported:**
-- Wide range of body types
-- Diverse skin tones
-- Various ages
-
-**Better results:**
-- Standard proportions
-- Full body shot showing more of the body
-- Enough body visible for garment placement
-
-**Challenges:**
-- Extreme proportions (very tall/short, very large/small)
-- Unusual poses or angles
-- Poor selfie quality
-
-**Why:** AI is trained on diverse data, but extreme edge cases may not render as accurately
-
-<Note>
-Looksy is trained on inclusive datasets and works across body types. Very unusual proportions may see slightly less accurate results.
-</Note>
-
-### Lighting Variation
-
-**Challenge:** Selfie lighting affects color perception
-
-**Example:**
-- Selfie in yellow indoor lighting → Garment appears warmer
-- Selfie in blue outdoor lighting → Garment appears cooler
-
-**Limitation:** Cannot fully compensate for colored lighting in selfies
-
-**Recommendation:** Instruct customers to use neutral lighting (natural daylight or neutral white LEDs)
-
-### No Physical Sensation
-
-**Cannot convey:**
-- Fabric feel (soft, rough, stretchy)
-- Weight of garment
-- Warmth or breathability
-- How fabric moves
-
-**Why:** Virtual try-on is visual only
-
-**Recommendation:** Provide detailed product descriptions covering fabric feel, weight, and other tactile properties
-
-## Use Case Limitations
-
-### Not for All Product Categories
-
-**Works well:**
-- Fashion apparel
-- Activewear
-- Casual wear
-- Formal wear
-
-**Doesn't work (currently):**
-- Home goods
-- Furniture
-- Electronics
-- Beauty products
-- Accessories (most types)
-
-**Why:** Looksy is purpose-built for apparel try-on. Other product categories require different technologies.
-
-### Not a Full Virtual Fitting Room (Yet)
-
-**Current:** One item at a time
-
-**Cannot do (yet):**
-- Try on multiple items simultaneously
-- Build complete outfits
-- Mix and match
-- See full-body view (with pants + top)
-
-**Future:** Multi-item try-on is on the roadmap for 2026-2027
-
-## Privacy Limitations
-
-### Customer Consent Required
-
-**Requirement:** Customers must opt-in to use try-on
-
-**Cannot:**
-- Force customers to use the feature
-- Use photos without permission
-- Store images without consent
-
-**Why:** Privacy regulations (GDPR, CCPA) require explicit consent
-
-**Impact:** Some customers won't use the feature, and that's okay. It's opt-in only.
-
-### No Stored Customer Data
-
-**Benefit:** Maximum privacy
-
-**Limitation:** Cannot save try-on history or preferences (without customer account creation)
-
-**Why:** Looksy prioritizes privacy by not storing images
-
-**Workaround (future):** Optional customer accounts for saving try-ons
-
-## Competitive Limitations
-
-### Not the Only Factor in Conversions
-
-**Virtual try-on helps, but doesn't fix:**
-- Poor product selection
-- Uncompetitive pricing
-- Bad customer service
-- Slow shipping
-- Low-quality products
-
-**Reality:** Virtual try-on increases conversions 15-25%, but it's not a silver bullet for all e-commerce challenges.
-
-<Check>
-Virtual try-on is one tool in your e-commerce toolkit. Combine it with great products, pricing, and service for best results.
-</Check>
-
-### Other Merchants Have It Too
-
-**Initially:** Competitive advantage (most stores don't have try-on)
-
-**Over time:** More stores will adopt virtual try-on
-
-**Your advantage:** Implementation quality, product selection, optimization
-
-**Recommendation:** Focus on executing well, not just having the feature
-
-## Setting Customer Expectations
-
-### What to Tell Customers
-
-**Do say:**
-- "See how the style looks on you"
-- "Visualize the garment before you buy"
-- "Get a realistic preview of the product"
-- "Helps you decide if the style is right for you"
-
-**Don't say:**
-- "Perfect fit guarantee"
-- "100% accurate representation"
-- "Exactly how it will look in person"
-- "Replaces trying on in-store"
-
-### Managing Disappointment
-
-**If customers say "it doesn't look exactly like me":**
-- Acknowledge it's an approximation
-- Emphasize it's for visualizing style, not exact fit
-- Point to size charts for fit guidance
-- Offer hassle-free returns if unsure
-
-<Tip>
-Under-promise and over-deliver. Set realistic expectations, and customers will be pleased with the results.
-</Tip>
-
-## When Not to Use Virtual Try-On
-
-### Situations Where Try-On May Not Help
-
-1. **Very low-quality product images**
-   - If you can't improve images, don't enable try-on
-
-2. **Products with critical fine details**
-   - If details are essential and won't render well, skip try-on
-
-3. **Non-apparel products**
-   - Stick to clothing for now
-
-4. **Stores with very low traffic**
-   - If < 500 monthly visitors, ROI may be minimal (but still positive)
-
-5. **When customers need tactile feedback**
-   - Fabrics where feel is critical may not benefit as much
-
-## Continuous Improvement
-
-### Looksy is Always Improving
-
-**Current limitations that will be addressed:**
-- Multi-item combinations (ongoing)
-- Enhanced texture rendering (ongoing)
-- Faster processing (ongoing)
-- Better edge case handling (ongoing)
-
-**How we improve:**
-- Model updates every quarter
-- New training data
-- Algorithm optimizations
-- Customer feedback integration
-
-<Note>
-Limitations listed here are current as of January 2026. Many will be resolved with future updates.
-</Note>
-
-## Questions About Limitations
-
-<AccordionGroup>
-  <Accordion title="Will these limitations be fixed?">
-    Many will. Better texture rendering and multi-item combinations are on our roadmap. Some limitations (like input quality affecting output quality) are inherent to the technology.
-  </Accordion>
-
-  <Accordion title="Should I wait for improvements before installing?">
-    No. Current technology delivers strong ROI for most stores. Install now to start benefiting, and you'll automatically get updates as we improve.
-  </Accordion>
-
-  <Accordion title="What if try-on doesn't work for my products?">
-    Test during the free preview. If results don't meet your standards, you can disable try-on or not proceed past the preview. No risk.
-  </Accordion>
-
-  <Accordion title="Are competitors' try-on solutions better?">
-    Looksy is among the most accurate and fastest solutions on the market. Some enterprise solutions may have marginal improvements but cost 10-50x more.
-  </Accordion>
-</AccordionGroup>
-
-## The Bottom Line
-
-**Virtual try-on is not perfect, but it's highly effective.**
-
-Despite limitations:
-- 10-25% conversion increase
-- 15-30% return reduction
-- 5-10x ROI
-- High customer satisfaction
-
-**Most limitations are:**
-- Well-understood
-- Manageable with proper setup
-- Being actively improved
-
-**For the vast majority of apparel stores, the benefits far outweigh the limitations.**
-
-## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="What Makes Looksy Different" icon="star" href="/about/what-makes-looksy-different">
-    See how Looksy compares to alternatives
+  <Card title="Supported Products" icon="list-check" href="https://withlooksy.com/docs/product-setup/supported-products">
+    Validate representative products and variants.
   </Card>
-  <Card title="Technology Explained" icon="microchip" href="/about/technology-explained">
-    Learn how the AI works
-  </Card>
-  <Card title="Start Free Preview" icon="play" href="https://apps.shopify.com/looksy">
-    Test virtual try-on with free plan (25 credits)
-  </Card>
-  <Card title="Image Requirements" icon="image" href="/product-setup/image-requirements">
-    Optimize for best results within limitations
+  <Card title="Accuracy" icon="bullseye" href="https://withlooksy.com/docs/faq/how-accurate-is-it">
+    Explain the output without overpromising.
   </Card>
 </CardGroup>

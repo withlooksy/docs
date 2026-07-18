@@ -1,389 +1,59 @@
 ---
 title: "A/B Testing Virtual Try-On"
-description: "Learn how to run A/B tests to optimize Looksy virtual try-on performance. Test button copy and product selection strategies to maximize conversions."
+description: "Design a controlled Looksy test with a clear hypothesis, suitable sample, guardrail metrics, and transparent reporting."
 ---
 
-<Warning>
-**Built-in A/B testing tools are coming soon.** Currently, you'll need to use your existing A/B testing platform (Google Optimize, VWO, Optimizely, etc.) to test virtual try-on variations. This guide shows you what to test and how to set up experiments.
-</Warning>
+## How do I A/B test Looksy?
 
-## Why A/B Test Virtual Try-On
+Split eligible traffic between a control experience and one defined Looksy variation, then compare a preselected primary metric. Use an experimentation tool that is compatible with your current Shopify setup.
 
-A/B testing helps you optimize virtual try-on for maximum impact. Small changes can drive **10-30% improvements** in engagement and conversions.
+## Define the test before it starts
 
-**How to A/B test now:** Use your existing A/B testing tools (Google Optimize, Shopify's built-in tests, or third-party apps) to test the variations recommended below.
+Record:
 
-## What to A/B Test
+- the question and hypothesis;
+- included products, traffic, and devices;
+- control and treatment experiences;
+- primary metric and guardrails;
+- planned duration and stopping rule;
+- exclusions and data-quality checks.
 
-### What You Can Test
+## What can I test?
 
-<CardGroup cols={2}>
-  <Card title="Button Copy" icon="pen">
-    Test different call-to-action text via dashboard
-  </Card>
-  <Card title="Button Colors" icon="palette">
-    Test different colors via dashboard
-  </Card>
-  <Card title="Product Selection" icon="check-circle">
-    Test which products benefit most from try-on
-  </Card>
-  <Card title="Promotion Strategy" icon="megaphone">
-    Test different ways to promote the feature
-  </Card>
-</CardGroup>
+- whether Looksy is shown for a selected product group;
+- entry-point wording or placement;
+- instructions before upload;
+- product-selection strategy;
+- mobile-specific presentation.
 
-### Other Tests
+Change one main variable at a time. If several things change together, the result will not show which change mattered.
 
-- Product selection strategy (which products to disable)
-- Promotional tactics (homepage banners, emails, social media)
-- Multiple product image angles (max 4 per product)
-- Button corner position (top left vs top right)
+## What should I measure?
 
-<Tip>
-Start with button copy tests – easy to do via dashboard and can improve engagement.
-</Tip>
+Choose one primary metric, such as try-on completion, add-to-cart rate, or conversion rate. Monitor guardrails including page performance, errors, support questions, and returns.
 
-## Test 1: Button Copy
+## How should I interpret the result?
 
-### Hypothesis
-
-**Question:** What call-to-action text drives the highest engagement?
-
-**Hypothesis:** Action-oriented, benefit-focused copy ("See it on you") will outperform generic copy ("Try On").
-
-### Test Setup
-
-**Variant A (Control):** "Try On"
-**Variant B:** "See it on you"
-**Variant C:** "Virtual try-on"
-**Variant D:** "Preview on yourself"
-
-**Traffic split:** 25% each
-**Duration:** 2 weeks
-
-### Success Metrics
-
-**Primary:** Click-through rate on button
-**Secondary:**
-- Try-on completion rate
-- Conversion rate
-
-### Expected Results
-
-**Typical outcome:**
-- Variant A: 35% engagement (baseline)
-- Variant B: 41% engagement (+17% – **WINNER**)
-- Variant C: 32% engagement (-9%)
-- Variant D: 37% engagement (+6%)
-
-**Winner:** "See it on you" (more personal, benefit-focused)
-
-<Note>
-Copy performance varies by audience. Test what resonates with YOUR customers.
-</Note>
-
-## Test 2: Supporting Messaging
-
-### Hypothesis
-
-**Question:** Does adding context around the button increase engagement?
-
-**Hypothesis:** Brief explanatory text will increase engagement by reducing uncertainty.
-
-### Test Setup
-
-**Variant A (Control):** Button only, no additional text
-
-**Variant B:** Button + text above:
-"See how this looks on you in seconds"
-
-**Variant C:** Button + text below:
-"AI-powered virtual try-on – no account needed"
-
-**Variant D:** Button + icon (camera) + text:
-📷 "Try On virtually"
-
-**Traffic split:** 25% each
-**Duration:** 2 weeks
-
-### Success Metrics
-
-**Primary:** Engagement rate
-**Secondary:**
-- Completion rate (did context set proper expectations?)
-- Conversion rate
-
-### Expected Results
-
-**Typical outcome:**
-- Variant A: 35% engagement
-- Variant B: 41% engagement (+17% – **WINNER**)
-- Variant C: 37% engagement (+6%)
-- Variant D: 39% engagement (+11%)
-
-**Winner:** Variant B (benefit-focused, addresses speed concern)
-
-## Test 4: Product Selection Strategy
-
-### Hypothesis
-
-**Question:** Which products benefit most from virtual try-on?
-
-**Hypothesis:** Products with higher return rates will see bigger conversion lift from try-on.
-
-### Test Setup
-
-**Segment A:** Products with < 15% return rate
-**Segment B:** Products with 15-25% return rate
-**Segment C:** Products with > 25% return rate
-
-**Measure:** Conversion rate lift for each segment
-
-**Duration:** 4 weeks (longer to account for returns)
-
-### Success Metrics
-
-**Primary:** Conversion rate lift %
-**Secondary:**
-- Return rate reduction % (track via Shopify analytics, not Looksy dashboard)
-- ROI per segment
-
-### Expected Results
-
-**Typical outcome:**
-- Segment A: 8% conversion lift, 10% return reduction
-- Segment B: 15% conversion lift, 20% return reduction
-- Segment C: 22% conversion lift, 35% return reduction (**HIGHEST ROI**)
-
-**Insight:** Focus try-on on high-return products for maximum impact
-
-<Check>
-Products with fit/style uncertainty benefit most from virtual try-on.
-</Check>
-
-## How to Run A/B Tests
-
-### Using Shopify Theme Editor
-
-**For button copy and styling:**
-
-1. Create multiple product page templates with different button configurations
-2. Assign products randomly to each template
-3. Track performance via Looksy analytics
-4. Compare engagement rates
-
-### Using Third-Party Tools
-
-**Recommended tools:**
-- **Google Optimize** (free, integrates with GA)
-- **Optimizely** (enterprise, advanced features)
-- **VWO** (visual editor, easy setup)
-- **Convert** (privacy-focused)
-
-**Setup:**
-1. Install A/B testing tool on your store
-2. Create variants in the tool
-3. Set up goal tracking
-4. Run experiment
-
-### Native Looksy Testing (Pro Plan)
-
-**Built-in A/B testing features:**
-- Button copy variants
-- Button styling tests
-- Automated winner selection
-- Statistical significance calculation
-
-**Access:** Looksy Dashboard → Experiments
-
-<Tip>
-Use native Looksy testing if available – it's pre-configured for virtual try-on optimization.
-</Tip>
-
-## Statistical Significance
-
-### How Long to Run Tests
-
-**Minimum requirements:**
-- **At least 1,000 visitors per variant**
-- **At least 2 weeks** (account for weekday/weekend patterns)
-- **95% statistical confidence** before declaring a winner
-
-**Calculator:**
-```
-Required sample size =
-  (Z-score² × p × (1-p)) / (margin of error²)
-
-For 95% confidence, p=0.5, 5% margin:
-  ≈ 385 visitors per variant minimum
-```
-
-**Rule of thumb:** Run tests until you have 1,000+ visitors per variant and clear winner emerges.
+Report counts, rates, sample size, uncertainty, dates, and implementation details. Check whether promotions, stock, traffic mix, or seasonality affected one group differently.
 
 <Warning>
-Declaring a winner too early leads to false positives. Be patient and wait for statistical significance.
+  Example percentages are not expected Looksy results. The outcome must come from your own experiment.
 </Warning>
 
-### Significance Calculators
+## Common mistakes
 
-Use online tools to verify significance:
-- Optimizely Stats Engine
-- VWO's Bayesian calculator
-- AB Testguide calculator
-
-**Check:** Is the p-value < 0.05? (95% confidence)
-
-## Analyzing Results
-
-### What to Look For
-
-**Clear winner:**
-- One variant significantly outperforms others
-- Results are consistent across days
-- Statistical significance achieved
-
-**No clear winner:**
-- Variants perform similarly
-- High variance in results
-- Need more data or different test
-
-**Unexpected results:**
-- Variant performs worse than control
-- Inconsistent patterns
-- Check for implementation bugs
-
-### Making Decisions
-
-**If there's a clear winner:**
-1. Implement winning variant for all traffic
-2. Document learnings
-3. Plan next test
-
-**If results are inconclusive:**
-1. Extend test duration
-2. Increase traffic to experiment
-3. Or move on to different test
-
-**If all variants underperform:**
-1. Check for technical issues
-2. Review test setup
-3. Consider different hypothesis
-
-## Sequential Testing Strategy
-
-### Recommended Test Order
-
-**Phase 1: Foundation (Weeks 1-4)**
-1. Button placement
-2. Button copy
-3. Button styling
-
-**Phase 2: Optimization (Weeks 5-8)**
-4. Supporting messaging
-5. Mobile-specific optimizations
-6. Product selection strategy
-
-**Phase 3: Advanced (Weeks 9-12)**
-7. Promotional tactics
-8. Image quality improvements
-9. Multi-variate tests (combine winners)
-
-<Tip>
-Test one element at a time. Don't change multiple things simultaneously or you won't know what drove the improvement.
-</Tip>
-
-## Common A/B Testing Mistakes
-
-### Pitfalls to Avoid
-
-<AccordionGroup>
-  <Accordion title="1. Stopping test too early">
-    **Problem:** Declaring winner before statistical significance
-
-    **Solution:** Wait for minimum sample size and 95% confidence
-  </Accordion>
-
-  <Accordion title="2. Testing too many variants">
-    **Problem:** 6+ variants dilutes traffic, takes forever
-
-    **Solution:** Limit to 2-4 variants maximum
-  </Accordion>
-
-  <Accordion title="3. Changing test mid-flight">
-    **Problem:** Adjusting variants during test invalidates results
-
-    **Solution:** Plan thoroughly, don't change once live
-  </Accordion>
-
-  <Accordion title="4. Ignoring external factors">
-    **Problem:** Traffic spike from campaign skews results
-
-    **Solution:** Note external events, extend test if needed
-  </Accordion>
-
-  <Accordion title="5. Not documenting learnings">
-    **Problem:** Forgetting what was tested and why
-
-    **Solution:** Maintain test log with hypotheses and results
-  </Accordion>
-</AccordionGroup>
-
-## Test Results Template
-
-### Document Every Test
-
-**Test Name:** Button Placement - Above vs. Below Fold
-
-**Date:** Jan 15 - Jan 29, 2026
-
-**Hypothesis:** Button above fold will increase engagement by 30%
-
-**Variants:**
-- Control: Button below description (28% engagement)
-- Variant B: Button above Add to Cart (38% engagement) ✓ WINNER
-
-**Results:**
-- Sample size: 2,400 visitors per variant
-- Improvement: +35.7% engagement
-- Statistical significance: p < 0.01 (99% confidence)
-- Winner: Variant B
-
-**Action:** Implement Variant B sitewide
-
-**Learnings:** Visibility matters more than placement within product details. Test mobile sticky bar next.
-
-**Next test:** Button copy optimization
-
-## Advanced: Multi-Variate Testing
-
-### Testing Multiple Elements Simultaneously
-
-**Example:** Test button placement AND copy together
-
-**Variants:**
-- A: Above fold + "Try On"
-- B: Above fold + "See it on you"
-- C: Below fold + "Try On"
-- D: Below fold + "See it on you"
-
-**Pros:** Find optimal combination faster
-**Cons:** Requires 4x more traffic
-
-**Recommendation:** Only do multi-variate after single-variable tests establish baselines
-
-## Next Steps
+- ending the test when an early result looks favourable;
+- testing too many changes at once;
+- comparing different product or traffic mixes;
+- ignoring device or variant failures;
+- treating correlation as causation;
+- reporting a percentage without underlying counts.
 
 <CardGroup cols={2}>
-  <Card title="Dashboard Overview" icon="chart-line" href="/analytics/dashboard-overview">
-    Track your test results in real-time
+  <Card title="Conversion Tracking" icon="chart-line" href="https://withlooksy.com/docs/analytics/conversion-tracking">
+    Define consistent events before the test.
   </Card>
-  <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
-    Implement optimization strategies
-  </Card>
-  <Card title="Calculating ROI" icon="calculator" href="/analytics/calculating-roi">
-    Measure the impact of your tests
-  </Card>
-  <Card title="Custom Styling" icon="palette" href="/integration/custom-styling">
-    Customize button styling for your brand
+  <Card title="Calculating ROI" icon="calculator" href="https://withlooksy.com/docs/analytics/calculating-roi">
+    Translate a measured effect into a financial estimate.
   </Card>
 </CardGroup>

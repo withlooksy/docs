@@ -1,180 +1,53 @@
 ---
 title: "Image Requirements for Virtual Try-On"
-description: "Understand how product images affect virtual try-on results. Learn what helps and what Looksy needs to deliver great results."
+description: "Learn which product-image and shopper-photo qualities help Looksy create a useful visual preview, and how to diagnose weak inputs."
 ---
 
-## Looksy Works With Any Product Images
+## What images work best with Looksy?
 
-Looksy works with your existing Shopify product images—no special photography or setup required. The AI adapts to any image style, background, lighting, or angle.
+Use clear product imagery and a clear photo of one person. Looksy can use existing Shopify product images, but image quality, visibility, category, framing, and the shopper photo can all affect the result.
 
-<Check>
-You don't need to reshoot products or adjust your photography. Looksy uses whatever images you already have on Shopify.
-</Check>
+## Product-image guidance
 
-## What Actually Helps
+Prefer images that:
 
-While Looksy works with any images, these factors improve accuracy and realism:
+- show the intended product clearly rather than as a small part of a scene;
+- make color, pattern, silhouette, and important details visible;
+- avoid heavy obstruction by props, hands, text, or other products;
+- include useful alternate views when they add information;
+- represent the selected variant accurately.
 
-### Multiple Angles (Up to 4 Images)
+Flat lays and model photography can both be useful. Review the actual preview rather than assuming one format is always better.
 
-**What helps:**
-- Different views of the garment (front, side, back, detail shots)
-- Shows the AI more context about the product
-- Looksy uses up to 4 product images per try-on
+## Shopper-photo guidance
 
-**Why it helps:** More angles give the AI better understanding of garment structure, fit, and details.
+Ask the shopper to use an image that:
 
-### Close-Ups on Texture and Material
+- contains one real person;
+- clearly shows the body area relevant to the product;
+- is not heavily blurred, dark, cropped, or obstructed;
+- uses a supported image file that the upload control accepts;
+- was shared with the person's permission.
 
-**What helps:**
-- Detail shots showing fabric texture
-- Close-ups of patterns, embellishments, or prints
-- Images highlighting material properties
+The storefront currently handles common formats including JPG, PNG, HEIC, and WebP, but browser and device behavior can vary.
 
-**Why it helps:** The AI renders textures more accurately when it can see fabric details clearly.
+## What to do with a weak result
 
-### Showcasing Garment Details
-
-**What helps:**
-- Images that show unique design elements
-- Clear views of collars, sleeves, hemlines, and other features
-- Photos highlighting special details or embellishments
-
-**Why it helps:** Better visibility of details leads to more realistic rendering in the try-on result.
-
-## Image Quality Factors
-
-These technical factors can improve results but are NOT required:
-
-### Resolution
-
-- **Higher resolution helps** – More detail for the AI to work with
-- **Minimum:** 800px wide
-- **Recommended:** 1200px+ wide
-- **Reality:** Looksy works with any resolution; higher is better but not essential
-
-### File Format
-
-- **JPG or PNG** – Standard Shopify formats work perfectly
-- **File size** – Any size works; Looksy uses what's on Shopify
+1. Confirm the correct product and variant were selected.
+2. Retry with a clearer shopper photo.
+3. Review another product image or angle if the merchant controls allow it.
+4. Check whether the product category or styling is listed in [Looksy's limitations](https://withlooksy.com/docs/about/limitations).
+5. Record the product URL, variant, device/browser, time, and screenshot before contacting support.
 
 <Note>
-Looksy pulls images directly from Shopify. You don't need to worry about file formats or compression—the app handles it automatically.
+A sharper image can improve the information available to the model, but no resolution, background, or lighting setup guarantees an accurate preview.
 </Note>
-
-## What Doesn't Matter
-
-These factors do NOT affect virtual try-on quality:
-
-### Backgrounds
-
-- ✓ **Any background works** – Plain, complex, busy, outdoor, indoor, patterned
-- ✓ **No background removal needed** – The AI handles isolation automatically
-- ✓ **Keep your existing photos** – No need to reshoot on white or gray backgrounds
-
-### Lighting
-
-- ✓ **Lighting is not critical** – The AI adapts to any lighting conditions
-- ✓ **Works with natural or artificial light** – Studio lighting not required
-- ✓ **Shadows and uneven lighting are fine** – The AI compensates automatically
-
-### Angles and Framing
-
-- ✓ **Any angle works** – Front-facing, side view, angled shots all work
-- ✓ **Composition is flexible** – Centered, off-center, cropped images all work
-- ✓ **Model poses don't matter** – Stylized poses, arms up/down, seated, standing all work
-
-<Check>
-The AI model is highly realistic across all product types and handles any photography style automatically.
-</Check>
-
-## Flat Lay vs. Model Photography
-
-Both work equally well with Looksy:
-
-### Flat Lay Photography
-
-**Works great for:**
-- T-shirts, tops, simple apparel
-- Budget-friendly product photos
-- Consistent product catalog
-
-### Model Photography
-
-**Works great for:**
-- Dresses, structured garments
-- Showing fit and drape
-- Lifestyle product presentation
-
-**No preference:** The AI delivers realistic results with either style.
-
-## Common Questions
-
-<AccordionGroup>
-  <Accordion title="Do I need to reshoot my products?">
-    No. Looksy works with your existing product images. Don't reshoot or adjust your photography—the AI handles any image style.
-  </Accordion>
-
-  <Accordion title="What if my images have busy backgrounds?">
-    That's fine. Looksy works with any background—plain, complex, patterned, or outdoor scenes. No background removal needed.
-  </Accordion>
-
-  <Accordion title="Do I need professional lighting?">
-    No. Lighting is not critical. The AI adapts to natural light, artificial light, bright conditions, or dim settings.
-  </Accordion>
-
-  <Accordion title="What if my photos are from different angles?">
-    Perfect. Multiple angles actually help accuracy. Looksy uses up to 4 images per product, and different angles give the AI more context.
-  </Accordion>
-
-  <Accordion title="Should I use low-resolution images?">
-    Higher resolution helps the AI see details more clearly, but it's not required. Looksy works with any resolution—use what you have.
-  </Accordion>
-
-  <Accordion title="What if my images don't meet these suggestions?">
-    Try-on will still work. The factors above improve accuracy but aren't requirements. The AI delivers realistic results with any product images.
-  </Accordion>
-</AccordionGroup>
-
-## What You Can Do (Optional)
-
-If you want to maximize accuracy, consider adding:
-
-1. **Multiple product images** – Upload up to 4 images showing different angles
-2. **Detail shots** – Include close-ups of fabric texture or unique design elements
-3. **Higher resolution** – Use 1200px+ width if available (but not required)
-
-<Note>
-These are optional optimizations, not requirements. Looksy works out of the box with whatever images you already have.
-</Note>
-
-## Technical Specifications
-
-### Supported Formats
-- JPG, PNG (standard Shopify formats)
-
-### Image Dimensions
-- **Minimum:** 800px wide
-- **Recommended:** 1200px+ wide
-- **Maximum:** No limit (Shopify's limits apply)
-
-### Images Per Product
-- **Used by AI:** Up to 4 images per product
-- **Pulls from:** Your Shopify product images automatically
-
-## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Choosing Products" icon="check-circle" href="/product-setup/choosing-products">
-    Learn which products benefit most from virtual try-on
+  <Card title="First Try-On" icon="camera" href="https://withlooksy.com/docs/getting-started/first-try-on">
+    Test a representative shopper journey.
   </Card>
-  <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
-    Optimize virtual try-on for maximum conversions
-  </Card>
-  <Card title="Supported Products" icon="check" href="/product-setup/supported-products">
-    See what works with Looksy (all fashion products)
-  </Card>
-  <Card title="First Try-On" icon="play" href="/getting-started/first-try-on">
-    Test virtual try-on yourself
+  <Card title="Preview Troubleshooting" icon="wrench" href="https://withlooksy.com/docs/troubleshooting/image-quality">
+    Diagnose a poor or failed result.
   </Card>
 </CardGroup>

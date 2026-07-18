@@ -1,0 +1,48 @@
+# Looksy Documentation
+
+> Authoritative setup, product, pricing, and troubleshooting guidance for Looksy AI virtual try-on on Shopify.
+
+## Docs
+
+- [Looksy Virtual Try-On Limitations](https://withlooksy.com/docs/about/limitations.md): Understand the main limits of generated try-on results and how to test products, shopper inputs, themes, and business outcomes responsibly.
+- [How Looksy Virtual Try-On Works](https://withlooksy.com/docs/about/technology-explained.md): Understand the shopper-facing Looksy flow, its inputs and output, and the checks merchants should perform before rollout.
+- [What Makes Looksy Different](https://withlooksy.com/docs/about/what-makes-looksy-different.md): Learn how to evaluate Looksy as a Shopify virtual try-on app using current product evidence and your own store tests.
+- [A/B Testing Virtual Try-On](https://withlooksy.com/docs/analytics/ab-testing.md): Design a controlled Looksy test with a clear hypothesis, suitable sample, guardrail metrics, and transparent reporting.
+- [Calculating Virtual Try-On ROI](https://withlooksy.com/docs/analytics/calculating-roi.md): Measure Looksy ROI with your own Shopify conversion, margin, return, and subscription data instead of relying on generic benchmarks.
+- [Conversion Tracking for Virtual Try-On](https://withlooksy.com/docs/analytics/conversion-tracking.md): Define, validate, and interpret Looksy engagement and conversion events without overstating attribution.
+- [Analytics Dashboard Overview](https://withlooksy.com/docs/analytics/dashboard-overview.md): Understand Looksy analytics, metric definitions, data-availability caveats, and the questions each view can help a Shopify merchant answer.
+- [Evaluating Virtual Try-On Results](https://withlooksy.com/docs/benefits/case-studies.md): Learn how to document a credible Looksy case study using measured Shopify data, a clear baseline, and transparent assumptions.
+- [Using Virtual Try-On to Support Conversion](https://withlooksy.com/docs/benefits/increase-conversions.md): Learn how to test whether Looksy reduces purchase uncertainty and supports conversion on your Shopify store.
+- [Using Virtual Try-On to Address Returns](https://withlooksy.com/docs/benefits/reduce-returns.md): Learn how to test whether Looksy helps shoppers set expectations and affects return reasons on your Shopify store.
+- [Virtual Try-On ROI Calculator](https://withlooksy.com/docs/benefits/roi-calculator.md): Use a transparent worksheet to estimate Looksy ROI with your store's own traffic, conversion, margin, return, and cost data.
+- [AI Virtual Try-On vs AR Try-On for E-Commerce](https://withlooksy.com/docs/comparison/ai-vs-ar-virtual-try-on.md): Compare AI-generated and augmented-reality try-on approaches by shopper task, product type, implementation, and measurable store outcomes.
+- [How to Compare Virtual Try-On Apps for Shopify](https://withlooksy.com/docs/comparison/virtual-try-on-apps.md): Compare Shopify virtual try-on apps using current vendor evidence, hands-on testing, data practices, support, and total cost.
+- [Does Virtual Try-On Work on Mobile?](https://withlooksy.com/docs/faq/does-it-work-on-mobile.md): Learn how to test the Looksy shopper flow on the phones, tablets, browsers, and network conditions your customers use.
+- [How Accurate Is Looksy Virtual Try-On?](https://withlooksy.com/docs/faq/how-accurate-is-it.md): Understand what a Looksy result can show, what affects output quality, and how to set realistic shopper expectations.
+- [Looksy Pricing and Plans](https://withlooksy.com/docs/faq/pricing-and-plans.md): Compare current Looksy pricing, included credits, additional-credit rates, and annual options for Shopify stores.
+- [Which Products Work with Looksy?](https://withlooksy.com/docs/faq/which-products-work.md): Learn how to test representative products, images, variants, and templates before enabling Looksy broadly.
+- [Will Virtual Try-On Slow Down My Store?](https://withlooksy.com/docs/faq/will-it-slow-my-store.md): Learn how to measure Looksy's storefront performance on your theme, devices, and product pages before and after installation.
+- [Your First 24 Hours with Looksy](https://withlooksy.com/docs/getting-started/first-24-hours.md): Use a first-day checklist to verify Looksy targeting, theme integration, shopper behavior, credits, analytics, and an initial measurement baseline.
+- [Your First Virtual Try-On](https://withlooksy.com/docs/getting-started/first-try-on.md): Test the Looksy shopper flow on a representative product, variant, device, browser, and theme before launch.
+- [Install Looksy on Shopify](https://withlooksy.com/docs/getting-started/how-to-install.md): Install Looksy, enable its Shopify app embed, and verify representative products, variants, devices, and theme behavior.
+- [Quick Start Guide](https://withlooksy.com/docs/getting-started/quick-setup.md): Set up Looksy on Shopify by selecting products, enabling the theme app embed, testing the shopper flow, and checking the first recorded activity.
+- [Understanding Looksy Credits](https://withlooksy.com/docs/getting-started/understanding-credits.md): Learn how Looksy plan credits, included allowances, and additional-credit rates work.
+- [Looksy Docs Overview](https://withlooksy.com/docs/index.md): Start here for Looksy virtual try-on setup, product configuration, theme integration, analytics, troubleshooting, and Shopify merchant guides.
+- [Button Customization](https://withlooksy.com/docs/integration/custom-styling.md): Customize and verify the Looksy Try On button through Shopify's theme app-embed settings without making unsupported compatibility assumptions.
+- [Set Up Looksy for Gorgias](https://withlooksy.com/docs/integration/gorgias.md): Connect Looksy to Gorgias so support agents can suggest Shopify products and create virtual try-ons inside customer conversations.
+- [Mobile Optimization Guide](https://withlooksy.com/docs/integration/mobile-optimization.md): Test and improve the Looksy product-page flow across representative mobile devices, browsers, permissions, and networks.
+- [Theme Integration Guide](https://withlooksy.com/docs/integration/theme-setup.md): Enable Looksy in Shopify, choose placement, and verify the shopper flow on your current theme and representative products.
+- [Best Practices for Virtual Try-On](https://withlooksy.com/docs/product-setup/best-practices.md): Use a measured Looksy rollout with clear product imagery, accurate shopper expectations, accessible placement, and evidence-based iteration.
+- [Choosing Products for Virtual Try-On](https://withlooksy.com/docs/product-setup/choosing-products.md): Choose a representative initial product set, verify image and variant behavior, and expand Looksy based on store evidence.
+- [Image Requirements for Virtual Try-On](https://withlooksy.com/docs/product-setup/image-requirements.md): Learn which product-image and shopper-photo qualities help Looksy create a useful visual preview, and how to diagnose weak inputs.
+- [Supported Product Types](https://withlooksy.com/docs/product-setup/supported-products.md): Learn how to verify whether representative products, images, variants, and templates work well with Looksy virtual try-on.
+- [How to Build Customer Confidence in E-Commerce](https://withlooksy.com/docs/solutions/improve-customer-confidence.md): Reduce purchase uncertainty with accurate product information, clear policies, trustworthy evidence, support, and measured virtual try-on tests.
+- [How to Improve E-Commerce Conversion Rates](https://withlooksy.com/docs/solutions/increase-conversion-rate.md): Use a measured process to identify and test product-page, merchandising, checkout, and virtual try-on improvements.
+- [How to Reduce Return Rates in E-Commerce](https://withlooksy.com/docs/solutions/reduce-return-rates.md): Use return-reason data to test product information, sizing, fulfilment, policy, and virtual try-on improvements.
+- [Troubleshooting Common Issues](https://withlooksy.com/docs/troubleshooting/common-issues.md): Diagnose Looksy button visibility, product targeting, photo uploads, generation failures, mobile behavior, and analytics with a bounded checklist.
+- [Troubleshooting Virtual Try-On Results](https://withlooksy.com/docs/troubleshooting/image-quality.md): Improve or diagnose a Looksy preview by checking the selected product, variant, product imagery, shopper photo, browser, and known limitations.
+- [Performance Troubleshooting](https://withlooksy.com/docs/troubleshooting/performance.md): Measure and diagnose storefront or try-on performance changes across representative pages, devices, browsers, and networks.
+- [Virtual Try-On for Activewear Brands](https://withlooksy.com/docs/use-cases/activewear-brands.md): Plan and measure a Looksy virtual try-on test for activewear products, variants, and mobile shoppers.
+- [Virtual Try-On for Fashion Retailers](https://withlooksy.com/docs/use-cases/fashion-retailers.md): Plan a measured Looksy rollout for fashion products, themes, variants, shopper devices, and store outcomes.
+- [Virtual Try-On for Luxury Fashion Brands](https://withlooksy.com/docs/use-cases/luxury-brands.md): Plan and evaluate a Looksy experience for luxury products with careful presentation, theme testing, and evidence-based measurement.
+- [Virtual Try-On for Swimwear Brands](https://withlooksy.com/docs/use-cases/swimwear.md): Plan and measure a Looksy virtual try-on test for swimwear products without relying on generic performance claims.

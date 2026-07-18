@@ -1,0 +1,112 @@
+name: AEO and crawlability audit
+
+on:
+  pull_request:
+    paths:
+      - "**/*.mdx"
+      - "docs.json"
+      - "llms.txt"
+      - "llms-full.txt"
+      - "skill.md"
+      - "schemarabbit.js"
+      - ".mintlify/skills/**"
+      - "AEO_RUNBOOK.md"
+      - "facts/aeo-baseline.json"
+      - "scripts/aeo-audit.mjs"
+      - ".github/workflows/aeo-docs-audit.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.mdx"
+      - "docs.json"
+      - "llms.txt"
+      - "llms-full.txt"
+      - "skill.md"
+      - "schemarabbit.js"
+      - ".mintlify/skills/**"
+      - "AEO_RUNBOOK.md"
+      - "facts/aeo-baseline.json"
+      - "scripts/aeo-audit.mjs"
+      - ".github/workflows/aeo-docs-audit.yml"
+  schedule:
+    - cron: "17 8 * * *"
+  workflow_dispatch:
+  deployment_status:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aeo-docs-audit-${{ github.event_name == 'deployment_status' && format('deployment-{0}', github.event.deployment.id) || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  source:
+    if: github.event_name != 'deployment_status'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Audit docs source
+        run: node scripts/aeo-audit.mjs --json-output artifacts/aeo-source-audit.json
+      - name: Validate Mintlify build
+        run: npx --yes mintlify@4.2.715 validate
+      - name: Check Mintlify links
+        run: npx --yes mintlify@4.2.715 broken-links --check-redirects
+      - name: Upload source audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aeo-source-audit-${{ github.run_id }}
+          path: artifacts/aeo-source-audit.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  deployment-failure:
+    if: >-
+      github.event_name == 'deployment_status' &&
+      (github.event.deployment_status.state == 'failure' ||
+       github.event.deployment_status.state == 'error')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report failed Mintlify deployment
+        run: |
+          echo "Mintlify deployment ended in ${{ github.event.deployment_status.state }}."
+          exit 1
+
+  live:
+    if: >-
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'deployment_status' &&
+       github.event.deployment_status.state == 'success' &&
+       startsWith(github.event.deployment_status.environment_url, 'https://withlooksy.com/docs'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Audit live Mintlify docs
+        shell: bash
+        run: |
+          for attempt in 1 2 3; do
+            node scripts/aeo-audit.mjs --live --json-output artifacts/aeo-live-audit.json && exit 0
+            if [ "$attempt" = 3 ]; then exit 1; fi
+            sleep $((attempt * 20))
+          done
+      - name: Upload live audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aeo-live-audit-${{ github.run_id }}
+          path: artifacts/aeo-live-audit.json
+          if-no-files-found: warn
+          retention-days: 30

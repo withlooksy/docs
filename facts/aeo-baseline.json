@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "Looksy",
+    "legalName": "Looksy, LLC",
+    "homepage": "https://withlooksy.com",
+    "docsBase": "https://withlooksy.com/docs",
+    "shopifyListing": "https://apps.shopify.com/looksy",
+    "organizationId": "https://withlooksy.com/#organization",
+    "profiles": [
+      "https://apps.shopify.com/looksy",
+      "https://www.linkedin.com/company/withlooksy",
+      "https://twitter.com/withlooksy"
+    ]
+  },
+  "plans": [
+    {
+      "name": "Preview",
+      "monthlyPrice": "$0",
+      "monthlyCredits": 25,
+      "additionalCreditPrice": null,
+      "annualPrice": null
+    },
+    {
+      "name": "Starter",
+      "monthlyPrice": "$14.99",
+      "monthlyCredits": 100,
+      "additionalCreditPrice": "$0.14",
+      "annualPrice": "$149"
+    },
+    {
+      "name": "Growth",
+      "monthlyPrice": "$29",
+      "monthlyCredits": 300,
+      "additionalCreditPrice": "$0.12",
+      "annualPrice": "$290"
+    },
+    {
+      "name": "Scale",
+      "monthlyPrice": "$79",
+      "monthlyCredits": 600,
+      "additionalCreditPrice": "$0.10",
+      "annualPrice": "$790"
+    }
+  ],
+  "requiredLiveFiles": [
+    "robots.txt",
+    "sitemap.xml",
+    "llms.txt",
+    "llms-full.txt",
+    "skill.md",
+    ".well-known/skills/index.json",
+    ".well-known/skills/looksy/SKILL.md",
+    ".well-known/agent-skills/index.json",
+    ".well-known/agent-skills/looksy/SKILL.md",
+    ".well-known/mcp/server-card.json",
+    ".well-known/agent-card.json"
+  ],
+  "requiredOriginDiscoveryFiles": [
+    "skill.md",
+    ".well-known/skills/index.json",
+    ".well-known/skills/looksy/SKILL.md",
+    ".well-known/agent-skills/index.json",
+    ".well-known/agent-skills/looksy/SKILL.md",
+    ".well-known/agent-card.json"
+  ],
+  "protectedRoutes": [
+    "index",
+    "getting-started/quick-setup",
+    "getting-started/how-to-install",
+    "getting-started/first-try-on",
+    "getting-started/first-24-hours",
+    "getting-started/understanding-credits",
+    "product-setup/choosing-products",
+    "product-setup/image-requirements",
+    "product-setup/best-practices",
+    "product-setup/supported-products",
+    "integration/gorgias",
+    "integration/theme-setup",
+    "integration/mobile-optimization",
+    "integration/custom-styling",
+    "analytics/dashboard-overview",
+    "analytics/conversion-tracking",
+    "analytics/calculating-roi",
+    "analytics/ab-testing",
+    "benefits/increase-conversions",
+    "benefits/reduce-returns",
+    "benefits/roi-calculator",
+    "benefits/case-studies",
+    "troubleshooting/common-issues",
+    "troubleshooting/image-quality",
+    "troubleshooting/performance",
+    "faq/does-it-work-on-mobile",
+    "faq/which-products-work",
+    "faq/how-accurate-is-it",
+    "faq/will-it-slow-my-store",
+    "faq/pricing-and-plans",
+    "about/what-makes-looksy-different",
+    "about/technology-explained",
+    "about/limitations",
+    "comparison/virtual-try-on-apps",
+    "comparison/ai-vs-ar-virtual-try-on",
+    "use-cases/fashion-retailers",
+    "use-cases/activewear-brands",
+    "use-cases/luxury-brands",
+    "use-cases/swimwear",
+    "solutions/reduce-return-rates",
+    "solutions/increase-conversion-rate",
+    "solutions/improve-customer-confidence"
+  ],
+  "forbiddenContentPatterns": [
+    {
+      "pattern": "\\$169(?:\\/month| per month|\\/mo)",
+      "reason": "retired Scale monthly price"
+    },
+    {
+      "pattern": "1,500\\s+(?:monthly\\s+)?(?:try-on\\s+)?credits",
+      "reason": "retired Scale credit allowance"
+    },
+    {
+      "pattern": "200\\s+(?:monthly\\s+)?(?:try-on\\s+)?credits",
+      "reason": "retired Starter credit allowance"
+    },
+    {
+      "pattern": "Starter(?: plan)?\\s*(?:[:(]|at\\s+|costs?\\s+)\\s*\\$29(?:\\/month| per month|\\/mo)",
+      "reason": "retired Starter monthly price"
+    },
+    {
+      "pattern": "Growth(?: plan)?\\s*(?:[:(]|at\\s+|costs?\\s+)\\s*\\$79(?:\\/month| per month|\\/mo)",
+      "reason": "retired Growth monthly price"
+    },
+    {
+      "pattern": "\\$0\\.08\\s+(?:per|additional)",
+      "reason": "retired additional-credit rate"
+    },
+    {
+      "pattern": "free forever",
+      "reason": "unsupported Preview-plan duration claim"
+    },
+    {
+      "pattern": "credits? (?:never expire|roll(?:s|ed)? over)|credit rollover",
+      "reason": "unsupported credit-expiry or rollover claim"
+    },
+    {
+      "pattern": "zero performance impact",
+      "reason": "unsupported absolute performance claim"
+    },
+    {
+      "pattern": "match(?:es|ing)? real-world fit",
+      "reason": "virtual try-on is not a real-world fit guarantee"
+    },
+    {
+      "pattern": "view the result instantly",
+      "reason": "unsupported absolute generation-speed claim"
+    },
+    {
+      "pattern": "works? (?:with|on) (?:all|any) (?:Shopify )?themes?",
+      "reason": "unsupported universal theme-compatibility claim"
+    },
+    {
+      "pattern": "GDPR and CCPA compliant",
+      "reason": "unsupported blanket legal-compliance claim"
+    },
+    {
+      "pattern": "10-20x ROI",
+      "reason": "unsupported guaranteed ROI claim"
+    }
+  ]
+}
