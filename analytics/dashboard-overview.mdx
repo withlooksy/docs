@@ -1,142 +1,50 @@
 ---
 title: "Analytics Dashboard Overview"
-description: "Track virtual try-on performance with Looksy's analytics dashboard. Monitor try-ons, credits, and product engagement."
+description: "Understand Looksy analytics, metric definitions, data-availability caveats, and the questions each view can help a Shopify merchant answer."
 ---
 
-## Understanding Your Looksy Dashboard
+## What does the Looksy analytics dashboard show?
 
-The Looksy analytics dashboard shows you how virtual try-on is performing on your store.
+The Looksy analytics area reports observed activity connected to the try-on experience. Use it to understand adoption and assisted shopping behavior, but do not treat an association as proof that Looksy caused a sale or prevented a return.
 
-## Accessing Your Dashboard
+Open **Apps → Looksy → Analytics** in Shopify admin. The metrics available to you can depend on your date range, connected integrations, and tracking access.
 
-1. Go to **Apps** in your Shopify admin
-2. Click **Looksy**
-3. View your analytics
+## Core metrics
 
-## Available Metrics
+The current analytics experience may include:
 
-### Total Try-Ons
+- **Sessions:** buyer sessions in which Looksy engagement was observed.
+- **Try-ons:** try-on events recorded during the selected period.
+- **Add to cart:** Looksy-engaged sessions that included an add-to-cart event.
+- **Conversion rate:** the share of observed Looksy sessions that also included add to cart; this is not necessarily the store's completed-purchase conversion rate.
+- **Assisted cart value:** value added to cart after a try-on; it is not completed revenue.
+- **Try-on revenue:** completed purchase value attributed under the definition shown in the dashboard, when checkout tracking is available.
+- **Emails captured:** consented captures from the try-on prompt when the required email integration is connected.
 
-Total number of virtual try-ons completed on your store.
+Read the caption and tooltip beside a metric before comparing it. An unavailable or partial metric should remain unavailable rather than being estimated from another number.
 
-**What it shows:**
-- Total try-ons over time
-- Overall usage of the feature
+## How to use the dashboard
 
-**Why it matters:**
-- Indicates feature adoption
-- Shows customer engagement with virtual try-on
-
-### Total Remaining Credits
-
-Your current credit balance.
-
-**What it shows:**
-- Credits remaining in your account
-- Usage rate
-
-**Why it matters:**
-- Helps you plan when to upgrade or add credits
-- Tracks monthly usage
-
-### Top Products
-
-Products with the most virtual try-ons.
-
-**What it shows:**
-- Which products customers try on most
-- Product ranking by try-on volume
-
-**Why it matters:**
-- Identifies products customers want to visualize
-- Helps focus marketing on high-engagement items
-
-### Amount of Try-Ons Per Product
-
-Try-on count for each individual product.
-
-**What it shows:**
-- Try-on volume per product
-- Product-level engagement
-
-**Why it matters:**
-- See which products benefit most from virtual try-on
-- Identify products to promote or optimize
-
-### Recent Activity
-
-Recent virtual try-on activity on your store.
-
-**What it shows:**
-- Latest try-ons
-- Real-time activity feed
-
-**Why it matters:**
-- See customer engagement in real-time
-- Monitor feature usage
-
-## Coming Features
-
-More analytics features coming over time:
-- Engagement rates
-- Conversion tracking
-- Revenue attribution
-- Advanced product insights
+1. Choose a date range with enough activity to reduce day-to-day noise.
+2. Record try-ons and Looksy-engaged sessions as the adoption baseline.
+3. Review product-level activity to find where shoppers use try-on.
+4. Compare equivalent periods and note promotions, theme changes, inventory changes, or tracking gaps.
+5. Use Shopify's order and return data for completed commercial outcomes.
+6. Test one change at a time before assigning a result to Looksy.
 
 <Note>
-Additional analytics features are being added regularly. Enterprise customers get early access to new features.
+Analytics is observational. Phrase conclusions as "associated with" unless a controlled experiment supports a causal claim.
 </Note>
 
-## How to Use Analytics
+## Data and privacy checks
 
-### Track Overall Usage
-
-Monitor total try-ons to see how adoption grows over time.
-
-**Good performance:**
-- Steady growth in try-ons month-over-month
-- Increasing usage as you promote the feature
-
-### Identify Top Products
-
-Look at top products to see what customers engage with most.
-
-**Actions you can take:**
-- Feature top try-on products in marketing
-- Promote virtual try-on on product pages with highest usage
-- Use product insights to guide inventory decisions
-
-### Monitor Credits
-
-Keep an eye on remaining credits to avoid running out.
-
-**Best practices:**
-- Check credits weekly
-- Plan ahead for high-traffic periods
-- Upgrade plan if consistently running low
-
-### Watch Recent Activity
-
-See real-time try-ons to understand when customers use the feature.
-
-**What to observe:**
-- Peak usage times
-- Customer behavior patterns
-- Feature adoption after marketing campaigns
-
-## Next Steps
+Before relying on a report, verify the selected dates, integration status, event coverage, consent flow, and currency. Review the current [Looksy privacy policy](https://withlooksy.com/legal/privacy-policy) and your store's own obligations for analytics and customer data.
 
 <CardGroup cols={2}>
-  <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
-    Optimize virtual try-on for engagement
+  <Card title="Conversion Tracking" icon="chart-line" href="https://withlooksy.com/docs/analytics/conversion-tracking">
+    Define events, attribution boundaries, and validation steps.
   </Card>
-  <Card title="Choosing Products" icon="check-circle" href="/product-setup/choosing-products">
-    Select products for virtual try-on
-  </Card>
-  <Card title="Troubleshooting" icon="wrench" href="/troubleshooting/common-issues">
-    Fix common issues
-  </Card>
-  <Card title="ROI Calculator" icon="calculator" href="/benefits/roi-calculator">
-    Estimate your return on investment
+  <Card title="A/B Testing" icon="flask" href="https://withlooksy.com/docs/analytics/ab-testing">
+    Compare one controlled change against a stable baseline.
   </Card>
 </CardGroup>

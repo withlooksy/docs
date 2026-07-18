@@ -1,337 +1,44 @@
 ---
 title: "Will Virtual Try-On Slow Down My Store?"
-description: "No, Looksy is optimized for minimal performance impact. Learn how virtual try-on maintains fast page speeds and passes Core Web Vitals."
+description: "Learn how to measure Looksy's storefront performance on your theme, devices, and product pages before and after installation."
 ---
 
-## No, Looksy Won't Slow Down Your Store
+## Will Looksy affect storefront performance?
 
-Looksy is engineered for **zero performance impact** on your Shopify store. Page speed remains fast, and your Core Web Vitals scores stay in the green.
+Any storefront feature can affect loading, responsiveness, or network activity. The practical answer depends on your theme, other apps, device mix, connection quality, and where the feature is loaded.
 
-## How Looksy Maintains Fast Performance
+Measure the actual effect on your store instead of relying on a blanket performance claim.
 
-<CardGroup cols={2}>
-  <Card title="Lazy Loading" icon="hourglass">
-    Button loads only when needed, not on page load
-  </Card>
-  <Card title="Async JavaScript" icon="code">
-    Doesn't block page rendering
-  </Card>
-  <Card title="Minimal File Size" icon="compress">
-    Optimized code bundle (< 50KB)
-  </Card>
-  <Card title="CDN Delivery" icon="server">
-    Fast global loading from edge servers
-  </Card>
-</CardGroup>
+## How should I test performance?
 
-## Performance Metrics
+1. Record a baseline on representative product pages before enabling Looksy.
+2. Test the same pages after enabling it.
+3. Use both lab tools and real-user data where available.
+4. Check mobile devices and slower connections, not only a fast desktop.
+5. Test the page before opening try-on and while completing the try-on flow.
 
-### Before vs. After Looksy Installation
+## What should I measure?
 
-Typical performance impact:
+- Largest Contentful Paint (LCP)
+- Interaction to Next Paint (INP)
+- Cumulative Layout Shift (CLS)
+- JavaScript execution and long tasks
+- transferred bytes and request count
+- visible delays, layout movement, or blocked interaction
 
-| Metric | Before Looksy | After Looksy | Change |
-|--------|---------------|--------------|--------|
-| **Page Load Time** | 2.1s | 2.1s | **No change** |
-| **Time to Interactive** | 3.2s | 3.3s | **+0.1s** |
-| **First Contentful Paint** | 1.5s | 1.5s | **No change** |
-| **Largest Contentful Paint** | 2.4s | 2.4s | **No change** |
-| **Cumulative Layout Shift** | 0.05 | 0.05 | **No change** |
+## What if I see a regression?
 
-<Check>
-Looksy adds negligible overhead – typically less than 100ms to overall page interaction time.
-</Check>
-
-## Core Web Vitals Compatibility
-
-Looksy is designed to pass Google's Core Web Vitals:
-
-### LCP (Largest Contentful Paint)
-
-**Target:** < 2.5 seconds
-
-**Looksy impact:** None. The button loads after LCP element (main product image).
-
-### FID (First Input Delay)
-
-**Target:** < 100ms
-
-**Looksy impact:** Minimal (< 10ms). Async loading prevents blocking.
-
-### CLS (Cumulative Layout Shift)
-
-**Target:** < 0.1
-
-**Looksy impact:** None. Button has reserved space, no unexpected shifts.
-
-<Tip>
-Run Google PageSpeed Insights before and after installing Looksy. You'll see scores remain virtually identical.
-</Tip>
-
-## How Virtual Try-On Actually Works
-
-### On Page Load
-
-**What happens:**
-1. Page loads normally
-2. Looksy button placeholder is added
-3. JavaScript loads **asynchronously** (doesn't block rendering)
-4. Button becomes functional
-
-**Time to functional:** < 1 second after page load
-
-### When Customer Clicks "Try On"
-
-**What happens:**
-1. Modal opens instantly (< 0.5s)
-2. Camera/upload UI loads
-3. Customer uploads photo
-4. Image is sent to Looksy servers for processing
-5. Result returns in 15-20 seconds
-
-**Processing happens on Looksy servers, not your store.**
-
-### After Try-On Completes
-
-**What happens:**
-- Result displays
-- Customer closes modal
-- Normal shopping continues
-- No residual impact on page performance
-
-## Shopify Performance Best Practices
-
-Looksy follows all Shopify performance guidelines:
-
-<AccordionGroup>
-  <Accordion title="App Embed Architecture">
-    Looksy uses Shopify's app embed system, which is optimized for performance. Apps load after critical page content, ensuring fast initial page loads.
-  </Accordion>
-
-  <Accordion title="Minimal DOM Manipulation">
-    Looksy adds minimal HTML to your page (just the button). The try-on modal loads only when clicked, avoiding unnecessary DOM bloat.
-  </Accordion>
-
-  <Accordion title="No Third-Party Dependencies">
-    Looksy doesn't load jQuery or other heavy libraries. All code is custom-built and lightweight.
-  </Accordion>
-
-  <Accordion title="Image Optimization">
-    Any images loaded by Looksy (like result renders) are optimized and compressed for fast delivery.
-  </Accordion>
-</AccordionGroup>
-
-## Comparing to Other Apps
-
-### Looksy vs. Average Shopify App
-
-| Feature | Looksy | Average App |
-|---------|--------|-------------|
-| **File size** | < 50KB | 200-500KB |
-| **Loading method** | Async | Often synchronous |
-| **Render blocking** | No | Often yes |
-| **Core Web Vitals impact** | Minimal | Can be significant |
-| **Performance optimization** | Built-in | Variable |
+Confirm that the difference is repeatable, then check theme placement, other app scripts, duplicate installation, network failures, and device-specific behavior. Record the affected URL, theme, browser, device, and measurements when contacting support.
 
 <Note>
-Many Shopify apps negatively impact performance. Looksy is specifically engineered to avoid this.
+  A single Lighthouse run is not definitive. Compare multiple runs and use field data when enough traffic is available.
 </Note>
 
-## Real-World Performance Data
-
-### Merchant Results
-
-Typical feedback from Looksy customers:
-
-- **"No noticeable change in page speed after installation"**
-- **"PageSpeed score stayed at 90+"**
-- **"Core Web Vitals still passing"**
-- **"Mobile performance is great"**
-
-### A/B Test Results
-
-Stores that A/B tested pages with and without Looksy found:
-- **Page load time difference:** < 0.1 seconds
-- **Bounce rate:** No change or slight improvement (customers engage more)
-- **SEO rankings:** Unaffected (no performance penalty)
-
-## Mobile Performance
-
-### Mobile-Specific Optimizations
-
-Mobile performance is equally strong:
-
-- **4G/5G:** No noticeable delay
-- **3G:** Gracefully handles slower connections
-- **Slow networks:** Button still loads, try-on may take slightly longer (processing is server-side)
-
-### Mobile Metrics
-
-Typical mobile performance:
-
-| Metric | Mobile (4G) |
-|--------|-------------|
-| **Button load time** | < 1 second |
-| **Modal open time** | < 0.5 seconds |
-| **Try-on processing** | 15-20 seconds |
-| **Total interaction** | < 7 seconds |
-
-## Testing Your Store's Performance
-
-### Before Installing Looksy
-
-1. Visit [Google PageSpeed Insights](https://pagespeed.web.dev/)
-2. Test a product page URL
-3. Note your scores (Performance, LCP, FID, CLS)
-4. Screenshot for comparison
-
-### After Installing Looksy
-
-1. Wait 24 hours (for caching)
-2. Test the same product page
-3. Compare scores
-4. Verify minimal or no change
-
-<Check>
-If you see a performance decrease, it's likely due to other factors (new apps, theme changes, image issues). Contact support for help.
-</Check>
-
-## What Doesn't Impact Performance
-
-### Common Misconceptions
-
-**"Adding any app slows down my store"**
-- Not true. Well-built apps like Looksy have minimal impact.
-
-**"Virtual try-on requires heavy processing on my site"**
-- False. Processing happens on Looksy servers, not your store.
-
-**"The try-on button loads on every page"**
-- No. It only loads on enabled product pages, not sitewide.
-
-**"Modal interactions slow down browsing"**
-- No. The modal is only active when opened by the customer.
-
-## What Actually Slows Down Stores
-
-If you notice performance issues, check these common culprits:
-
-1. **Large unoptimized product images** (> 1MB)
-2. **Too many apps** (> 15-20)
-3. **Heavy theme code** (bloated themes)
-4. **Third-party scripts** (analytics, ads)
-5. **Unoptimized videos** (autoplay videos)
-
-<Warning>
-Don't blame Looksy for performance issues that existed before installation. Use PageSpeed Insights to identify actual bottlenecks.
-</Warning>
-
-## SEO and Page Speed
-
-### Google Ranking Factors
-
-Google uses page speed as a ranking factor. Will Looksy hurt SEO?
-
-**No.**
-
-- Looksy has **minimal performance impact**
-- Core Web Vitals remain in "Good" range
-- No negative SEO effect
-- May even **improve** engagement metrics (time on site, lower bounce rate)
-
-### Engagement Metrics Improvement
-
-Stores with Looksy often see:
-- **Lower bounce rate** (customers engage more)
-- **Higher time on page** (using try-on)
-- **More pages per session** (try on multiple products)
-
-These **positive engagement signals** can actually help SEO.
-
-## Monitoring Ongoing Performance
-
-### What to Track
-
-- **Google PageSpeed Insights scores** (monthly check)
-- **Shopify Online Store Speed Report**
-- **Core Web Vitals in Google Search Console**
-- **Real user metrics** (via Google Analytics)
-
-### Performance Troubleshooting
-
-If you notice performance issues:
-
-1. **Test without Looksy** (disable app temporarily)
-2. **Check other recently installed apps**
-3. **Review theme updates** (themes can cause slowdowns)
-4. **Optimize product images** (compress, use WebP)
-5. **Contact Looksy support** if issues persist
-
-## Common Questions
-
-<AccordionGroup>
-  <Accordion title="Will Looksy affect my SEO rankings?">
-    No. Looksy has minimal performance impact and doesn't hurt SEO. Improved engagement metrics (lower bounce rate, higher time on site) may even help SEO.
-  </Accordion>
-
-  <Accordion title="Does the try-on processing happen on my server?">
-    No. All AI processing happens on Looksy servers. Your Shopify store only handles displaying the button and result – no heavy lifting.
-  </Accordion>
-
-  <Accordion title="What if I have many other apps installed?">
-    Looksy won't add to app bloat issues. However, if your store is already slow due to too many apps, consider removing underperforming ones to improve overall speed.
-  </Accordion>
-
-  <Accordion title="Can I test performance before committing?">
-    Yes. Install Looksy, run PageSpeed Insights tests, and verify performance is acceptable. If you're not satisfied, uninstall within your trial period.
-  </Accordion>
-</AccordionGroup>
-
-## Performance Best Practices
-
-To maintain fast page speeds with Looksy:
-
-- [ ] Optimize product images (compress, use WebP format)
-- [ ] Limit total apps to < 20
-- [ ] Use a lightweight, performance-optimized theme
-- [ ] Enable Shopify CDN for image delivery
-- [ ] Monitor Core Web Vitals regularly
-- [ ] Remove unused apps and theme code
-- [ ] Use lazy loading for images
-- [ ] Minimize third-party scripts
-
-<Check>
-Following these practices ensures your store stays fast, with or without Looksy.
-</Check>
-
-## The Bottom Line
-
-**Will Looksy slow down your store?**
-
-**No.** Looksy is purpose-built for zero performance impact:
-
-- Async loading (doesn't block rendering)
-- Minimal file size (< 50KB)
-- Lazy loading (loads only when needed)
-- Server-side processing (no client-side strain)
-- CDN delivery (fast global loading)
-- Core Web Vitals compliant
-
-**Your store will remain fast, your SEO won't suffer, and your customers will enjoy a great experience.**
-
-## Next Steps
-
 <CardGroup cols={2}>
-  <Card title="Performance Troubleshooting" icon="gauge" href="/troubleshooting/performance">
-    Fix performance issues and optimize speed
+  <Card title="Performance Troubleshooting" icon="gauge" href="https://withlooksy.com/docs/troubleshooting/performance">
+    Investigate a measured slowdown.
   </Card>
-  <Card title="Mobile Optimization" icon="mobile" href="/integration/mobile-optimization">
-    Ensure fast mobile experience
-  </Card>
-  <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
-    Optimize your setup for maximum performance
-  </Card>
-  <Card title="Pricing & Plans" icon="dollar-sign" href="/faq/pricing-and-plans">
-    See Looksy pricing options
+  <Card title="Theme Integration" icon="paintbrush" href="https://withlooksy.com/docs/integration/theme-setup">
+    Verify the current theme setup.
   </Card>
 </CardGroup>

@@ -2,6 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Looksy Documentation",
+  "description": "Authoritative setup, product, pricing, and troubleshooting guidance for Looksy AI virtual try-on on Shopify.",
   "logo": {
     "light": "/looksy_logo.svg",
     "dark": "/looksy_logo.svg"
@@ -11,15 +12,18 @@
     "light": "#1e9fff",
     "dark": "#1e9fff"
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:support@looksy.ai"
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:caleb@withlooksy.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Install App",
+      "href": "https://apps.shopify.com/looksy"
     }
-  ],
-  "topbarCtaButton": {
-    "name": "Install App",
-    "url": "https://apps.shopify.com/looksy"
   },
   "navigation": {
     "groups": [
@@ -117,18 +121,34 @@
       }
     ]
   },
-  "footerSocials": {
-    "website": "https://withlooksy.com",
-    "twitter": "https://twitter.com/withlooksy",
-    "linkedin": "https://www.linkedin.com/company/withlooksy"
+  "footer": {
+    "socials": {
+      "website": "https://withlooksy.com",
+      "x": "https://twitter.com/withlooksy",
+      "linkedin": "https://www.linkedin.com/company/withlooksy"
+    }
   },
   "seo": {
-    "indexHiddenPages": false
-  },
-  "metadata": {
-    "og:site_name": "Looksy Documentation",
-    "og:type": "website",
-    "twitter:site": "@withlooksy"
+    "indexing": "navigable",
+    "trailingSlash": false,
+    "metatags": {
+      "canonical": "https://withlooksy.com/docs",
+      "author": "Looksy editorial team",
+      "og:site_name": "Looksy",
+      "og:type": "website",
+      "twitter:site": "@withlooksy"
+    },
+    "organization": {
+      "id": "https://withlooksy.com/#organization",
+      "name": "Looksy",
+      "legalName": "Looksy, LLC",
+      "url": "https://withlooksy.com",
+      "sameAs": [
+        "https://apps.shopify.com/looksy",
+        "https://www.linkedin.com/company/withlooksy",
+        "https://twitter.com/withlooksy"
+      ]
+    }
   },
   "integrations": {
     "intercom": {

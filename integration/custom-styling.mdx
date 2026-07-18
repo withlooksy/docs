@@ -1,144 +1,38 @@
 ---
 title: "Button Customization"
-description: "Customize the Try On button appearance in your Looksy dashboard. Adjust colors, text, and corner position to match your brand."
+description: "Customize and verify the Looksy Try On button through Shopify's theme app-embed settings without making unsupported compatibility assumptions."
 ---
 
-## Customize the Button in Your Dashboard
+## How do I customize the Looksy button?
 
-Customize the Try On button to match your brand using the Looksy dashboard.
+Open the Looksy app embed in Shopify's theme editor. The **Customize button** action in the Looksy dashboard can take you to that surface when the active theme and plan are ready.
 
-## Available Customizations
+## Open the controls
 
-### Button Text
+1. In Shopify admin, go to **Online Store → Themes**.
+2. Select **Customize** for the intended theme.
+3. Open **App embeds → Looksy Try-On Button**.
+4. Enable the embed if necessary.
+5. Change the supported settings and save the theme.
 
-**Default:** "Try On"
+## Available settings
 
-**Alternatives:**
-- "See it on you"
-- "Virtual try-on"
-- "Try it on"
-- "Preview on yourself"
-- Custom text of your choice
+The current extension includes controls for button position, text, text and background color, icon, typography, border radius, padding, offsets, and result-thumbnail radius. The exact controls shown can vary with the installed extension version.
 
-**Best practice:** Keep it short (2-4 words) and action-oriented.
+Start with the smallest useful changes:
 
-### Button Colors
+- use short, literal button text;
+- maintain sufficient color contrast;
+- select a corner that does not cover important imagery or gallery controls;
+- adjust spacing only as needed for the current theme;
+- retain an icon only when it remains understandable and uncluttered.
 
-**What you can customize:**
-- Background color
-- Text color
-- Button styling
+## Verify before publishing
 
-**Best practice:** Choose colors that match your brand and contrast well for visibility.
-
-### Corner Position
-
-**Options:**
-- Top left (default)
-- Top right
-
-**Best practice:** Choose based on your product image layout and other overlays.
-
-## How to Customize
-
-1. Go to your **Looksy dashboard**
-2. Click **"Customize Button"**
-3. Adjust the following:
-   - Button text
-   - Button colors (background, text)
-   - Corner position (top left or top right)
-4. Click **"Save"**
-
-<Check>
-Changes apply to all products automatically on both desktop and mobile.
-</Check>
-
-## Customization Limits
-
-You can only customize:
-- Button text
-- Button colors
-- Corner position
-
-You cannot customize:
-- Button location (fixed on product image)
-- CSS styling beyond dashboard settings
-- Modal appearance
-- Upload area styling
-- Fonts or typography
-- Animations
+Test representative product templates, variants, image aspect ratios, desktop widths, and mobile devices. Confirm the button remains visible, readable, keyboard reachable, and separate from other overlays.
 
 <Note>
-All customization is done via the Looksy dashboard. You cannot add custom CSS or code to further customize the button.
+Theme behavior can change after a theme update or template edit. Re-test Looksy whenever the storefront theme changes materially.
 </Note>
 
-## Brand Styling Examples
-
-### Minimalist/Clean Brands
-- Text: "Try On"
-- Colors: Black button, white text
-- Position: Top left
-
-### Vibrant/Fun Brands
-- Text: "See it on you!"
-- Colors: Bright brand color, contrasting text
-- Position: Top right
-
-### Luxury/Premium Brands
-- Text: "Preview"
-- Colors: Dark neutral, gold/elegant accent
-- Position: Top left
-
-## Testing Your Customization
-
-After customizing:
-
-1. Visit a product page on your live store
-2. Check that button appears with your styling
-3. Click button to verify try-on works
-4. Test on mobile to confirm it looks good
-
-<Check>
-Customization applies automatically to desktop, mobile, and tablet. No separate testing needed.
-</Check>
-
-## Common Questions
-
-<AccordionGroup>
-  <Accordion title="Can I add custom CSS to style the button?">
-    No. You can only customize via the Looksy dashboard settings (text, colors, corner position). Custom CSS is not supported.
-  </Accordion>
-
-  <Accordion title="Can I change the button position?">
-    No. The button is fixed on the product image. You can only change the corner position (top left or top right).
-  </Accordion>
-
-  <Accordion title="Can I customize the modal or upload area?">
-    No. Only the button text, colors, and corner position can be customized.
-  </Accordion>
-
-  <Accordion title="Do changes apply to mobile automatically?">
-    Yes. All customization applies to desktop, mobile, and tablet automatically.
-  </Accordion>
-
-  <Accordion title="Can I use different styling for different products?">
-    No. Button customization applies to all products globally.
-  </Accordion>
-</AccordionGroup>
-
-## Next Steps
-
-<CardGroup cols={2}>
-  <Card title="Theme Integration" icon="palette" href="/integration/theme-setup">
-    Enable Looksy with the app embed
-  </Card>
-  <Card title="Mobile Experience" icon="mobile" href="/integration/mobile-optimization">
-    Learn how Looksy works on mobile
-  </Card>
-  <Card title="Best Practices" icon="star" href="/product-setup/best-practices">
-    Optimize virtual try-on for conversions
-  </Card>
-  <Card title="Analytics" icon="chart-line" href="/analytics/dashboard-overview">
-    Track performance and engagement
-  </Card>
-</CardGroup>
+For placement or compatibility problems, use the [theme integration guide](https://withlooksy.com/docs/integration/theme-setup) and capture the theme name, template, product URL, screenshot, and device/browser for support.
