@@ -50,19 +50,16 @@
     "llms-full.txt",
     "skill.md",
     ".well-known/skills/index.json",
-    ".well-known/skills/looksy/SKILL.md",
+    ".well-known/skills/looksy/skill.md",
     ".well-known/agent-skills/index.json",
-    ".well-known/agent-skills/looksy/SKILL.md",
+    ".well-known/agent-skills/looksy/skill.md",
     ".well-known/mcp/server-card.json",
     ".well-known/agent-card.json"
   ],
   "requiredOriginDiscoveryFiles": [
     "skill.md",
     ".well-known/skills/index.json",
-    ".well-known/skills/looksy/SKILL.md",
-    ".well-known/agent-skills/index.json",
-    ".well-known/agent-skills/looksy/SKILL.md",
-    ".well-known/agent-card.json"
+    ".well-known/skills/looksy/skill.md"
   ],
   "protectedRoutes": [
     "index",
