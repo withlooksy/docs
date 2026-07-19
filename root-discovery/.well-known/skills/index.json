@@ -1,0 +1,9 @@
+{
+  "skills": [
+    {
+      "name": "looksy",
+      "description": "Use when a Shopify merchant needs authoritative Looksy virtual try-on setup, product, pricing, integration, or troubleshooting guidance.",
+      "files": ["skill.md"]
+    }
+  ]
+}

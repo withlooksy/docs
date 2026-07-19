@@ -8,6 +8,7 @@ on:
       - "llms.txt"
       - "llms-full.txt"
       - "skill.md"
+      - "root-discovery/**"
       - "schemarabbit.js"
       - ".mintlify/skills/**"
       - "AEO_RUNBOOK.md"
@@ -23,6 +24,7 @@ on:
       - "llms.txt"
       - "llms-full.txt"
       - "skill.md"
+      - "root-discovery/**"
       - "schemarabbit.js"
       - ".mintlify/skills/**"
       - "AEO_RUNBOOK.md"
@@ -88,7 +90,7 @@ jobs:
        github.event.deployment_status.state == 'success' &&
        startsWith(github.event.deployment_status.environment_url, 'https://withlooksy.com/docs'))
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -97,10 +99,10 @@ jobs:
       - name: Audit live Mintlify docs
         shell: bash
         run: |
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4 5 6; do
             node scripts/aeo-audit.mjs --live --json-output artifacts/aeo-live-audit.json && exit 0
-            if [ "$attempt" = 3 ]; then exit 1; fi
-            sleep $((attempt * 20))
+            if [ "$attempt" = 6 ]; then exit 1; fi
+            sleep $((attempt * 30))
           done
       - name: Upload live audit
         if: always()

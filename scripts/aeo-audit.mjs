@@ -667,8 +667,23 @@ function robotsBlocks(source, userAgent, requestPath) {
   return applicable[0]?.field === "disallow";
 }
 
+function crawlerBlockingProblems(source, requestPaths) {
+  const problems = [];
+  for (const userAgent of crawlerUserAgents) {
+    const blockedPaths = requestPaths.filter((requestPath) => robotsBlocks(source, userAgent, requestPath));
+    if (blockedPaths.length) {
+      problems.push(`${userAgent} is blocked from ${blockedPaths.slice(0, 3).join(", ")}${blockedPaths.length > 3 ? ` and ${blockedPaths.length - 3} more paths` : ""}`);
+    }
+  }
+  return problems;
+}
+
 function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
+}
+
+function normalizePublishedText(value) {
+  return value.replaceAll("\r\n", "\n").trimEnd();
 }
 
 const mdxFiles = await listFiles(root, ".mdx");
@@ -692,6 +707,14 @@ if (!robotsBlocks(wildcardFixture, "Googlebot", "/docs/private/page")) {
 const precedenceFixture = "User-agent: *\nDisallow: /docs/\nUser-agent: OAI-SearchBot\nAllow: /docs/\n";
 if (robotsBlocks(precedenceFixture, "OAI-SearchBot", "/docs/page")) {
   auditFixtureProblems.push("robots parser ignored the most-specific user-agent group");
+}
+const answerEngineBlockFixture = "User-agent: *\nAllow: /\nUser-agent: OAI-SearchBot\nDisallow: /docs/\n";
+if (!crawlerBlockingProblems(answerEngineBlockFixture, ["/docs/"]).length) {
+  auditFixtureProblems.push("crawler policy guard missed an answer-engine-specific docs block");
+}
+const nestedSectionBlockFixture = "User-agent: *\nDisallow: /docs/integration/\n";
+if (!crawlerBlockingProblems(nestedSectionBlockFixture, ["/docs/integration/gorgias"]).length) {
+  auditFixtureProblems.push("crawler policy guard missed a nested documentation-section block");
 }
 if (robotsSitemaps("# Sitemap: https://invalid.example/sitemap.xml\nSitemap: https://example.com/sitemap.xml\n").length !== 1) {
   auditFixtureProblems.push("robots sitemap parser accepted a commented directive");
@@ -986,6 +1009,52 @@ for (const problem of validateDocumentationLinks(sourceSkill, "skill.md", source
 if (aiSourceProblems.length) fail("AI discovery source", aiSourceProblems);
 else pass("AI discovery source", "reviewed llms.txt and skill.md agree with navigation and commercial facts");
 
+const rootDiscoverySourceProblems = [];
+let sourceRootRobots = "";
+let sourceRootLegacyManifest = "";
+let sourceRootLegacySkill = "";
+try {
+  sourceRootRobots = await readFile(path.join(root, "root-discovery", "robots.txt"), "utf8");
+  const expectedSitemaps = [
+    `${baseline.site.homepage}/sitemap.xml`,
+    `${baseline.site.docsBase}/sitemap.xml`,
+  ];
+  for (const sitemap of expectedSitemaps) {
+    if (!robotsSitemaps(sourceRootRobots).includes(sitemap)) {
+      rootDiscoverySourceProblems.push(`root-discovery/robots.txt is missing ${sitemap}`);
+    }
+  }
+  const sourceDocsPaths = [...new Set([
+    "/docs",
+    "/docs/",
+    ...navRoutes.map((route) => new URL(expectedLiveUrl(route)).pathname),
+  ])];
+  rootDiscoverySourceProblems.push(...crawlerBlockingProblems(sourceRootRobots, sourceDocsPaths));
+
+  sourceRootLegacyManifest = await readFile(
+    path.join(root, "root-discovery", ".well-known", "skills", "index.json"),
+    "utf8",
+  );
+  const sourceLegacyManifest = JSON.parse(sourceRootLegacyManifest);
+  sourceRootLegacySkill = await readFile(
+    path.join(root, "root-discovery", ".well-known", "skills", "looksy", "SKILL.md"),
+    "utf8",
+  );
+  const looksySkill = sourceLegacyManifest.skills?.find(
+    (entry) => entry.name?.toLowerCase() === "looksy",
+  );
+  if (!looksySkill?.files?.includes("skill.md")) {
+    rootDiscoverySourceProblems.push("root legacy manifest does not advertise the public lowercase skill.md path");
+  }
+  if (sourceRootLegacySkill !== sourceSkill) {
+    rootDiscoverySourceProblems.push("root legacy SKILL.md does not match the reviewed source skill.md");
+  }
+} catch (error) {
+  rootDiscoverySourceProblems.push(error.message);
+}
+if (rootDiscoverySourceProblems.length) fail("Root discovery source", rootDiscoverySourceProblems);
+else pass("Root discovery source", "Framer-hosted robots, manifest, and skill sources are complete and consistent");
+
 const brokenInternalLinks = [];
 for (const page of parsedPages) {
   brokenInternalLinks.push(...validateDocumentationLinks(
@@ -1104,16 +1173,40 @@ if (liveMode) {
   });
 
   const originDiscoveryProblems = [];
-  for (const liveFile of baseline.requiredOriginDiscoveryFiles) {
-    const originBody = originFileBodies.get(liveFile);
-    const docsBody = liveFileBodies.get(liveFile);
-    if (originBody && docsBody && originBody !== docsBody) {
-      originDiscoveryProblems.push(`${liveFile} does not transparently match its /docs counterpart`);
-    }
+  const originSkill = originFileBodies.get("skill.md") ?? "";
+  const originLegacyManifestText = originFileBodies.get(".well-known/skills/index.json") ?? "";
+  const originLegacySkill = originFileBodies.get(".well-known/skills/looksy/skill.md") ?? "";
+  if (originSkill && originSkill !== sourceSkill) {
+    originDiscoveryProblems.push("root skill.md does not match the reviewed source skill.md");
   }
-  if (originDiscoveryProblems.length) fail("Origin discovery transparency", originDiscoveryProblems);
+  if (originLegacySkill && originLegacySkill !== sourceSkill) {
+    originDiscoveryProblems.push("root legacy skill does not match the reviewed source skill.md");
+  }
+  if (
+    originLegacyManifestText &&
+    originLegacyManifestText !== sourceRootLegacyManifest
+  ) {
+    originDiscoveryProblems.push("root legacy manifest does not match its reviewed repository source");
+  }
+  try {
+    const originLegacyManifest = JSON.parse(originLegacyManifestText || "{}");
+    const originLegacyEntry = originLegacyManifest.skills?.find(
+      (entry) => entry.name?.toLowerCase() === "looksy",
+    );
+    if (!originLegacyEntry?.files?.includes("skill.md")) {
+      originDiscoveryProblems.push("root legacy manifest does not advertise the public lowercase skill.md path");
+    } else {
+      const advertisedPath = `.well-known/skills/${originLegacyEntry.name}/skill.md`;
+      if (!originFileBodies.has(advertisedPath)) {
+        originDiscoveryProblems.push(`root legacy manifest path /${advertisedPath} was not fetched successfully`);
+      }
+    }
+  } catch (error) {
+    originDiscoveryProblems.push(`root legacy manifest is invalid: ${error.message}`);
+  }
+  if (originDiscoveryProblems.length) fail("Origin discovery integrity", originDiscoveryProblems);
   else if (baseline.requiredOriginDiscoveryFiles.every((liveFile) => originFileBodies.has(liveFile))) {
-    pass("Origin discovery transparency", "root discovery resources match their canonical /docs counterparts");
+    pass("Origin discovery integrity", "root discovery resources match their reviewed Framer source files");
   }
 
   try {
@@ -1121,6 +1214,9 @@ if (liveMode) {
     const rootLlmsProblems = machineResourceProblems("llms.txt", response, body);
     if (!hasCanonicalDocsLink(body)) {
       rootLlmsProblems.push("main-site llms.txt does not include a Markdown link to Looksy documentation");
+    }
+    if (body !== sourceLlms) {
+      rootLlmsProblems.push("main-site llms.txt does not match its reviewed repository source");
     }
     for (const entry of baseline.forbiddenContentPatterns) {
       const match = body.match(new RegExp(entry.pattern, "i"));
@@ -1149,7 +1245,6 @@ if (liveMode) {
   }
 
   const aiIntegrityProblems = [];
-  const normalizePublishedText = (value) => value.replaceAll("\r\n", "\n").trimEnd();
   const liveSkill = liveFileBodies.get("skill.md") ?? "";
   const liveLlms = liveFileBodies.get("llms.txt") ?? "";
   if (liveSkill && normalizePublishedText(liveSkill) !== normalizePublishedText(sourceSkill)) {
@@ -1259,6 +1354,9 @@ if (liveMode) {
   try {
     const { response, body } = await fetchText(`${baseline.site.homepage}/robots.txt`);
     const originRobotsProblems = machineResourceProblems("robots.txt", response, body);
+    if (body !== sourceRootRobots) {
+      originRobotsProblems.push("root robots.txt does not match its reviewed repository source");
+    }
     if (!robotsSitemaps(body).includes(`${baseline.site.docsBase}/sitemap.xml`)) {
       originRobotsProblems.push("root robots.txt does not advertise the docs sitemap");
     }
@@ -1267,12 +1365,7 @@ if (liveMode) {
       "/docs/",
       ...expectedUrls.map((url) => new URL(url).pathname),
     ])];
-    for (const userAgent of crawlerUserAgents) {
-      const blockedPaths = docsPaths.filter((requestPath) => robotsBlocks(body, userAgent, requestPath));
-      if (blockedPaths.length) {
-        originRobotsProblems.push(`${userAgent} is blocked from ${blockedPaths.slice(0, 3).join(", ")}${blockedPaths.length > 3 ? ` and ${blockedPaths.length - 3} more paths` : ""}`);
-      }
-    }
+    originRobotsProblems.push(...crawlerBlockingProblems(body, docsPaths));
     if (originRobotsProblems.length) fail("Origin robots policy", originRobotsProblems);
     else pass("Origin robots policy", "root robots.txt advertises the docs sitemap and permits representative crawlers");
   } catch (error) {

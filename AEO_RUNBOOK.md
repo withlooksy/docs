@@ -67,7 +67,7 @@ The live audit also verifies:
 
 - `robots.txt`, `sitemap.xml`, `llms.txt`, and `llms-full.txt` are served;
 - Mintlify skill-discovery and MCP server-card endpoints are served;
-- root agent-discovery routes reach their Mintlify counterparts;
+- root Framer discovery routes match their reviewed repository sources;
 - all navigated source pages appear in the sitemap;
 - every sitemap URL returns indexable, self-canonical HTML with one H1 and article schema tied to the approved `Looksy, LLC` publisher;
 - every page's Markdown variant matches its reviewed source and is served without bare-origin internal links;
@@ -75,28 +75,31 @@ The live audit also verifies:
 - the live pricing answer, homepage pricing, Shopify App Store pricing, and approved baseline agree;
 - common search and answer-engine user agents can retrieve HTML and Markdown representations across every top-level docs section.
 
-## Reverse-proxy completeness
+## Root discovery completeness
 
-The `/docs` reverse proxy also needs these uncached origin routes for standard agent discovery:
+Framer serves five reviewed static files at the main origin. Their repository sources and public routes are:
 
-| Origin route | Mintlify destination |
+| Repository source | Public route |
 | --- | --- |
-| `/skill.md` | `/docs/skill.md` |
-| `/.well-known/skills/*` | `/docs/.well-known/skills/*` |
-| `/.well-known/agent-skills/*` | `/docs/.well-known/agent-skills/*` |
-| `/.well-known/agent-card.json` | `/docs/.well-known/agent-card.json` |
+| `root-discovery/robots.txt` | `/robots.txt` |
+| `llms.txt` | `/llms.txt` |
+| `skill.md` | `/skill.md` |
+| `root-discovery/.well-known/skills/index.json` | `/.well-known/skills/index.json` |
+| `root-discovery/.well-known/skills/looksy/SKILL.md` | `/.well-known/skills/looksy/skill.md` |
 
-Forward the original user agent and client/protocol headers, set the Mintlify target as `Origin`, do not forward the incoming `Host`, and disable cache on these routes. The root `robots.txt` must allow `/docs` and advertise `https://withlooksy.com/docs/sitemap.xml` alongside the main-site sitemap.
+Framer normalizes the uploaded `SKILL.md` filename to lowercase. Its current plan permits five static files, so the recommended agent-skills manifest, agent card, and MCP server card remain canonical below `/docs`; do not buy a file add-on or create more root copies without an explicit owner decision.
 
-These settings live on the production origin proxy, not in this repository. The scheduled audit fails when a route is absent or when root robots policy no longer permits the docs. Resolve the proxy or robots configuration at its owning surface rather than adding duplicate files to this repo.
+The root skill gives answer engines a stable reviewed source while Mintlify regenerates its own `/docs/skill.md`. Mintlify documents that skill updates can take up to 24 hours. The live audit remains strict about the generated copy, so a recent content deployment can fail until that copy catches up; the daily run will verify eventual convergence.
 
-Keep the main site's `/llms.txt` as the broader Looksy product index rather than replacing it with the docs-only file. It must link to `/docs`, avoid retired commercial facts, and describe generated results as visual previews rather than real-world fit proof or instant output. Framer hosts that file from its domain-level static files, so update and publish it at the Framer surface; this repository only verifies the live result.
+The root `robots.txt` must allow `/docs` and advertise `https://withlooksy.com/docs/sitemap.xml` alongside the main-site sitemap. Root `/llms.txt` is a second publication of the reviewed documentation answer index in this repository. It must match that source, link to `/docs`, and avoid retired commercial facts or unsupported product claims.
+
+Update these files in the repository, upload the mapped files through **Framer Dashboard -> withlooksy.com -> Files**, publish Framer, and run the live audit. The audit compares root resources to their reviewed repository sources; it does not require them to match Mintlify-generated resources byte for byte.
 
 If `/docs/api-reference/openapi.json` serves Mintlify's sample Plant Store after this repository deploys without an OpenAPI configuration, remove the stale API specification in the Mintlify dashboard or ask Mintlify support to clear the project setting. The audit treats that unrelated answer surface as a failure.
 
 ## Schedule and failure handling
 
-`.github/workflows/aeo-docs-audit.yml` runs source checks on pull requests and changes to `main`. It runs the complete live audit every day at 08:17 UTC, on manual dispatch, and after a successful Mintlify deployment event for the production docs URL. A terminal Mintlify deployment failure or error produces a failed workflow instead of a skipped green run.
+`.github/workflows/aeo-docs-audit.yml` runs source checks on pull requests and changes to `main`. It runs the complete live audit every day at 08:17 UTC, on manual dispatch, and after a successful Mintlify deployment event for the production docs URL. Deployment-triggered live checks retry six times over about eight minutes to absorb ordinary edge propagation. A terminal Mintlify deployment failure or error produces a failed workflow instead of a skipped green run.
 
 A failed check is a release blocker for the affected docs change. The workflow uploads a 30-day JSON artifact and writes a concise GitHub job summary. Fix the source or deployment; do not weaken a check merely to make CI green.
 
