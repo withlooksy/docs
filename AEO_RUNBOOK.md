@@ -95,7 +95,9 @@ The root `robots.txt` must allow `/docs` and advertise `https://withlooksy.com/d
 
 Update these files in the repository, upload the mapped files through **Framer Dashboard -> withlooksy.com -> Files**, publish Framer, and run the live audit. The audit compares root resources to their reviewed repository sources; it does not require them to match Mintlify-generated resources byte for byte.
 
-If `/docs/api-reference/openapi.json` serves Mintlify's sample Plant Store after this repository deploys without an OpenAPI configuration, remove the stale API specification in the Mintlify dashboard or ask Mintlify support to clear the project setting. The audit treats that unrelated answer surface as a failure.
+If `/docs/api-reference/openapi.json` serves Mintlify's sample Plant Store after this repository deploys without an OpenAPI configuration, remove the stale API specification in the Mintlify dashboard or ask Mintlify support to clear the project setting. The audit treats that unrelated answer surface as a failure. The purge is complete only when both the custom-domain and `looksy.mintlify.app` routes return HTTP 404 or 410 without the sample body.
+
+Mintlify support confirmed that `X-Robots-Tag: noindex, nofollow` on generated Markdown and `.md` responses is currently platform-wide and is not controlled by `seo.indexing`. Keep that state visible as a warning while the corresponding HTML remains indexable. An HTML `noindex` remains a failure, and the docs must not add a conflicting response header to mask Mintlify's upstream policy.
 
 ## Schedule and failure handling
 
