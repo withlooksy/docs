@@ -323,6 +323,17 @@ function machineResourceProblems(name, response, body) {
   return problems;
 }
 
+function unexpectedOpenApiProblem(url, status, body) {
+  const retired = status === 404 || status === 410;
+  const servesSample = /OpenAPI Plant Store/i.test(body);
+  if (retired && !servesSample) return null;
+
+  const reason = servesSample
+    ? "sample OpenAPI Plant Store is served"
+    : "unconfigured OpenAPI route is still served";
+  return `${url}: ${reason} with HTTP ${status}`;
+}
+
 function expectedPlanRow(plan) {
   return `| ${plan.name} | ${plan.monthlyPrice} | ${plan.monthlyCredits} | ${plan.additionalCreditPrice ?? "Not listed"} | ${plan.annualPrice ?? "Not listed"} |`;
 }
@@ -356,24 +367,44 @@ function llmsFullCoverageProblems(source, pages) {
   const expectedSources = new Set(
     pages.map((page) => expectedLiveUrl(page.relative.replace(/\.mdx$/, ""))),
   );
-  const entries = [...source.matchAll(/^# [^\n]+\nSource:\s+(\S+)\s*$/gm)]
-    .map((match) => ({
-      index: match.index,
-      end: match.index + match[0].length,
-      source: match[1].replace(/\/$/, ""),
-    }));
+  const entries = [...source.matchAll(/^# ([^\n]+)\nSource:\s+(\S+)\s*$/gm)]
+    .map((match) => {
+      const source = match[2].replace(/\/$/, "");
+      return {
+        index: match.index,
+        end: match.index + match[0].length,
+        title: match[1].trim(),
+        source: source === `${baseline.site.docsBase}/index` ? baseline.site.docsBase : source,
+      };
+    });
   const publishedSources = entries.map((entry) => entry.source);
+  const sourceCounts = new Map();
+  for (const publishedSource of publishedSources) {
+    sourceCounts.set(publishedSource, (sourceCounts.get(publishedSource) ?? 0) + 1);
+  }
+  for (const [publishedSource, count] of sourceCounts) {
+    if (count > 1) problems.push(`${publishedSource}: duplicate source marker`);
+  }
   for (const page of pages) {
     const route = page.relative.replace(/\.mdx$/, "");
     const expectedSource = expectedLiveUrl(route);
     const matches = entries.filter((entry) => entry.source === expectedSource);
     if (matches.length === 0) problems.push(`${route}: source marker missing`);
     if (matches.length > 1) problems.push(`${route}: source marker appears ${matches.length} times`);
+    if (matches.length === 1) {
+      if (typeof page.data?.title === "string" && matches[0].title !== page.data.title.trim()) {
+        problems.push(`${route}: published corpus title does not match source`);
+      }
+    }
     if (matches.length === 1 && typeof page.body === "string") {
       const entryIndex = entries.indexOf(matches[0]);
       const sectionEnd = entries[entryIndex + 1]?.index ?? source.length;
       const publishedBody = normalizedMarkdownBody(source.slice(matches[0].end, sectionEnd));
-      const expectedBody = normalizedMarkdownBody(page.body);
+      const expectedBody = normalizedMarkdownBody(
+        typeof page.data?.description === "string"
+          ? `${page.data.description}\n\n${page.body}`
+          : page.body,
+      );
       if (publishedBody !== expectedBody) {
         problems.push(`${route}: published corpus body does not match source`);
       }
@@ -388,21 +419,72 @@ function llmsFullCoverageProblems(source, pages) {
 function normalizedMarkdownBody(source) {
   const normalized = [];
   let inFence = false;
-  for (const rawLine of source.replaceAll("\r\n", "\n").split("\n")) {
-    if (/^\s*```/.test(rawLine)) {
+  const inlineCodeState = { delimiterLength: 0 };
+  const lines = source.replaceAll("\r\n", "\n").split("\n");
+  for (const [index, rawLine] of lines.entries()) {
+    if (!inlineCodeState.delimiterLength && /^\s*```/.test(rawLine)) {
       inFence = !inFence;
-      normalized.push(rawLine.trimEnd().trimStart());
+      normalized.push(rawLine.trim().replace(/\s+theme=\{null\}$/, ""));
       continue;
     }
     if (inFence) {
       normalized.push(rawLine.trimEnd());
       continue;
     }
-    const line = rawLine.trim().replace(/^\*\s+/, "- ");
-    if (!line && !normalized.at(-1)) continue;
+    let line = rawLine
+      .trim()
+      .replace(/^\*\s+/, "- ")
+      .replace(/^<CardGroup\s+cols=\{\d+\}>$/, "<CardGroup>");
+    line = normalizeGeneratedCurrencyEscapes(line, inlineCodeState);
+    if (/^\|.*\|$/.test(line)) {
+      const cells = line.slice(1, -1).split("|").map((cell) => cell.trim());
+      const separator = cells.every((cell) => /^:?-{3,}:?$/.test(cell));
+      line = `|${cells.map((cell) => {
+        if (!separator) return cell;
+        return `${cell.startsWith(":") ? ":" : ""}---${cell.endsWith(":") ? ":" : ""}`;
+      }).join("|")}|`;
+    }
+    if (!line) {
+      const nextLine = lines.slice(index + 1).find((candidate) => candidate.trim())?.trim();
+      const betweenGeneratedCards = /<\/Card>$/.test(normalized.at(-1) ?? "") && /^<Card\b/.test(nextLine ?? "");
+      if (!betweenGeneratedCards && normalized.length && normalized.at(-1) !== "") normalized.push("");
+      continue;
+    }
     normalized.push(line);
   }
   return normalized.join("\n").trim();
+}
+
+function normalizeGeneratedCurrencyEscapes(line, state) {
+  let normalized = "";
+  for (let index = 0; index < line.length;) {
+    if (line[index] === "`") {
+      let precedingBackslashes = 0;
+      for (let cursor = index - 1; cursor >= 0 && line[cursor] === "\\"; cursor -= 1) precedingBackslashes += 1;
+      const escapedOutsideCode = !state.delimiterLength && precedingBackslashes % 2 === 1;
+      if (escapedOutsideCode) {
+        normalized += "`";
+        index += 1;
+        continue;
+      }
+      let end = index + 1;
+      while (line[end] === "`") end += 1;
+      const delimiterLength = end - index;
+      if (!state.delimiterLength) state.delimiterLength = delimiterLength;
+      else if (delimiterLength === state.delimiterLength) state.delimiterLength = 0;
+      normalized += line.slice(index, end);
+      index = end;
+      continue;
+    }
+    if (!state.delimiterLength && line[index] === "\\" && line[index + 1] === "$" && /\d/.test(line[index + 2] ?? "")) {
+      normalized += "$";
+      index += 2;
+      continue;
+    }
+    normalized += line[index];
+    index += 1;
+  }
+  return normalized;
 }
 
 function liveMarkdownBody(source, page) {
@@ -767,6 +849,18 @@ if (hasCanonicalDocsLink("[unrelated docs](https://example.com/docs)")) {
 if (!hasCanonicalDocsLink("[Looksy docs](https://withlooksy.com/docs)")) {
   auditFixtureProblems.push("origin llms validator rejected the canonical docs link");
 }
+if (unexpectedOpenApiProblem("https://example.com/openapi.json", 404, "")) {
+  auditFixtureProblems.push("OpenAPI validator rejected a purged HTTP 404 route");
+}
+if (unexpectedOpenApiProblem("https://example.com/openapi.json", 410, "")) {
+  auditFixtureProblems.push("OpenAPI validator rejected a purged HTTP 410 route");
+}
+if (!unexpectedOpenApiProblem("https://example.com/openapi.json", 200, "")) {
+  auditFixtureProblems.push("OpenAPI validator accepted a live unconfigured route");
+}
+if (!unexpectedOpenApiProblem("https://example.com/openapi.json", 404, "OpenAPI Plant Store")) {
+  auditFixtureProblems.push("OpenAPI validator accepted a sample body on a retired route");
+}
 const frontmatterFixture = parseFrontmatter('---\ntitle: "Fixture"\ndescription: >\n  A folded description\n  remains readable.\nnoindex: true # temporary\n---\n');
 if (frontmatterFixture?.data.noindex !== true || frontmatterFixture?.data.description !== "A folded description remains readable.") {
   auditFixtureProblems.push("frontmatter parser missed typed or folded YAML values");
@@ -778,6 +872,36 @@ const fullCorpusFixturePages = [
 const fullCorpusFixture = `# Fixture\nSource: ${baseline.site.docsBase}\n\nThe complete fixture answer is present.\n\n# Example\nSource: ${baseline.site.docsBase}/faq/example\n\nThe complete example answer is present.\n`;
 if (llmsFullCoverageProblems(fullCorpusFixture, fullCorpusFixturePages).length) {
   auditFixtureProblems.push("llms-full coverage validator rejected a complete corpus");
+}
+const generatedCorpusFixturePages = [
+  {
+    relative: "index.mdx",
+    data: { title: "Fixture", description: "A generated description." },
+    body: "The current answer costs **$14.99**.",
+  },
+];
+const generatedCorpusFixture = `# Fixture\nSource: ${baseline.site.docsBase}/index\n\nA generated description.\n\nThe current answer costs **\\$14.99**.\n`;
+if (llmsFullCoverageProblems(generatedCorpusFixture, generatedCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator rejected Mintlify's index alias, description, or Markdown escaping");
+}
+if (!llmsFullCoverageProblems(generatedCorpusFixture.replace("A generated description.", "A stale description."), generatedCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator accepted a stale generated description");
+}
+if (!llmsFullCoverageProblems(generatedCorpusFixture.replace("A generated description.\n\n", ""), generatedCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator accepted a missing generated description");
+}
+if (!llmsFullCoverageProblems(generatedCorpusFixture.replace("# Fixture", "# Stale fixture"), generatedCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator accepted a stale generated title");
+}
+if (!llmsFullCoverageProblems(`${generatedCorpusFixture}\n# Duplicate\nSource: ${baseline.site.docsBase}\n\nDuplicate body.\n`, generatedCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator accepted duplicate /docs and /docs/index root markers");
+}
+const nestedIndexAliasFixture = fullCorpusFixture.replace(
+  `${baseline.site.docsBase}/faq/example`,
+  `${baseline.site.docsBase}/faq/example/index`,
+);
+if (!llmsFullCoverageProblems(nestedIndexAliasFixture, fullCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator accepted a nested /index source alias");
 }
 if (!llmsFullCoverageProblems(`# Fixture\nSource: ${baseline.site.docsBase}\n`, fullCorpusFixturePages).length) {
   auditFixtureProblems.push("llms-full coverage validator accepted a truncated corpus");
@@ -799,6 +923,93 @@ if (!quantifiedClaimHasSupport("According to [the named study](https://example.c
 }
 if (normalizedMarkdownBody("```yaml\n  nested: true\n```") === normalizedMarkdownBody("```yaml\nnested: true\n```")) {
   auditFixtureProblems.push("Markdown parity normalization hid indentation-sensitive code changes");
+}
+if (normalizedMarkdownBody("First paragraph.\n\nSecond paragraph.") === normalizedMarkdownBody("First paragraph.\nSecond paragraph.")) {
+  auditFixtureProblems.push("Markdown parity normalization hid a changed paragraph boundary");
+}
+if (normalizedMarkdownBody("## Current answer") === normalizedMarkdownBody("\\## Current answer")) {
+  auditFixtureProblems.push("Markdown parity normalization hid an escaped heading marker");
+}
+if (normalizedMarkdownBody("Use `\\$TOKEN`.") === normalizedMarkdownBody("Use `$TOKEN`.")) {
+  auditFixtureProblems.push("Markdown parity normalization hid an escaped inline-code dollar");
+}
+if (normalizedMarkdownBody("Use `\\$14.99`.") === normalizedMarkdownBody("Use `$14.99`.")) {
+  auditFixtureProblems.push("Markdown parity normalization hid an escaped numeric inline-code dollar");
+}
+if (normalizedMarkdownBody("Use `` `\\$14.99` ``.") === normalizedMarkdownBody("Use `` `$14.99` ``.")) {
+  auditFixtureProblems.push("Markdown parity normalization hid an escaped dollar in multi-backtick inline code");
+}
+if (
+  normalizedMarkdownBody("Use `the literal\n\\$14.99` value.") ===
+  normalizedMarkdownBody("Use `the literal\n$14.99` value.")
+) {
+  auditFixtureProblems.push("Markdown parity normalization hid an escaped dollar in multiline inline code");
+}
+if (
+  normalizedMarkdownBody("Show \\` literally, then pay $14.99.") !==
+  normalizedMarkdownBody("Show \\` literally, then pay \\$14.99.")
+) {
+  auditFixtureProblems.push("Markdown parity normalization treated an escaped backtick as inline code");
+}
+if (
+  normalizedMarkdownBody("Show \\``\\$14.99`.") ===
+  normalizedMarkdownBody("Show \\``$14.99`.")
+) {
+  auditFixtureProblems.push("Markdown parity normalization hid code after an escaped backtick");
+}
+if (
+  normalizedMarkdownBody("Use `the literal\n\\$14.99` then pay $29.") !==
+  normalizedMarkdownBody("Use `the literal\n\\$14.99` then pay \\$29.")
+) {
+  auditFixtureProblems.push("Markdown parity normalization did not reset after multiline inline code");
+}
+const sourceFormattingFixture = [
+  "The plan costs **$14.99**.",
+  "",
+  "| Plan | Price |",
+  "| --- | ---: |",
+  "| Starter | $14.99 |",
+  "",
+  "- Current answer",
+  "<CardGroup cols={2}>",
+  "<Card>First</Card>",
+  "<Card>Second</Card>",
+  "</CardGroup>",
+  "```text",
+  "current answer",
+  "```",
+].join("\n");
+const generatedFormattingFixture = [
+  "The plan costs **\\$14.99**.",
+  "",
+  "| Plan    | Price |",
+  "| ------- | ----: |",
+  "| Starter | \\$14.99 |",
+  "",
+  "* Current answer",
+  "<CardGroup>",
+  "<Card>First</Card>",
+  "",
+  "<Card>Second</Card>",
+  "</CardGroup>",
+  "```text theme={null}",
+  "current answer",
+  "```",
+].join("\n");
+if (normalizedMarkdownBody(sourceFormattingFixture) !== normalizedMarkdownBody(generatedFormattingFixture)) {
+  auditFixtureProblems.push("Markdown parity normalization rejected equivalent generated formatting");
+}
+if (
+  normalizedMarkdownBody(sourceFormattingFixture) ===
+  normalizedMarkdownBody(generatedFormattingFixture.replace("| Starter | \\$14.99 |", "| Starter | \\$19.99 |"))
+) {
+  auditFixtureProblems.push("Markdown parity normalization hid changed table content");
+}
+if (
+  normalizedMarkdownBody("| Plan | Price |\n| --- | ---: |") ===
+  normalizedMarkdownBody("| Plan | Price |\n| --- | --- |")
+) {
+  auditFixtureProblems.push("Markdown parity normalization hid changed table alignment");
 }
 const conflictingCommercialFixture = [
   "Preview Free 25 try-on credits",
@@ -1453,23 +1664,44 @@ if (liveMode) {
   else pass("Live Markdown variants", `${navRoutes.length} Markdown answers are served without bare-origin links`);
 
   if (!config.api?.openapi) {
-    try {
-      const { response, body } = await fetchText(`${baseline.site.docsBase}/api-reference/openapi.json`);
-      if (response.status !== 404 || /OpenAPI Plant Store/i.test(body)) {
-        fail("Unexpected OpenAPI surface", `unconfigured sample OpenAPI is served with HTTP ${response.status}`);
-      } else {
-        pass("Unexpected OpenAPI surface", "no unconfigured OpenAPI is served");
+    const openApiUrls = [...new Set([
+      `${baseline.site.docsBase}/api-reference/openapi.json`,
+      `${baseline.site.mintlifyOrigin}/api-reference/openapi.json`,
+    ])];
+    const openApiProbes = new Array(openApiUrls.length);
+    await mapLimit(openApiUrls, 2, async (url, index) => {
+      try {
+        const { response, body } = await fetchText(url);
+        const sampleDetected = /OpenAPI Plant Store/i.test(body);
+        openApiProbes[index] = {
+          url,
+          status: response.status,
+          sampleDetected,
+          retired: (response.status === 404 || response.status === 410) && !sampleDetected,
+        };
+      } catch (error) {
+        openApiProbes[index] = { url, error: error.message, retired: false };
       }
-    } catch (error) {
-      fail("Unexpected OpenAPI surface", error.message);
-    }
+    });
+    const openApiProblems = openApiProbes
+      .map((probe) => probe.error
+        ? `${probe.url}: ${probe.error}`
+        : unexpectedOpenApiProblem(probe.url, probe.status, probe.sampleDetected ? "OpenAPI Plant Store" : ""))
+      .filter(Boolean);
+    const openApiDetails = {
+      summary: `${openApiProbes.filter((probe) => probe.retired).length}/${openApiProbes.length} unconfigured OpenAPI routes are retired`,
+      probes: openApiProbes,
+    };
+    if (openApiProblems.length) fail("Unexpected OpenAPI surface", { ...openApiDetails, problems: openApiProblems });
+    else pass("Unexpected OpenAPI surface", openApiDetails);
   }
 
   const livePricingUrl = `${baseline.site.docsBase}/faq/pricing-and-plans.md`;
   try {
     const { response, body } = await fetchText(livePricingUrl, { headers: { accept: "text/markdown" } });
+    const normalizedBody = normalizedMarkdownBody(body);
     const missingPlanRows = baseline.plans
-      .filter((plan) => !body.includes(expectedPlanRow(plan)))
+      .filter((plan) => !normalizedBody.includes(normalizedMarkdownBody(expectedPlanRow(plan))))
       .map((plan) => plan.name);
     const missingPrimarySources = [baseline.site.homepage, baseline.site.shopifyListing]
       .filter((url) => !body.includes(url));
