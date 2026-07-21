@@ -399,11 +399,14 @@ function llmsFullCoverageProblems(source, pages) {
     if (matches.length === 1 && typeof page.body === "string") {
       const entryIndex = entries.indexOf(matches[0]);
       const sectionEnd = entries[entryIndex + 1]?.index ?? source.length;
-      const publishedBody = normalizedMarkdownBody(source.slice(matches[0].end, sectionEnd));
+      const publishedBody = normalizedMarkdownBody(source.slice(matches[0].end, sectionEnd), {
+        collapseImageFrameShape: "generated",
+      });
       const expectedBody = normalizedMarkdownBody(
         typeof page.data?.description === "string"
           ? `${page.data.description}\n\n${page.body}`
           : page.body,
+        { collapseImageFrameShape: "source" },
       );
       if (publishedBody !== expectedBody) {
         problems.push(`${route}: published corpus body does not match source`);
@@ -416,7 +419,7 @@ function llmsFullCoverageProblems(source, pages) {
   return problems;
 }
 
-function normalizedMarkdownBody(source) {
+function normalizedMarkdownBody(source, { collapseImageFrameShape } = {}) {
   const normalized = [];
   let inFence = false;
   const inlineCodeState = { delimiterLength: 0 };
@@ -427,6 +430,27 @@ function normalizedMarkdownBody(source) {
       normalized.push(rawLine.trim().replace(/\s+theme=\{null\}$/, ""));
       continue;
     }
+    if (
+      collapseImageFrameShape && !inFence && !inlineCodeState.delimiterLength &&
+      (
+        (
+          collapseImageFrameShape === "source" &&
+          /^\s*<Frame\b[^>]*\bcaption="[^"]+"[^>]*>\s*$/.test(rawLine) &&
+          /^\s*<img\b[^>]*\bsrc="\/images\/[^"]+"[^>]*\balt="[^"]+"[^>]*\/>\s*$/.test(lines[index + 1] ?? "")
+        ) || (
+          collapseImageFrameShape === "generated" &&
+          /^\s*<Frame>\s*$/.test(rawLine) &&
+          /^\s*<img\s+alt="[^"]+"\s*\/>\s*$/.test(lines[index + 1] ?? "")
+        )
+      ) &&
+      /^\s*<\/Frame>\s*$/.test(lines[index + 2] ?? "")
+    ) {
+      const alt = lines[index + 1].match(/\balt="([^"]+)"/)?.[1];
+      normalized.push(`<Image alt="${alt}">`);
+      lines[index + 1] = "";
+      lines[index + 2] = "";
+      continue;
+    }
     if (inFence) {
       normalized.push(rawLine.trimEnd());
       continue;
@@ -435,6 +459,7 @@ function normalizedMarkdownBody(source) {
       .trim()
       .replace(/^\*\s+/, "- ")
       .replace(/^<CardGroup\s+cols=\{\d+\}>$/, "<CardGroup>");
+    if (!inlineCodeState.delimiterLength) line = normalizeMintlifyGeneratedImage(line);
     line = normalizeGeneratedCurrencyEscapes(line, inlineCodeState);
     if (/^\|.*\|$/.test(line)) {
       const cells = line.slice(1, -1).split("|").map((cell) => cell.trim());
@@ -453,6 +478,15 @@ function normalizedMarkdownBody(source) {
     normalized.push(line);
   }
   return normalized.join("\n").trim();
+}
+
+function normalizeMintlifyGeneratedImage(line) {
+  const match = line.match(
+    /^<img src="https:\/\/mintcdn\.com\/looksy\/[^\/"\s]+\/(images\/[^?"\s]+)\?[^\"]*" alt="([^"]+)" width="\d+" height="\d+" data-path="\1" \/>$/,
+  );
+  if (!match) return line;
+  if (/%(?:2f|5c)/i.test(match[1])) return line;
+  return `<img src="/${match[1]}" alt="${match[2]}" />`;
 }
 
 function normalizeGeneratedCurrencyEscapes(line, state) {
@@ -884,6 +918,52 @@ const generatedCorpusFixture = `# Fixture\nSource: ${baseline.site.docsBase}/ind
 if (llmsFullCoverageProblems(generatedCorpusFixture, generatedCorpusFixturePages).length) {
   auditFixtureProblems.push("llms-full coverage validator rejected Mintlify's index alias, description, or Markdown escaping");
 }
+const imageCorpusFixturePages = [
+  {
+    relative: "faq/image-example.mdx",
+    data: { title: "Image example", description: "A visual example." },
+    body: [
+      "The written instruction remains canonical.",
+      "",
+      '<Frame caption="Current screenshot">',
+      '  <img src="/images/example/current.jpg" alt="Current UI." />',
+      "</Frame>",
+      "",
+      "The verification step remains canonical.",
+    ].join("\n"),
+  },
+];
+const imageCorpusFixture = `# Image example
+Source: ${baseline.site.docsBase}/faq/image-example
+
+A visual example.
+
+The written instruction remains canonical.
+
+<Frame>
+  <img alt="Current UI." />
+</Frame>
+
+The verification step remains canonical.
+`;
+if (llmsFullCoverageProblems(imageCorpusFixture, imageCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator rejected Mintlify's generated visual-only Frame");
+}
+if (!llmsFullCoverageProblems(imageCorpusFixture.replace("verification step", "retired step"), imageCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator hid changed prose around a generated image Frame");
+}
+if (!llmsFullCoverageProblems(imageCorpusFixture.replace('alt="Current UI."', 'alt="Stale UI."'), imageCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator hid changed generated image alt text");
+}
+if (!llmsFullCoverageProblems(imageCorpusFixture.replace('\n<Frame>\n  <img alt="Current UI." />\n</Frame>\n', "\n"), imageCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator accepted an omitted image Frame");
+}
+if (!llmsFullCoverageProblems(imageCorpusFixture.replace(
+  '<Frame>\n  <img alt="Current UI." />\n</Frame>',
+  '<Frame caption="Changed screenshot">\n  <img src="/images/example/changed.jpg" alt="Current UI." />\n</Frame>',
+), imageCorpusFixturePages).length) {
+  auditFixtureProblems.push("llms-full coverage validator accepted an unexpected source-form image Frame");
+}
 if (!llmsFullCoverageProblems(generatedCorpusFixture.replace("A generated description.", "A stale description."), generatedCorpusFixturePages).length) {
   auditFixtureProblems.push("llms-full coverage validator accepted a stale generated description");
 }
@@ -998,6 +1078,47 @@ const generatedFormattingFixture = [
 ].join("\n");
 if (normalizedMarkdownBody(sourceFormattingFixture) !== normalizedMarkdownBody(generatedFormattingFixture)) {
   auditFixtureProblems.push("Markdown parity normalization rejected equivalent generated formatting");
+}
+const sourceImageFixture = [
+  '<Frame caption="Current screenshot">',
+  '  <img src="/images/example/current.jpg" alt="Current UI." />',
+  '</Frame>',
+].join("\n");
+const generatedImageFixture = [
+  '<Frame caption="Current screenshot">',
+  '<img src="https://mintcdn.com/looksy/deploy/images/example/current.jpg?fit=max&amp;auto=format&amp;q=85" alt="Current UI." width="1280" height="720" data-path="images/example/current.jpg" />',
+  '</Frame>',
+].join("\n");
+const fencedImageFixture = `\`\`\`mdx\n${sourceImageFixture}\n\`\`\``;
+if (normalizedMarkdownBody(fencedImageFixture, { collapseImageFrameShape: "source" }) !== normalizedMarkdownBody(fencedImageFixture)) {
+  auditFixtureProblems.push("llms-full normalization hid an image Frame inside a code fence");
+}
+const inlineCodeImageFixture = `\`\n${generatedImageFixture}\n\``;
+if (normalizedMarkdownBody(inlineCodeImageFixture, { collapseImageFrameShape: "generated" }) !== normalizedMarkdownBody(inlineCodeImageFixture)) {
+  auditFixtureProblems.push("Markdown parity normalization rewrote an image inside multiline inline code");
+}
+if (normalizedMarkdownBody(sourceImageFixture) !== normalizedMarkdownBody(generatedImageFixture)) {
+  auditFixtureProblems.push("Markdown parity normalization rejected an equivalent Mintlify image rewrite");
+}
+if (
+  normalizedMarkdownBody(sourceImageFixture) ===
+  normalizedMarkdownBody(generatedImageFixture.replace('alt="Current UI."', 'alt="Stale UI."'))
+) {
+  auditFixtureProblems.push("Markdown parity normalization hid changed image alt text");
+}
+if (
+  normalizedMarkdownBody(sourceImageFixture) ===
+  normalizedMarkdownBody(generatedImageFixture.replace("images/example/current.jpg?", "images/example/retired.jpg?"))
+) {
+  auditFixtureProblems.push("Markdown parity normalization hid a mismatched Mintlify image source");
+}
+const imageWithSiblingFixture = `${generatedImageFixture.split("\n")[1]}<Panel width="9" />`;
+if (normalizedMarkdownBody(imageWithSiblingFixture) !== imageWithSiblingFixture) {
+  auditFixtureProblems.push("Markdown parity normalization rewrote a generated image with sibling markup");
+}
+const nonImageMintlifyFixture = generatedImageFixture.split("\n")[1].replace(/^<img/, "<Widget");
+if (normalizedMarkdownBody(nonImageMintlifyFixture) !== nonImageMintlifyFixture) {
+  auditFixtureProblems.push("Markdown parity normalization rewrote non-image Mintlify markup");
 }
 if (
   normalizedMarkdownBody(sourceFormattingFixture) ===
