@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "**/*.mdx"
+      - "images/**"
       - "docs.json"
       - "llms.txt"
       - "llms-full.txt"
@@ -20,6 +21,7 @@ on:
       - main
     paths:
       - "**/*.mdx"
+      - "images/**"
       - "docs.json"
       - "llms.txt"
       - "llms-full.txt"
