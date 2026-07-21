@@ -482,7 +482,7 @@ function normalizedMarkdownBody(source, { collapseImageFrameShape } = {}) {
 
 function normalizeMintlifyGeneratedImage(line) {
   const match = line.match(
-    /^<img src="https:\/\/mintcdn\.com\/looksy\/[^\/"\s]+\/(images\/[^?"\s]+)\?[^\"]*" alt="([^"]+)" width="\d+" height="\d+" data-path="\1" \/>$/,
+    /^<img src="https:\/\/mintcdn\.com\/looksy\/[A-Za-z0-9_-]+\/(images\/[^?"\s]+)\?[^"]*" alt="([^"]+)" width="\d+" height="\d+" data-path="\1" \/>$/,
   );
   if (!match) return line;
   if (/%(?:2f|5c)/i.test(match[1])) return line;
@@ -1119,6 +1119,12 @@ if (normalizedMarkdownBody(imageWithSiblingFixture) !== imageWithSiblingFixture)
 const nonImageMintlifyFixture = generatedImageFixture.split("\n")[1].replace(/^<img/, "<Widget");
 if (normalizedMarkdownBody(nonImageMintlifyFixture) !== nonImageMintlifyFixture) {
   auditFixtureProblems.push("Markdown parity normalization rewrote non-image Mintlify markup");
+}
+for (const deploymentToken of ["deploy?ignored", "deploy#ignored", "..", "deploy%2Fignored", "deploy%5Cignored"]) {
+  const unsafeDeploymentFixture = generatedImageFixture.split("\n")[1].replace("/deploy/", `/${deploymentToken}/`);
+  if (normalizedMarkdownBody(unsafeDeploymentFixture) !== unsafeDeploymentFixture) {
+    auditFixtureProblems.push(`Markdown parity normalization accepted unsafe Mintlify deployment token ${deploymentToken}`);
+  }
 }
 if (
   normalizedMarkdownBody(sourceFormattingFixture) ===
