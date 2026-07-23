@@ -545,36 +545,97 @@ function visibleTextFromHtml(html) {
 function commercialPlanProblems(html, { requireAnnual }) {
   const text = visibleTextFromHtml(html);
   const problems = [];
-  let cursor = text.indexOf("Preview");
-  if (cursor < 0) return ["pricing section does not contain Preview"];
+  const monthlyCadenceSource = String.raw`(?:/|per)\s*(?:month|mo)\b`;
+  const perAdditionalTryOnSource = String.raw`\s*per\s*(?:extra|additional)\s*try[- ]on`;
+  const planOccurrences = baseline.plans.map((plan) => {
+    const occurrences = [];
+    let cursor = 0;
+    while (cursor < text.length) {
+      const occurrence = text.indexOf(plan.name, cursor);
+      if (occurrence < 0) break;
+      occurrences.push(occurrence);
+      cursor = occurrence + plan.name.length;
+    }
+    return occurrences;
+  });
+  const candidates = [];
+  const collectCandidates = (planIndex, positions) => {
+    if (planIndex === planOccurrences.length) {
+      let score = 0;
+      for (let index = 0; index < baseline.plans.length; index += 1) {
+        const plan = baseline.plans[index];
+        const start = positions[index];
+        const end = positions[index + 1] ?? start + 500;
+        const segment = text.slice(start, end);
+        if (
+          index === 0
+            ? /\bFree\b/i.test(segment)
+            : new RegExp(`\\$(?:\\d+(?:\\.\\d+)?)\\s*${monthlyCadenceSource}`, "i").test(segment)
+        ) {
+          score += 1;
+        }
+        if (/\b[\d,]+\s+try-on(?:s)?\s+credits?\b/i.test(segment)) score += 1;
+        if (
+          plan.additionalCreditPrice
+          && new RegExp(
+            `(?:Additional credits at \\$(?:\\d+(?:\\.\\d+)?)|\\$(?:\\d+(?:\\.\\d+)?)${perAdditionalTryOnSource})`,
+            "i",
+          ).test(segment)
+        ) {
+          score += 1;
+        }
+      }
+      candidates.push({
+        positions,
+        score,
+        span: positions.at(-1) - positions[0],
+      });
+      return;
+    }
+    const previous = positions.at(-1) ?? -1;
+    for (const occurrence of planOccurrences[planIndex]) {
+      if (occurrence <= previous) continue;
+      collectCandidates(planIndex + 1, [...positions, occurrence]);
+    }
+  };
+  collectCandidates(0, []);
+  if (!candidates.length) {
+    return ["pricing section does not contain the complete Preview, Starter, Growth, and Scale sequence"];
+  }
+  candidates.sort((left, right) => right.score - left.score || left.span - right.span);
+  const planStarts = candidates[0].positions;
 
   for (let index = 0; index < baseline.plans.length; index += 1) {
     const plan = baseline.plans[index];
-    const start = text.indexOf(plan.name, cursor);
-    const nextPlan = baseline.plans[index + 1];
-    const end = nextPlan ? text.indexOf(nextPlan.name, start + plan.name.length) : start + 500;
-    if (start < 0 || (nextPlan && end < 0)) {
-      problems.push(`${plan.name}: plan card is missing or out of order`);
-      continue;
-    }
-    const segment = text.slice(start, end < 0 ? start + 500 : end);
+    const start = planStarts[index];
+    const end = planStarts[index + 1] ?? start + 500;
+    const segment = text.slice(start, end);
     const monthlyPricePresent = plan.monthlyPrice === "$0"
       ? /\bFree\b/i.test(segment)
-      : new RegExp(`${escapeRegExp(plan.monthlyPrice)}\\s*(?:/|per)\\s*month`, "i").test(segment);
+      : new RegExp(`${escapeRegExp(plan.monthlyPrice)}\\s*${monthlyCadenceSource}`, "i").test(segment);
     if (!monthlyPricePresent) problems.push(`${plan.name}: monthly price ${plan.monthlyPrice} is missing`);
     if (!new RegExp(`\\b${plan.monthlyCredits}\\s+try-on(?:s)?\\s+credits?\\b`, "i").test(segment)) {
       problems.push(`${plan.name}: ${plan.monthlyCredits} credits are missing`);
     }
-    if (plan.additionalCreditPrice && !new RegExp(`Additional credits at ${escapeRegExp(plan.additionalCreditPrice)}`, "i").test(segment)) {
+    if (
+      plan.additionalCreditPrice
+      && !new RegExp(
+        `(?:Additional credits at ${escapeRegExp(plan.additionalCreditPrice)}|${escapeRegExp(plan.additionalCreditPrice)}${perAdditionalTryOnSource})`,
+        "i",
+      ).test(segment)
+    ) {
       problems.push(`${plan.name}: additional-credit rate ${plan.additionalCreditPrice} is missing`);
     }
     if (requireAnnual && plan.annualPrice && !new RegExp(`${escapeRegExp(plan.annualPrice)}\\s*/\\s*year`, "i").test(segment)) {
       problems.push(`${plan.name}: annual price ${plan.annualPrice} is missing`);
     }
-    const monthlyPrices = new Set([...segment.matchAll(/\$(\d+(?:\.\d+)?)\s*(?:\/|per)\s*month/gi)].map((match) => `$${match[1]}`));
+    const monthlyPrices = new Set([...segment.matchAll(new RegExp(`\\$(\\d+(?:\\.\\d+)?)\\s*${monthlyCadenceSource}`, "gi"))].map((match) => `$${match[1]}`));
     const annualPrices = new Set([...segment.matchAll(/\$(\d+(?:\.\d+)?)\s*\/\s*year/gi)].map((match) => `$${match[1]}`));
     const creditAllowances = new Set([...segment.matchAll(/\b([\d,]+)\s+try-on(?:s)?\s+credits?\b/gi)].map((match) => Number(match[1].replaceAll(",", ""))));
-    const additionalRates = new Set([...segment.matchAll(/Additional credits at \$(\d+(?:\.\d+)?)/gi)].map((match) => `$${match[1]}`));
+    const additionalRates = new Set([
+      ...[...segment.matchAll(/Additional credits at \$(\d+(?:\.\d+)?)/gi)].map((match) => `$${match[1]}`),
+      ...[...segment.matchAll(new RegExp(`\\$(\\d+(?:\\.\\d+)?)${perAdditionalTryOnSource}`, "gi"))].map((match) => `$${match[1]}`),
+    ]);
     for (const price of monthlyPrices) {
       if (price !== plan.monthlyPrice) problems.push(`${plan.name}: conflicting monthly price ${price}`);
     }
@@ -587,7 +648,6 @@ function commercialPlanProblems(html, { requireAnnual }) {
     for (const rate of additionalRates) {
       if (rate !== plan.additionalCreditPrice) problems.push(`${plan.name}: conflicting additional-credit rate ${rate}`);
     }
-    cursor = end;
   }
   return problems;
 }
@@ -1303,6 +1363,29 @@ const conflictingCommercialFixture = [
 if (!commercialPlanProblems(conflictingCommercialFixture, { requireAnnual: false }).some((problem) => problem.includes("conflicting monthly price $169"))) {
   auditFixtureProblems.push("commercial parity validator accepted current and retired prices together");
 }
+const homepageCommercialFixture = [
+  "Preview images help Starter merchants compare catalogs. Growth guidance helps Scale brands.",
+  "Preview Free 25 try-on credits / 30 days",
+  "Starter $14.99 / mo 100 try-on credits / mo $0.14 per extra try-on",
+  "Growth $29 / mo 300 try-on credits / mo $0.12 per extra try-on",
+  "Scale $79 / mo 600 try-on credits / mo $0.10 per extra try-on",
+].join(" ");
+if (commercialPlanProblems(homepageCommercialFixture, { requireAnnual: false }).length) {
+  auditFixtureProblems.push("commercial parity validator rejected the homepage monthly-plan summary");
+}
+if (!commercialPlanProblems(homepageCommercialFixture, { requireAnnual: true }).some((problem) => problem.includes("annual price"))) {
+  auditFixtureProblems.push("commercial parity validator did not require annual prices from an annual-plan surface");
+}
+const conflictingHomepageCommercialFixture = homepageCommercialFixture.replace(
+  "$79 / mo 600 try-on credits / mo $0.10 per extra try-on",
+  "$79 / mo $169 / mo 600 try-on credits / mo $0.10 per extra try-on $0.20 per additional try-on",
+);
+if (!commercialPlanProblems(conflictingHomepageCommercialFixture, { requireAnnual: false }).some((problem) => problem.includes("conflicting monthly price $169"))) {
+  auditFixtureProblems.push("commercial parity validator accepted a retired homepage monthly price");
+}
+if (!commercialPlanProblems(conflictingHomepageCommercialFixture, { requireAnnual: false }).some((problem) => problem.includes("conflicting additional-credit rate $0.20"))) {
+  auditFixtureProblems.push("commercial parity validator accepted a retired homepage additional-credit rate");
+}
 if (!distributedCommercialProblems({
   relative: "fixture.mdx",
   source: "Starter costs $19.99 per month and includes 120 credits.",
@@ -1741,7 +1824,7 @@ if (liveMode) {
     ]);
     const commercialProblems = [];
     if (!homepage.response.ok) commercialProblems.push(`homepage: HTTP ${homepage.response.status}`);
-    else commercialProblems.push(...commercialPlanProblems(homepage.body, { requireAnnual: true }).map((problem) => `homepage: ${problem}`));
+    else commercialProblems.push(...commercialPlanProblems(homepage.body, { requireAnnual: false }).map((problem) => `homepage: ${problem}`));
     if (!shopifyListing.response.ok) commercialProblems.push(`Shopify listing: HTTP ${shopifyListing.response.status}`);
     else commercialProblems.push(...commercialPlanProblems(shopifyListing.body, { requireAnnual: false }).map((problem) => `Shopify listing: ${problem}`));
     if (commercialProblems.length) fail("Current commercial source parity", commercialProblems);
