@@ -560,21 +560,30 @@ function commercialPlanProblems(html, { requireAnnual }) {
     const segment = text.slice(start, end < 0 ? start + 500 : end);
     const monthlyPricePresent = plan.monthlyPrice === "$0"
       ? /\bFree\b/i.test(segment)
-      : new RegExp(`${escapeRegExp(plan.monthlyPrice)}\\s*(?:/|per)\\s*month`, "i").test(segment);
+      : new RegExp(`${escapeRegExp(plan.monthlyPrice)}\\s*(?:/|per)\\s*(?:month|mo)\\b`, "i").test(segment);
     if (!monthlyPricePresent) problems.push(`${plan.name}: monthly price ${plan.monthlyPrice} is missing`);
     if (!new RegExp(`\\b${plan.monthlyCredits}\\s+try-on(?:s)?\\s+credits?\\b`, "i").test(segment)) {
       problems.push(`${plan.name}: ${plan.monthlyCredits} credits are missing`);
     }
-    if (plan.additionalCreditPrice && !new RegExp(`Additional credits at ${escapeRegExp(plan.additionalCreditPrice)}`, "i").test(segment)) {
+    if (
+      plan.additionalCreditPrice
+      && !new RegExp(
+        `(?:Additional credits at ${escapeRegExp(plan.additionalCreditPrice)}|${escapeRegExp(plan.additionalCreditPrice)}\\s*per\\s*(?:extra|additional)\\s*try[- ]on)`,
+        "i",
+      ).test(segment)
+    ) {
       problems.push(`${plan.name}: additional-credit rate ${plan.additionalCreditPrice} is missing`);
     }
     if (requireAnnual && plan.annualPrice && !new RegExp(`${escapeRegExp(plan.annualPrice)}\\s*/\\s*year`, "i").test(segment)) {
       problems.push(`${plan.name}: annual price ${plan.annualPrice} is missing`);
     }
-    const monthlyPrices = new Set([...segment.matchAll(/\$(\d+(?:\.\d+)?)\s*(?:\/|per)\s*month/gi)].map((match) => `$${match[1]}`));
+    const monthlyPrices = new Set([...segment.matchAll(/\$(\d+(?:\.\d+)?)\s*(?:\/|per)\s*(?:month|mo)\b/gi)].map((match) => `$${match[1]}`));
     const annualPrices = new Set([...segment.matchAll(/\$(\d+(?:\.\d+)?)\s*\/\s*year/gi)].map((match) => `$${match[1]}`));
     const creditAllowances = new Set([...segment.matchAll(/\b([\d,]+)\s+try-on(?:s)?\s+credits?\b/gi)].map((match) => Number(match[1].replaceAll(",", ""))));
-    const additionalRates = new Set([...segment.matchAll(/Additional credits at \$(\d+(?:\.\d+)?)/gi)].map((match) => `$${match[1]}`));
+    const additionalRates = new Set([
+      ...[...segment.matchAll(/Additional credits at \$(\d+(?:\.\d+)?)/gi)].map((match) => `$${match[1]}`),
+      ...[...segment.matchAll(/\$(\d+(?:\.\d+)?)\s*per\s*(?:extra|additional)\s*try[- ]on/gi)].map((match) => `$${match[1]}`),
+    ]);
     for (const price of monthlyPrices) {
       if (price !== plan.monthlyPrice) problems.push(`${plan.name}: conflicting monthly price ${price}`);
     }
@@ -1303,6 +1312,29 @@ const conflictingCommercialFixture = [
 if (!commercialPlanProblems(conflictingCommercialFixture, { requireAnnual: false }).some((problem) => problem.includes("conflicting monthly price $169"))) {
   auditFixtureProblems.push("commercial parity validator accepted current and retired prices together");
 }
+const homepageCommercialFixture = [
+  "Starter merchants can begin on Preview before the pricing section.",
+  "Preview Free 25 try-on credits / 30 days",
+  "Starter $14.99 / mo 100 try-on credits / mo $0.14 per extra try-on",
+  "Growth $29 / mo 300 try-on credits / mo $0.12 per extra try-on",
+  "Scale $79 / mo 600 try-on credits / mo $0.10 per extra try-on",
+].join(" ");
+if (commercialPlanProblems(homepageCommercialFixture, { requireAnnual: false }).length) {
+  auditFixtureProblems.push("commercial parity validator rejected the homepage monthly-plan summary");
+}
+if (!commercialPlanProblems(homepageCommercialFixture, { requireAnnual: true }).some((problem) => problem.includes("annual price"))) {
+  auditFixtureProblems.push("commercial parity validator did not require annual prices from an annual-plan surface");
+}
+const conflictingHomepageCommercialFixture = homepageCommercialFixture.replace(
+  "$79 / mo 600 try-on credits / mo $0.10 per extra try-on",
+  "$79 / mo $169 / mo 600 try-on credits / mo $0.10 per extra try-on $0.20 per additional try-on",
+);
+if (!commercialPlanProblems(conflictingHomepageCommercialFixture, { requireAnnual: false }).some((problem) => problem.includes("conflicting monthly price $169"))) {
+  auditFixtureProblems.push("commercial parity validator accepted a retired homepage monthly price");
+}
+if (!commercialPlanProblems(conflictingHomepageCommercialFixture, { requireAnnual: false }).some((problem) => problem.includes("conflicting additional-credit rate $0.20"))) {
+  auditFixtureProblems.push("commercial parity validator accepted a retired homepage additional-credit rate");
+}
 if (!distributedCommercialProblems({
   relative: "fixture.mdx",
   source: "Starter costs $19.99 per month and includes 120 credits.",
@@ -1741,7 +1773,7 @@ if (liveMode) {
     ]);
     const commercialProblems = [];
     if (!homepage.response.ok) commercialProblems.push(`homepage: HTTP ${homepage.response.status}`);
-    else commercialProblems.push(...commercialPlanProblems(homepage.body, { requireAnnual: true }).map((problem) => `homepage: ${problem}`));
+    else commercialProblems.push(...commercialPlanProblems(homepage.body, { requireAnnual: false }).map((problem) => `homepage: ${problem}`));
     if (!shopifyListing.response.ok) commercialProblems.push(`Shopify listing: HTTP ${shopifyListing.response.status}`);
     else commercialProblems.push(...commercialPlanProblems(shopifyListing.body, { requireAnnual: false }).map((problem) => `Shopify listing: ${problem}`));
     if (commercialProblems.length) fail("Current commercial source parity", commercialProblems);

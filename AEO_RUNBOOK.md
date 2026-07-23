@@ -72,7 +72,7 @@ The live audit also verifies:
 - every sitemap URL returns indexable, self-canonical HTML with one H1 and article schema tied to the approved `Looksy, LLC` publisher;
 - every page's Markdown variant matches its reviewed source and is served without bare-origin internal links;
 - `llms-full.txt` contains every current page exactly once and no retired pages;
-- the live pricing answer, homepage pricing, Shopify App Store pricing, and approved baseline agree;
+- the live pricing answer, homepage monthly plan summary, Shopify App Store pricing, and approved baseline agree; annual prices remain required on annual-plan surfaces and any conflicting annual claim still fails;
 - common search and answer-engine user agents can retrieve HTML and Markdown representations across every top-level docs section.
 
 ## Root discovery completeness
