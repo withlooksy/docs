@@ -1,11 +1,13 @@
 ---
 title: "How Looksy Virtual Try-On Works"
-description: "Understand the shopper-facing Looksy flow, its inputs and output, and the checks merchants should perform before rollout."
+description: "Understand how shoppers launch Looksy from the main product image, which inputs affect generation, and where the preview appears."
 ---
 
 ## How does Looksy virtual try-on work?
 
-A shopper opens Looksy from a product page, provides an image through the browser flow, and receives a generated visualization for the selected product. The result is intended to support product visualization, not provide an exact fit measurement.
+On an eligible product page, Looksy automatically places the **Try On** button over the main product image. A shopper opens Looksy there, provides an image through the browser flow, and receives a generated visualization in the same product-image area. The result is intended to support product visualization, not provide an exact fit measurement.
+
+The Shopify app embed turns this behavior on for the theme. It is not a separate section or app block that merchants place on each product page.
 
 ## What information affects the result?
 
@@ -18,11 +20,13 @@ A shopper opens Looksy from a product page, provides an image through the browse
 ## What should merchants verify?
 
 1. The intended product and variant are passed into the flow.
-2. Instructions set realistic expectations.
-3. Representative shopper inputs produce an acceptable experience.
-4. Errors and retries are understandable.
-5. The shopper returns to the correct product state.
-6. Theme, mobile, and performance behavior are acceptable.
+2. The button appears over the main product image without blocking important controls.
+3. The generated preview appears in the same product-image area.
+4. Instructions set realistic expectations.
+5. Representative shopper inputs produce an acceptable experience.
+6. Errors and retries are understandable.
+7. The shopper returns to the correct product state.
+8. Theme, mobile, and performance behavior are acceptable.
 
 ## What does Looksy not claim here?
 

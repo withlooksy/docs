@@ -1,13 +1,19 @@
 ---
 title: "Theme Integration Guide"
-description: "Enable Looksy in Shopify, choose placement, and verify the shopper flow on your current theme and representative products."
+description: "Turn on Looksy's Shopify app embed and verify its automatic product-image button and preview on representative products."
 ---
 
-## How do I add Looksy to my Shopify theme?
+## How does Looksy appear on my product pages?
 
-Enable the Looksy app embed in the Shopify theme editor, save the theme, and test representative product pages. Theme structures and app interactions vary, so verify compatibility on the exact theme you plan to publish.
+On an eligible product page, Looksy automatically places the **Try On** button over the main product image. The shopper opens Looksy there, and the generated preview appears in the same product-image area.
 
-## Enable the app embed
+You do not add an app block to every product template or choose a page section for Looksy. Three settings have separate jobs:
+
+- **Products and collections** control which product pages offer try-on.
+- **The app embed** turns the storefront experience on for the theme.
+- **Button settings** control the image corner, appearance, and offsets.
+
+## Turn Looksy on for the theme
 
 1. Open **Online Store → Themes** in Shopify.
 2. Choose the theme you want to test and open **Customize**.
@@ -15,7 +21,7 @@ Enable the Looksy app embed in the Shopify theme editor, save the theme, and tes
 4. Enable Looksy and save.
 5. Preview a representative product page.
 
-<Frame caption="Turn on Looksy Try-On Button for the theme you are testing, then save the theme. This example uses a Looksy test store.">
+<Frame caption="This switch activates Looksy's automatic product-image button for the theme. Enable it, then save. This example uses a Looksy test store.">
   <img src="/images/getting-started/theme-app-embed.jpg" alt="Shopify theme editor App embeds panel with Looksy Try-On Button enabled and the Save button visible." />
 </Frame>
 
@@ -25,7 +31,9 @@ Enable the Looksy app embed in the Shopify theme editor, save the theme, and tes
 
 ## What should I verify?
 
-- the entry point appears in the intended location;
+- the button appears over the main product image rather than elsewhere on the page;
+- the selected image corner does not cover important product details or gallery controls;
+- the generated preview appears in the same product-image area;
 - product and variant selection still work;
 - the complete try-on flow works on mobile and desktop;
 - dialogs are not hidden behind theme elements;
