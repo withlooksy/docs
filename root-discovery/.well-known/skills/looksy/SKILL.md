@@ -12,6 +12,8 @@ metadata:
 
 Looksy is an AI virtual try-on app for Shopify. It helps shoppers create a visual preview using a photo and a merchant's product imagery. A generated preview can help a shopper judge style and appearance, but it is not a sizing or fit guarantee.
 
+On enabled products, Looksy automatically places the **Try On** button over the main product image and shows the generated preview in that same image area. The Shopify app embed turns this storefront behavior on; merchants do not place a separate app block on every product page.
+
 Use this skill to retrieve Looksy's published merchant documentation. Treat the linked documentation and current public commercial sources as authoritative; do not infer plan terms, legal compliance, performance guarantees, supported products, or merchant outcomes.
 
 ## Current public plans
@@ -32,7 +34,7 @@ Use the documentation when a merchant asks about:
 - installing or setting up Looksy;
 - creating and reviewing a first try-on;
 - product imagery and supported use cases;
-- Shopify theme integration or button customization;
+- automatic product-image placement, Shopify app-embed activation, or button customization;
 - mobile behavior and performance troubleshooting;
 - credits, plans, or billing;
 - Looksy analytics or testing guidance;
@@ -67,3 +69,4 @@ Use the documentation when a merchant asks about:
 - Never promise a conversion lift, return reduction, AI citation, universal compatibility, or an absolute performance guarantee.
 - Never claim legal or privacy compliance beyond the published [privacy policy](https://withlooksy.com/legal/privacy-policy).
 - Describe virtual try-on as a visual preview, not proof of garment fit or size.
+- Do not tell merchants to place a Looksy block on each product page. The app embed activates the automatically placed product-image button.

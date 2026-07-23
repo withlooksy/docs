@@ -802,6 +802,98 @@ function normalizePublishedText(value) {
   return value.replaceAll("\r\n", "\n").trimEnd();
 }
 
+const productImageExperienceRequirements = new Map([
+  ["index.mdx", [
+    "Looksy automatically places the **Try On** button over the main product image",
+    "shows the generated preview in that same image area",
+    "The Shopify app embed—the theme-wide on/off switch—enables this behavior; it is not a block you place in the page layout.",
+  ]],
+  ["getting-started/quick-setup.mdx", [
+    "The app embed is the theme-wide on/off switch, not a block you place on each product page.",
+    "Looksy finds the main product image on eligible product pages and adds the **Try On** button there automatically.",
+    "the generated preview appears in the same product-image area",
+  ]],
+  ["getting-started/first-try-on.mdx", [
+    "the **Try On** button over the main product image",
+    "the generated preview appears in the same product-image area",
+  ]],
+  ["integration/theme-setup.mdx", [
+    "Looksy automatically places the **Try On** button over the main product image.",
+    "You do not add an app block to every product template or choose a page section for Looksy.",
+    "the generated preview appears in the same product-image area",
+  ]],
+  ["about/technology-explained.mdx", [
+    "Looksy automatically places the **Try On** button over the main product image.",
+    "The Shopify app embed turns this behavior on for the theme. It is not a separate section or app block that merchants place on each product page.",
+    "the generated preview appears in the same product-image area",
+  ]],
+  ["skill.md", [
+    "Looksy automatically places the **Try On** button over the main product image",
+    "shows the generated preview in that same image area",
+    "Do not tell merchants to place a Looksy block on each product page.",
+  ]],
+  ["llms.txt", [
+    "[How Looksy Virtual Try-On Works](https://withlooksy.com/docs/about/technology-explained.md): Understand how shoppers launch Looksy from the main product image",
+    "[Theme Integration Guide](https://withlooksy.com/docs/integration/theme-setup.md): Turn on Looksy's Shopify app embed and verify its automatic product-image button and preview",
+  ]],
+]);
+
+const misleadingManualPlacementPatterns = [
+  ["ambiguous placement choice", /\bchoose where try-on should appear\b|\bchoose placement\b/i],
+  ["negated automatic placement", /\b(?:does not|doesn't|not) automatically place\b/i],
+  ["negated shared result area", /\b(?:does not|doesn't|not) appear in (?:the )?same (?:product-)?image area\b/i],
+];
+
+function manualProductPagePlacementProblems(source) {
+  const problems = [];
+  const segments = source.split(/\n|(?<=[.!?;])\s+/);
+  for (const segment of segments) {
+    if (/\b(?:do not|does not|don't|doesn't|never|should not|shouldn't|must not|mustn't|cannot|can't|not a (?:separate )?(?:block|section))\b/i.test(segment)) continue;
+
+    const governedTarget = segment.match(
+      /\b(?:place|add|position|move)\s+(?:(?:the|a|an|your)\s+)?(?:(?:looksy(?:'s)?|shopify)\s+)?(?<target>app embed|app block|try[- ]on (?:button|entry point|control)|entry point)\b/i,
+    )?.groups?.target;
+    if (!governedTarget) continue;
+
+    const appEmbed = /app embed/i.test(governedTarget);
+    const productPageContext = /\b(?:product (?:page|template|form|image|gallery|evaluation)|page (?:section|layout|template)|below|above)\b/i.test(segment);
+    const virtualShowroom = /\bvirtual showroom\b/i.test(segment);
+    const buttonAppearanceControl = /\b(?:corner|offset|appearance|style|colour|color|spacing)\b/i.test(segment);
+
+    if (appEmbed || (productPageContext && !virtualShowroom && !buttonAppearanceControl)) {
+      problems.push(`manual PDP placement instruction ${JSON.stringify(segment.trim())}`);
+    }
+  }
+  return problems;
+}
+
+function productImageExperienceProblems(sources, requirements = productImageExperienceRequirements) {
+  const problems = [];
+  for (const [relative, requiredStatements] of requirements) {
+    const source = sources.get(relative);
+    if (!source) {
+      problems.push(`${relative}: required positioning source is missing`);
+      continue;
+    }
+    const normalizedSource = source.replace(/\s+/g, " ").trim().toLowerCase();
+    for (const statement of requiredStatements) {
+      const normalizedStatement = statement.replace(/\s+/g, " ").trim().toLowerCase();
+      if (!normalizedSource.includes(normalizedStatement)) {
+        problems.push(`${relative}: missing canonical statement ${JSON.stringify(statement)}`);
+      }
+    }
+  }
+  for (const [relative, source] of sources) {
+    for (const problem of manualProductPagePlacementProblems(source)) {
+      problems.push(`${relative}: ${problem}`);
+    }
+    for (const [label, expression] of misleadingManualPlacementPatterns) {
+      if (expression.test(source)) problems.push(`${relative}: contains ${label}`);
+    }
+  }
+  return problems;
+}
+
 const mdxFiles = await listFiles(root, ".mdx");
 const sourceRoutes = mdxFiles.map((file) =>
   path.relative(root, file).replaceAll(path.sep, "/").replace(/\.mdx$/, ""),
@@ -809,6 +901,70 @@ const sourceRoutes = mdxFiles.map((file) =>
 const navRoutes = navigationPages(config.navigation);
 
 const auditFixtureProblems = [];
+const productImageFixtureRequirements = new Map([
+  ["fixture.mdx", [
+    "Looksy automatically places the **Try On** button over the main product image.",
+    "The generated preview appears in the same product-image area.",
+  ]],
+]);
+const productImageFixture = [
+  "Looksy automatically places the **Try On** button over the main product image.",
+  "The generated preview appears in the same product-image area.",
+].join("\n");
+if (productImageExperienceProblems(
+  new Map([["fixture.mdx", productImageFixture]]),
+  productImageFixtureRequirements,
+).length) {
+  auditFixtureProblems.push("product-image truth guard rejected affirmative canonical copy");
+}
+if (!productImageExperienceProblems(
+  new Map([["fixture.mdx", `${productImageFixture}\n\nPlace the try-on entry point below the product form.`]]),
+  productImageFixtureRequirements,
+).length) {
+  auditFixtureProblems.push("product-image truth guard accepted contradictory manual-placement copy");
+}
+if (!productImageExperienceProblems(
+  new Map([["fixture.mdx", `${productImageFixture}\n\nPlace the app embed on the product page.`]]),
+  productImageFixtureRequirements,
+).length) {
+  auditFixtureProblems.push("product-image truth guard accepted generic app-embed placement copy");
+}
+for (const contradictoryCopy of [
+  "1. Add the Looksy app block to each product page.",
+  'description: "Add the app embed to the product page."',
+  "- [Theme setup](/theme): Position the Try On button below the product form.",
+]) {
+  if (!productImageExperienceProblems(
+    new Map([["fixture.mdx", `${productImageFixture}\n\n${contradictoryCopy}`]]),
+    productImageFixtureRequirements,
+  ).length) {
+    auditFixtureProblems.push(`product-image truth guard accepted ${JSON.stringify(contradictoryCopy)}`);
+  }
+}
+if (productImageExperienceProblems(
+  new Map([["fixture.mdx", `${productImageFixture}\n\nAdd the Looksy Virtual Showroom app block to a page template.`]]),
+  productImageFixtureRequirements,
+).length) {
+  auditFixtureProblems.push("product-image truth guard rejected the optional Virtual Showroom app block");
+}
+for (const allowedCopy of [
+  "From the app embed settings, move to the storefront preview.",
+  "Add your button copy in the app embed settings.",
+  "Position the Try On button in the top-right corner of the product image.",
+]) {
+  if (productImageExperienceProblems(
+    new Map([["fixture.mdx", `${productImageFixture}\n\n${allowedCopy}`]]),
+    productImageFixtureRequirements,
+  ).length) {
+    auditFixtureProblems.push(`product-image truth guard rejected ${JSON.stringify(allowedCopy)}`);
+  }
+}
+if (!productImageExperienceProblems(
+  new Map([["fixture.mdx", productImageFixture.replace("automatically places", "does not automatically place")]]),
+  productImageFixtureRequirements,
+).length) {
+  auditFixtureProblems.push("product-image truth guard accepted negated automatic-placement copy");
+}
 const nestedBlockFixture = "User-agent: *\nDisallow: /docs/\n";
 if (!robotsBlocks(nestedBlockFixture, "Googlebot", "/docs/page")) {
   auditFixtureProblems.push("robots parser missed a nested /docs/ block");
@@ -1346,6 +1502,18 @@ for (const problem of validateDocumentationLinks(sourceSkill, "skill.md", source
 }
 if (aiSourceProblems.length) fail("AI discovery source", aiSourceProblems);
 else pass("AI discovery source", "reviewed llms.txt and skill.md agree with navigation and commercial facts");
+
+const productImageTruthSources = new Map(
+  parsedPages.map((page) => [page.relative, page.source]),
+);
+productImageTruthSources.set("skill.md", sourceSkill);
+productImageTruthSources.set("llms.txt", sourceLlms);
+const productImageTruthProblems = productImageExperienceProblems(productImageTruthSources);
+if (productImageTruthProblems.length) fail("Product-image experience truth", productImageTruthProblems);
+else pass(
+  "Product-image experience truth",
+  "primary docs and AI surfaces distinguish the automatic product-image experience from the app-embed activation step",
+);
 
 const rootDiscoverySourceProblems = [];
 let sourceRootRobots = "";
