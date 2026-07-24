@@ -1,0 +1,46 @@
+---
+title: "Share a Direct Try-On Link or QR Code"
+description: "Copy a product-specific Looksy link or download its QR code so shoppers can open the try-on flow on an eligible product page."
+---
+
+## What does a direct try-on link do?
+
+A direct try-on link opens the selected Shopify product page and starts the Looksy try-on flow automatically. The shopper still uses the normal product-page experience; the link does not create a separate hosted campaign page.
+
+## When is the link available?
+
+Looksy enables the sharing controls after all of these checks pass:
+
+- the product has a saved try-on image configuration;
+- try-on is enabled for the product;
+- Shopify provides a usable product-page URL; and
+- the app-embed check is not still running and has not confirmed that the embed is disabled.
+
+An `unverified` theme status does not block the sharing control, but it is not proof that the embed is active. If Looksy is still checking, or it confirms the embed is disabled, the product configuration page explains what must be fixed before sharing.
+
+## Copy the link
+
+1. Open **Looksy → Products**.
+2. Select the product and, when relevant, the intended appearance or variant.
+3. Find the **Try-on link** card.
+4. Select the link to copy it.
+5. Open the copied URL in a storefront test before publishing it.
+
+The link retains the selected Shopify variant when a valid variant is available.
+
+## Download the QR code
+
+Select **QR code** in the same card to download an SVG QR code for the direct link. Test the code with a real phone before placing it in print, packaging, signage, email, or other campaigns.
+
+<Note>
+  Direct links still depend on the live product, theme, Looksy app embed, product configuration, and storefront availability. Retest a shared link after changing the product URL, theme, or try-on settings.
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="Configure Products" icon="sliders" href="https://withlooksy.com/docs/product-setup/configuring-products">
+    Review the product requirements for a shareable link.
+  </Card>
+  <Card title="Theme Setup" icon="shopify" href="https://withlooksy.com/docs/integration/theme-setup">
+    Turn on and verify the product-image experience.
+  </Card>
+</CardGroup>

@@ -1,0 +1,103 @@
+---
+title: "Set Up Size Recommendations"
+description: "Configure Find Your Size from your real product size charts, understand the shopper flow, and keep recommendations separate from the generated try-on preview."
+---
+
+Size Recommendations helps a shopper compare measurements they enter with the product's size chart after a successful try-on.
+
+<Warning>
+  A size recommendation is not inferred from the shopper's photo or the generated preview. It is a deterministic comparison against the size chart you review in Looksy, so it should not be presented as a fit guarantee.
+</Warning>
+
+<Frame caption="Review the product's Try-on Images and Size recommendations together before making the shopper action available. This example uses a Looksy test store.">
+  <img src="/images/product-setup/configure-product.jpg" alt="Looksy product configuration for Abby top showing Try-on Images, shared size setup controls, and the Size recommendations card." />
+</Frame>
+
+## Before you start
+
+For each product, confirm that:
+
+- Try On is enabled;
+- Shopify contains the correct size variants, or the product is genuinely one-size;
+- you have the merchant's real size-chart measurements;
+- size labels, units, ranges, and regional systems are accurate.
+
+## Configure a product's size chart
+
+1. In **Shopify Admin**, open **Looksy**, then select **Products**.
+2. Select the product name to open its configuration.
+3. Open **Size recommendations**.
+4. Select **Scan for size charts** to look for an existing chart in the product data, or select **Edit size chart** to enter the chart manually.
+5. Review the measurement unit, the measurements used, every size label, and every range. Enter only measurements supplied by the merchant.
+6. If Looksy shows **Needs review**, choose the Shopify option that represents the product's purchasable size.
+7. Select **Save changes**.
+
+<Note>
+  Scanned size charts still require merchant review. Looksy can convert an existing chart into structured ranges, but it must not invent missing measurements.
+</Note>
+
+## Turn on the shopper feature
+
+1. In Looksy, open **Settings**.
+2. Select **Features**.
+3. Turn on **Recommend sizes from my size charts**.
+4. Review the **Storefront button label**. The default action is **Find my size**.
+5. Select **Save**.
+
+The action appears only after a successful try-on and only when the current product has an available size setup.
+
+<Frame caption="Complete the Look and Size recommendations are separate optional shopper features. This example uses a Looksy test store.">
+  <img src="/images/settings/shopper-features.jpg" alt="Looksy Features settings showing Complete the look and Size recommendations controls." />
+</Frame>
+
+## What shoppers experience
+
+1. The shopper completes a photo or Live Video try-on.
+2. They select **Find my size**, or the storefront label you configured.
+3. Looksy requests only the measurements relevant to that product's chart and lets the shopper choose centimetres or inches.
+4. Looksy compares those measurements with the chart and displays a size suggestion with a confidence level.
+
+One-size products can return their configured one-size label without asking for measurements.
+
+After a shopper submits measurements, Looksy can save a size profile for that store and visitor. On another eligible product, Looksy can reuse the saved measurements and preferred unit to prefill the form or show a new chart-based recommendation without asking for the same values again.
+
+The saved profile does not change how the recommendation is calculated: each result still comes from the current product's reviewed size chart. It is not inferred from the shopper's photo.
+
+The profile is stored against a hashed visitor identifier and can include the body measurements the shopper entered, their preferred unit, and the latest recommendation. A size profile becomes eligible for removal after 180 days without an update. Looksy's retention action includes these profiles, but it defaults to dry-run and requires deletion mode to be enabled for physical removal. Explain this data use in your storefront privacy notice, review the current [Looksy privacy policy](https://withlooksy.com/legal/privacy-policy), and contact support for the effective cleanup schedule before making a customer-facing retention promise.
+
+## Exact Shopify variant selection
+
+In **Advanced size variant mapping**, you can turn on **Select the exact available variant**.
+
+When Looksy can prove one exact, currently available Shopify variant, it preserves the shopper's other choices—such as colour or fit—and selects that size. It never substitutes a different colour, fit, audience, material, region, or other option.
+
+If the mapping is ambiguous, the variant changed, the exact variant is unavailable, or the theme cannot confirm the selection, Looksy fails safely: it shows the recommended size label and asks the shopper to choose it manually.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Find my size does not appear">
+    Confirm that the global feature is enabled, the product has a saved size chart or valid one-size setup, Try On is enabled for the product, and the shopper has completed a successful try-on.
+  </Accordion>
+
+  <Accordion title="The product says Needs review">
+    Open the product's size chart, choose the Shopify option that contains its sizes, verify the chart, and save the setup.
+  </Accordion>
+
+  <Accordion title="No size matches the shopper's measurements">
+    Check the selected unit and the chart's measurement ranges. A recommendation is unavailable when the submitted measurements do not match the saved chart.
+  </Accordion>
+
+  <Accordion title="The size label appears but the variant is not selected">
+    This is the safe fallback when Looksy cannot prove that one exact matching variant is available and compatible with the current product form. Review the advanced mapping and Shopify availability; never tell shoppers that another variant was selected when only a label is shown.
+  </Accordion>
+</AccordionGroup>
+
+<CardGroup cols={2}>
+  <Card title="Virtual Try-On Accuracy" icon="bullseye" href="https://withlooksy.com/docs/faq/how-accurate-is-it">
+    Explain what the generated visual can and cannot prove.
+  </Card>
+  <Card title="Best Practices" icon="list-check" href="https://withlooksy.com/docs/product-setup/best-practices">
+    Roll out shopper-facing features with accurate expectations.
+  </Card>
+</CardGroup>

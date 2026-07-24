@@ -1,0 +1,88 @@
+---
+title: "Set Up Live Video Try-On"
+description: "Enable camera-based Live Video Try-On, set its session limit, understand credit metering, and test the storefront experience."
+---
+
+Live Video Try-On uses the shopper's camera to show the selected product in real time. It appears as a second mode from the existing Try On action on products where Try On is enabled.
+
+<Note>
+  Looksy presents Live Video in its active-feature and plan interfaces, but availability is evaluated again when a session starts. Check the status shown in **Dashboard**, **Plans**, and **Settings** for your store before promoting the feature.
+</Note>
+
+## Before you start
+
+Confirm that:
+
+- your store is eligible for Live Video Try-On in Looksy;
+- Try On is enabled on the products you want to test;
+- your credit balance and usage limits can fund a session;
+- you have a current browser and device that can grant camera access.
+
+## Enable Live Video Try-On
+
+1. In **Shopify Admin**, open **Looksy**.
+2. Select **Settings**, then **Photo & Video**.
+3. Turn on **Offer live video try-on**.
+4. Set **Maximum session length (seconds)** between 10 and 120, or leave it blank to use the 30-second default.
+5. Review your credit balance, safety limit, and daily shopper limit.
+6. Select **Save**.
+7. Open an enabled product page and complete a test on a real device.
+
+When enabled, Live Video is offered on every product that has Try On enabled. It can be temporarily hidden when the available credit or safety-limit headroom cannot fund the 10-second minimum session.
+
+## What shoppers experience
+
+1. The shopper selects the existing **Try On** action.
+2. They choose **Live video try-on** instead of **Photo try-on**.
+3. Their browser asks for camera permission.
+4. Looksy places the live experience over the main product image. If the theme's product-media container cannot be detected, it uses a centred modal instead.
+5. A countdown shows the remaining session time.
+6. When the shopper ends the session or the timer reaches zero, supported browsers show a looping replay with actions to save, share, retry, or remove it.
+
+The replay recording is created in the shopper's browser. It is page-scoped unless the shopper explicitly saves or shares it.
+
+## How Live Video uses credits
+
+Live Video is metered at **1 credit per 2 active seconds**, rounded up, with a 1-credit minimum once a provider session begins.
+
+| Maximum session length | Maximum credit use |
+| --- | ---: |
+| 10 seconds | 5 credits |
+| 30 seconds (default) | 15 credits |
+| 60 seconds | 30 credits |
+| 120 seconds | 60 credits |
+
+A session can be shorter than the configured maximum when the shopper ends it or when available credits or the billing-period safety limit provide less headroom. The daily shopper limit can prevent a new session from starting after that shopper reaches the configured allowance.
+
+## Optional email capture
+
+If Klaviyo is connected and a destination list is selected, **Photo & Video** settings can ask for the shopper's email before Live Video begins. You can choose how many prior Live Video sessions a shopper may complete before the prompt appears, including `0` to ask before the first session.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The Live Video option does not appear">
+    Confirm the availability shown for your store, the Live Video setting, Try On status for the product, and available credit and safety-limit headroom. If the store cannot fund the minimum session, Looksy hides the option instead of sending the shopper into a dead end.
+  </Accordion>
+
+  <Accordion title="The camera does not start">
+    Check the browser's camera permission, confirm that another app is not blocking the camera, and retry in a current browser on the same device.
+  </Accordion>
+
+  <Accordion title="The live view opens in a modal">
+    Looksy uses the modal fallback when it cannot identify the theme's main product-image container. Test the current product template and review the theme integration before changing storefront code.
+  </Accordion>
+
+  <Accordion title="No replay appears after the session">
+    Replay recording depends on browser recording support. A recording failure does not necessarily stop the live view, but it can prevent Looksy from presenting a replay.
+  </Accordion>
+</AccordionGroup>
+
+<CardGroup cols={2}>
+  <Card title="Understanding Credits" icon="coins" href="https://withlooksy.com/docs/getting-started/understanding-credits">
+    Review plan allowances and additional-credit terms.
+  </Card>
+  <Card title="Mobile Optimization" icon="mobile" href="https://withlooksy.com/docs/integration/mobile-optimization">
+    Test camera and storefront behavior on real devices.
+  </Card>
+</CardGroup>

@@ -13,20 +13,26 @@ Open **Apps → Looksy → Analytics** in Shopify admin. The metrics available t
 
 The current analytics experience may include:
 
-- **Sessions:** buyer sessions in which Looksy engagement was observed.
-- **Try-ons:** try-on events recorded during the selected period.
-- **Add to cart:** Looksy-engaged sessions that included an add-to-cart event.
-- **Conversion rate:** the share of observed Looksy sessions that also included add to cart; this is not necessarily the store's completed-purchase conversion rate.
-- **Assisted cart value:** value added to cart after a try-on; it is not completed revenue.
-- **Try-on revenue:** completed purchase value attributed under the definition shown in the dashboard, when checkout tracking is available.
-- **Emails captured:** consented captures from the try-on prompt when the required email integration is connected.
+- **Users:** the number of Looksy-engaged buyer sessions in the selected period. Identified activity is grouped into two-hour sessions; an unidentified try-on starts its own session. This is not a unique-person count.
+- **Conversion rate (CR):** attributed orders divided by Looksy-engaged buyer sessions. This requires checkout tracking and Shopify protected customer data access.
+- **Average order value (AOV):** attributed revenue from purchased tried-on items divided by the number of attributed orders, when checkout tracking is available. It is not the full Shopify order value.
+- **Added revenue:** revenue from purchased items the shopper tried on during the previous seven days, when checkout tracking is available.
+- **Add to cart:** Looksy buyer sessions that included at least one add-to-cart event.
+- **Add to cart %:** the share of Looksy buyer sessions that included an add-to-cart event.
+- **Revenue per user:** attributed revenue divided by the session count shown as **Users**, when the required revenue and session data are available.
 
-Read the caption and tooltip beside a metric before comparing it. An unavailable or partial metric should remain unavailable rather than being estimated from another number.
+**Total revenue** and **Upsell %** may appear as unavailable while their underlying tracking is not yet computed. Do not substitute another metric for an unavailable value.
+
+<Note>
+  Conversion rate and Add to cart % are different metrics. Conversion rate divides distinct attributed orders by Looksy-engaged sessions; Add to cart % measures the share of those sessions with an observed add-to-cart event. Because a session can be associated with more than one order, do not interpret CR as a unique-person percentage and do not assume it is capped at 100%.
+</Note>
+
+Read the caption and tooltip beside a metric before comparing it. Revenue metrics require checkout tracking and the necessary Shopify data access. An unavailable or partial metric should remain unavailable rather than being estimated from another number.
 
 ## How to use the dashboard
 
 1. Choose a date range with enough activity to reduce day-to-day noise.
-2. Record try-ons and Looksy-engaged sessions as the adoption baseline.
+2. Record Looksy users and product activity as the adoption baseline.
 3. Review product-level activity to find where shoppers use try-on.
 4. Compare equivalent periods and note promotions, theme changes, inventory changes, or tracking gaps.
 5. Use Shopify's order and return data for completed commercial outcomes.
@@ -38,7 +44,7 @@ Analytics is observational. Phrase conclusions as "associated with" unless a con
 
 ## Data and privacy checks
 
-Before relying on a report, verify the selected dates, integration status, event coverage, consent flow, and currency. Review the current [Looksy privacy policy](https://withlooksy.com/legal/privacy-policy) and your store's own obligations for analytics and customer data.
+Before relying on a report, verify the selected dates, checkout-tracking status, protected-customer-data access, event coverage, consent flow, and currency. Review the current [Looksy privacy policy](https://withlooksy.com/legal/privacy-policy) and your store's own obligations for analytics and customer data.
 
 <CardGroup cols={2}>
   <Card title="Conversion Tracking" icon="chart-line" href="https://withlooksy.com/docs/analytics/conversion-tracking">

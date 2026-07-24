@@ -1,85 +1,31 @@
 ---
-title: "Set Up Looksy for Gorgias"
-description: "Connect Looksy to Gorgias so support agents can suggest Shopify products and create virtual try-ons inside customer conversations."
+title: "Gorgias Integration"
+description: "Review the current Gorgias integration status and available Looksy alternatives. Availability: Coming soon."
+availability: "Coming soon"
 ---
 
-Connect Looksy to Gorgias so your support team can suggest eligible Shopify products and create virtual try-ons without leaving the customer conversation.
+## Current status
 
-<Note>
-You need a Looksy account connected to your Shopify store, permission to manage Looksy integrations, and access to your Gorgias account.
-</Note>
+**Availability:** Coming soon.
 
-## Before You Start
+The current Looksy app lists the Gorgias integration as **Coming soon**. Its integration card is informational and does not provide a merchant connection flow.
 
-Confirm that:
-
-- Looksy is installed on the Shopify store you want to connect
-- You can manage integrations in Looksy
-- You can approve apps in the Gorgias account
-- Customer photos are JPG, PNG, or WebP files
-
-## Connect Gorgias
-
-1. In **Shopify Admin**, open **Looksy**.
-2. Select **Integrations**, then choose **Gorgias**.
-3. Select **Connect**.
-4. Enter your Gorgias account name. For `your-account.gorgias.com`, enter `your-account`.
-5. Select **Continue to Gorgias** and approve the requested access.
-6. Return to Looksy and confirm that the Gorgias status is **Connected**.
-
-Looksy installs the ticket card and virtual try-on action automatically.
-
-<Check>
-The connection is ready when the Gorgias page in Looksy shows **Connected** and your Gorgias account name.
-</Check>
-
-## Create a Virtual Try-On From a Ticket
-
-1. Open a Gorgias chat ticket where the shopper has explicitly requested a virtual try-on and attached their own photo.
-2. Review Looksy's suggested products. Suggestions appear when the conversation contains a direct product link or a sufficiently clear product and variant mention.
-3. Select **Generate and send** on the correct product, or use **Choose product and send** to enter an active Shopify product URL or product ID manually.
-4. Confirm the action.
-5. Looksy generates the result and sends it back to the same Gorgias conversation.
+<Frame caption="The current Integrations screen marks Gorgias as Coming soon. Klaviyo and Shopify Flow appear as available. This example uses a Looksy test store.">
+  <img src="/images/integration/integrations-overview.jpg" alt="Looksy Integrations page showing a Gorgias card marked Coming soon. Available Klaviyo and Shopify Flow cards appear above it." />
+</Frame>
 
 <Warning>
-Looksy never generates a virtual try-on from an attachment alone. The shopper must explicitly request a try-on, and an agent must confirm the product before generation begins.
+Do not follow earlier Gorgias connection, OAuth, ticket-card, or agent-action instructions. Those instructions were published before merchant availability was verified and have been withdrawn.
 </Warning>
 
-## How Credits and Safety Controls Work
+## What is planned?
 
-Gorgias virtual try-ons use the merchant's existing Looksy plan, credits, and safety limits. There is no separate Gorgias integration fee.
+The Gorgias integration is intended to help support teams handle shopper-requested virtual try-ons inside a customer-support conversation. Final merchant steps, supported ticket types, consent controls, credit behaviour, and availability will be documented only after the released integration is verified.
 
-Looksy validates the ticket, shopper request, image, and Shopify product before it queues a generation. Repeated clicks on the same action do not create or bill duplicate requests.
+## What should I do now?
 
-## Disconnect Gorgias
+- Continue using Looksy's storefront product-page try-on for shopper self-service.
+- Treat the Gorgias card in Looksy as **Coming soon** while it remains noninteractive.
+- Contact [caleb@withlooksy.com](mailto:caleb@withlooksy.com) to register interest or ask about availability for your store.
 
-1. In **Shopify Admin**, open **Looksy**.
-2. Select **Integrations**, then choose **Gorgias**.
-3. Open **More actions** and select **Remove integration**.
-4. Confirm **Remove Gorgias**.
-
-Looksy removes its Gorgias ticket card and action, then clears the store's saved Gorgias connection.
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title="The Looksy action is missing from a ticket">
-    Refresh the ticket after connecting Gorgias. Confirm that the ticket is a chat conversation and that the connection still shows **Connected** in Looksy.
-  </Accordion>
-
-  <Accordion title="No product suggestion appears">
-    Use **Choose product and send** and enter an active product URL from the connected Shopify store, or the Shopify product ID.
-  </Accordion>
-
-  <Accordion title="Looksy cannot use the shopper's photo">
-    Confirm that the shopper attached a JPG, PNG, or WebP image and explicitly requested a virtual try-on in the chat. Looksy does not generate from an attachment alone.
-  </Accordion>
-
-  <Accordion title="The Gorgias connection was revoked">
-    Return to **Looksy → Integrations → Gorgias** and reconnect the account.
-  </Accordion>
-</AccordionGroup>
-
-## Need Help?
-
-Contact [caleb@withlooksy.com](mailto:caleb@withlooksy.com) with the Shopify store name, Gorgias account name, and ticket ID. Do not send OAuth credentials or customer image files by email.
+Do not send OAuth credentials or customer image files by email.

@@ -1,0 +1,65 @@
+---
+title: "Fitting Room Recommendations"
+description: "Understand the difference between Shopify catalog recommendations and merchant-curated Looksy recommendation offers in the Virtual Fitting Room."
+---
+
+The Virtual Fitting Room can use two recommendation systems. They have different sources and different jobs.
+
+## Shopify catalog recommendations
+
+When **Use product recommendations** is enabled on the Fitting Room app block, Looksy uses the products in the shopper's current outfit as recommendation inputs.
+
+The catalog recommendation order is:
+
+1. complementary products configured through Shopify Search & Discovery;
+2. Shopify related-product recommendations when there are not enough complementary results;
+3. eligible products from the store's collections when Shopify has too little recommendation data.
+
+Looksy combines signals from the selected outfit, removes products already selected, and shows eligible products with usable imagery.
+
+<Note>
+Use Shopify Search & Discovery when you want to influence which catalog products Shopify considers complementary. These are Shopify merchandising signals; they do not create a Looksy discount or offer.
+</Note>
+
+## Merchant-curated Looksy recommendations
+
+Looksy's **Recommendations** manager in **Fitting Room** lets you create a specific recommended look and, when required, an associated offer.
+
+You can start from templates including:
+
+- Complete the look;
+- Recommended for you;
+- Mix & match;
+- Buy X, get Y;
+- Quantity breaks;
+- Progressive gifts.
+
+In the editor, choose which try-on products trigger the recommendation, then choose the products to recommend. A trigger can target specific products, collections, or all eligible products.
+
+The editor also supports recommendation content, offer bars, discount settings, active dates, market visibility, B2B exclusions, variant behaviour, and presentation styles. Review the preview before saving.
+
+<Warning>
+A saved recommendation is not the same as a Shopify Search & Discovery recommendation. Merchant-curated Looksy recommendations use the products, targeting, visibility, offer, and styles saved in Looksy. Shopify catalog recommendations remain the fallback merchandising layer when no eligible Looksy recommendation applies.
+</Warning>
+
+## Which system should I use?
+
+| Goal | Use |
+| --- | --- |
+| Suggest complementary products without configuring an offer in Looksy | Shopify Search & Discovery |
+| Let Shopify supply related products when no complementary products are configured | Shopify catalog recommendations |
+| Choose the exact products, trigger products, and presentation | Looksy Recommendations |
+| Attach a discount, quantity break, gift, or other configured offer | Looksy Recommendations |
+
+## Keep the other "Complete the Look" separate
+
+Looksy also has a product-page **Complete the Look** shopper feature that can show a small related-product rail after a successful try-on. That feature is separate from the Fitting Room recommendation manager described here.
+
+<CardGroup cols={2}>
+  <Card title="Virtual Fitting Room" icon="shirt" href="https://withlooksy.com/docs/fitting-room/overview">
+    Create the storefront page and add its dedicated app block.
+  </Card>
+  <Card title="Choosing Products" icon="list-check" href="https://withlooksy.com/docs/product-setup/choosing-products">
+    Start with representative products and verify eligibility.
+  </Card>
+</CardGroup>

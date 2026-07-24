@@ -1,0 +1,56 @@
+---
+title: "Use Looksy With Shopify Flow"
+description: "Start Shopify Flow automations when a logged-in shopper joins Looksy's virtual try-on customer segment."
+---
+
+Looksy maintains a Shopify customer segment named **Virtual Try-On Users by Looksy**. You can use Shopify Flow's standard **Customer joined segment** trigger when a customer first joins that audience.
+
+<Note>
+Integration availability can depend on your Looksy environment. Continue only when **Shopify Flow** appears as an interactive card under **Integrations**. Shopify Flow must also be available for your store.
+</Note>
+
+<Frame caption="Shopify Flow appears as an available automation integration beside Klaviyo; Gorgias remains Coming soon. This example uses a Looksy test store.">
+  <img src="/images/integration/integrations-overview.jpg" alt="Looksy Integrations page showing Shopify Flow and Klaviyo as available cards and Gorgias as Coming soon." />
+</Frame>
+
+## Activate the Looksy audience
+
+1. In **Shopify Admin**, open **Looksy**.
+2. Select **Integrations**, then choose **Shopify Flow**.
+3. Check the status shown by Looksy.
+
+The audience remains **Inactive** until the first logged-in shopper completes a successful try-on. Anonymous try-ons do not activate or join this customer segment.
+
+When Looksy shows **Active**, select **View audience in Shopify** to review the segment.
+
+## Build the workflow
+
+1. From the Looksy integration page, select **Open Shopify Flow**.
+2. Create a workflow with the **Customer joined segment** trigger.
+3. Choose **Virtual Try-On Users by Looksy**.
+4. Add the Shopify Flow condition or action you want to run.
+5. Review and turn on the workflow in Shopify Flow.
+
+Examples include email or SMS activity through compatible Shopify marketing tools, a discount action, or another app action that supports Shopify Flow and customer segments.
+
+<Warning>
+Looksy supplies audience membership; Shopify Flow controls the automation that follows. Review the workflow's recipients, conditions, consent requirements, and actions before turning it on.
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The Looksy audience is still inactive">
+    Complete one successful try-on while signed in as a customer, then reopen or refresh the Shopify Flow integration page. Logged-out shopper activity does not create customer-segment membership.
+  </Accordion>
+
+  <Accordion title="Looksy cannot verify the segment">
+    Reopen Looksy from Shopify Admin and try again. Looksy does not change Shopify customer segments when verification fails.
+  </Accordion>
+
+  <Accordion title="I cannot open the audience">
+    Reload Looksy from Shopify Admin so it can prepare the correct Shopify Admin destination, then select **View audience in Shopify** again.
+  </Accordion>
+</AccordionGroup>
+
+See Shopify's documentation for the [Customer joined segment trigger](https://help.shopify.com/en/manual/shopify-flow/reference/triggers/customer-joined-segment).

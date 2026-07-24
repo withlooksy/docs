@@ -14,12 +14,13 @@ A dedicated documentation repository is a supported Mintlify layout. Do not move
 
 For commercial or product claims, use this order:
 
-1. Current Looksy product behavior and billing configuration
-2. [Looksy website](https://withlooksy.com/) and [Shopify App Store listing](https://apps.shopify.com/looksy)
-3. Published docs
-4. Old strategy, planning, or campaign documents
+1. Exact production-released Looksy product behavior and billing configuration
+2. The current in-app Shopify approval flow and [Shopify App Store listing](https://apps.shopify.com/looksy)
+3. [Looksy website](https://withlooksy.com/) marketing pages
+4. Published docs
+5. Old strategy, planning, or campaign documents
 
-If the first two sources disagree, stop and resolve the product fact before publishing an answer. Never infer plan terms, legal compliance, performance guarantees, or merchant outcomes.
+If a marketing page disagrees with released product configuration or the Shopify approval flow, keep the docs aligned to released behavior and record the marketing-page correction separately. Never copy the conflicting marketing claim into the docs or infer plan terms, legal compliance, performance guarantees, or merchant outcomes.
 
 The machine-readable baseline is `facts/aeo-baseline.json`. Update it in the same pull request as an approved pricing or identity change.
 
@@ -28,7 +29,9 @@ The machine-readable baseline is `facts/aeo-baseline.json`. Update it in the sam
 Run the source checks before every documentation change:
 
 ```bash
-node scripts/aeo-audit.mjs --json-output artifacts/aeo-source-audit.json
+node scripts/aeo-audit.mjs \
+  --product-repo <path-to-withlooksy-product-repo> \
+  --json-output artifacts/aeo-source-audit.json
 ```
 
 When navigation, titles, or descriptions change, regenerate and review the public AI index first:
@@ -40,6 +43,7 @@ node scripts/aeo-audit.mjs --write-ai-index
 The source audit verifies:
 
 - every MDX page is present exactly once in Mintlify navigation;
+- every manifest-declared released or gated merchant feature in `facts/feature-coverage.json` has source-pinned, navigated documentation and a route-specific AI-index entry;
 - established routes remain live or have a permanent redirect, and new routes join the append-only protected inventory;
 - every page has a unique title and description and is not marked `noindex`;
 - root-relative documentation links resolve;
@@ -56,6 +60,24 @@ npx --yes mintlify@4.2.715 broken-links --check-redirects
 ```
 
 Use Node 20 LTS for Mintlify CLI commands. When adding a route, add it to `protectedRoutes` in `facts/aeo-baseline.json`. When moving or retiring one, keep it in that inventory and add a permanent `docs.json` redirect to a current page.
+
+## Product feature coverage
+
+`facts/feature-coverage.json` is the reviewed contract between the Looksy product repository and public documentation. Each entry records:
+
+- a unique merchant-facing feature ID and name;
+- whether the feature is `released` or `gated`;
+- one or more product source references pinned to the same exact product Git commit;
+- the navigated documentation route and terms that must remain on that page;
+- the route and terms that must remain in `llms.txt` or `skill.md`.
+
+`facts/aeo-baseline.json.requiredFeatureIds` is the independent append-only inventory for the reviewed feature IDs. Update it with the manifest when a feature is deliberately added; removing a manifest entry without updating that inventory fails the audit.
+
+The GitHub docs workflow validates the declared contract without access to the private product repository. That check is intentionally named **manifest-declared coverage**: it fails when the manifest is malformed, a required feature ID disappears, feature IDs or documentation routes are duplicated, a required page is absent or unnavigated, or reviewed terms disappear from the page or AI index. It does not prove that a genuinely new product feature was discovered.
+
+The local cross-repository command above additionally resolves every source path and line range at the pinned product commit, checks that the commit belongs to product `origin/main`, and lists product files changed after the pin. Fetch both repositories before running it. A gated feature must set canonical `Coming soon` metadata and a visible disclosure in every docs and AI-index entry.
+
+When product behavior is released, gated, renamed, or retired, review the product repository at an exact production-released commit and update this manifest in the corresponding documentation pull request. Do not advance the pinned commit without re-checking every affected source reference, and do not mark repository code as `released` without the required runtime/release evidence. The weekly **Looksy Docs Truth & Coverage** automation fetches both repositories, resolves the cross-repository contract, and reviews post-pin merchant-facing changes; product release owners must still add genuinely new merchant-facing features to the manifest as part of the release handoff.
 
 Run the live checks after a successful Mintlify deployment:
 
@@ -119,6 +141,7 @@ A failed check is a release blocker for the affected docs change. The workflow u
 At least monthly, review:
 
 - plan prices, credit allowances, and product capabilities;
+- the feature-coverage manifest against the current released product surface and its pinned product commit;
 - support questions that deserve a clearer existing answer;
 - Search Console impressions, clicks, CTR, and indexing;
 - answer-engine referrals and manual factual spot checks;
