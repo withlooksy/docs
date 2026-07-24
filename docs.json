@@ -42,18 +42,48 @@
         "group": "Product Setup",
         "pages": [
           "product-setup/choosing-products",
+          "product-setup/configuring-products",
+          "product-setup/direct-try-on-links",
+          "product-setup/looksy-studio",
           "product-setup/image-requirements",
           "product-setup/best-practices",
           "product-setup/supported-products"
         ]
       },
       {
+        "group": "Shopper Features",
+        "pages": [
+          "shopper-features/size-recommendations",
+          "shopper-features/complete-the-look",
+          "shopper-features/live-video-try-on",
+          "shopper-features/results-and-history"
+        ]
+      },
+      {
+        "group": "Virtual Fitting Room",
+        "pages": [
+          "fitting-room/overview",
+          "fitting-room/recommendations"
+        ]
+      },
+      {
         "group": "Integration & Customization",
         "pages": [
+          "integration/klaviyo",
+          "integration/shopify-flow",
           "integration/gorgias",
+          "integration/coming-soon",
           "integration/theme-setup",
           "integration/mobile-optimization",
           "integration/custom-styling"
+        ]
+      },
+      {
+        "group": "Settings & Developer Tools",
+        "pages": [
+          "settings/product-defaults-and-language",
+          "settings/usage-and-access-controls",
+          "developers/api-and-webhooks"
         ]
       },
       {

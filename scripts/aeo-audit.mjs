@@ -14,9 +14,16 @@ const args = new Set(process.argv.slice(2));
 const liveMode = args.has("--live");
 const outputFlagIndex = process.argv.indexOf("--json-output");
 const outputPath = outputFlagIndex >= 0 ? process.argv[outputFlagIndex + 1] : null;
+const productRepoFlagIndex = process.argv.indexOf("--product-repo");
+const productRepoPath = productRepoFlagIndex >= 0
+  ? process.argv[productRepoFlagIndex + 1]
+  : null;
 
 if (outputFlagIndex >= 0 && !outputPath) {
   throw new Error("--json-output requires a path");
+}
+if (productRepoFlagIndex >= 0 && !productRepoPath) {
+  throw new Error("--product-repo requires a path");
 }
 
 const config = JSON.parse(await readFile(path.join(root, "docs.json"), "utf8"));
@@ -66,7 +73,7 @@ async function listFiles(directory, extension) {
   return found.sort();
 }
 
-async function previousProtectedRouteInventory() {
+async function previousAeoBaselineInventory() {
   const candidates = [];
   if (process.env.GITHUB_EVENT_NAME === "push") candidates.push("HEAD^");
   if (process.env.GITHUB_BASE_REF) candidates.push(`origin/${process.env.GITHUB_BASE_REF}`);
@@ -80,7 +87,7 @@ async function previousProtectedRouteInventory() {
         { cwd: root, maxBuffer: 2_000_000 },
       );
       const previous = JSON.parse(stdout);
-      if (Array.isArray(previous.protectedRoutes)) return { reference, routes: previous.protectedRoutes };
+      if (isPlainObject(previous)) return { reference, baseline: previous };
     } catch {
       // The baseline did not exist before the first AEO audit change, or the ref is unavailable locally.
     }
@@ -665,38 +672,50 @@ function distributedCommercialProblems(page) {
       .map((value) => Number(value.slice(1))),
   );
   const approvedCredits = new Set(baseline.plans.map((plan) => plan.monthlyCredits));
+  const approvedFeatureCreditLines = new Set(
+    baseline.approvedFeatureCreditLines?.[page.relative] ?? [],
+  );
+  const hasFeatureCreditContract = approvedFeatureCreditLines.size > 0;
 
   for (const [lineIndex, line] of page.source.split("\n").entries()) {
+    const commercialLine = line.replace(/[*_`~]/g, "");
     const explicitlyHypothetical = /illustrative example|hypothetical example/i.test(line);
-    for (const match of line.matchAll(/\$([\d,]+(?:\.\d+)?)/g)) {
+    const approvedFeatureCreditLine = approvedFeatureCreditLines.has(line.trim());
+    for (const match of commercialLine.matchAll(/\$([\d,]+(?:\.\d+)?)/g)) {
       const amount = Number(match[1].replaceAll(",", ""));
       if (!approvedMoney.has(amount) && !explicitlyHypothetical) {
         problems.push(`${page.relative}:${lineIndex + 1}: unapproved commercial amount $${match[1]}`);
       }
     }
-    for (const match of line.matchAll(/\b(\d[\d,]*)\s+(?:included\s+)?credits?\b/gi)) {
+    for (const match of commercialLine.matchAll(/\b(\d[\d,]*)(?:\s+(?:included\s+)?|-)credits?\b/gi)) {
       const allowance = Number(match[1].replaceAll(",", ""));
-      if (!approvedCredits.has(allowance) && !explicitlyHypothetical) {
+      if (
+        hasFeatureCreditContract
+        && !approvedFeatureCreditLine
+        && !explicitlyHypothetical
+      ) {
+        problems.push(`${page.relative}:${lineIndex + 1}: unapproved feature credit statement ${match[1]}`);
+      } else if (!approvedCredits.has(allowance) && !explicitlyHypothetical && !approvedFeatureCreditLine) {
         problems.push(`${page.relative}:${lineIndex + 1}: unapproved credit allowance ${match[1]}`);
       }
     }
 
     for (const plan of baseline.plans) {
-      const planNameMatch = line.match(new RegExp(`\\b${escapeRegExp(plan.name)}\\b`, "i"));
+      const planNameMatch = commercialLine.match(new RegExp(`\\b${escapeRegExp(plan.name)}\\b`, "i"));
       if (!planNameMatch) continue;
       const expectedMonthly = Number(plan.monthlyPrice.slice(1));
       const expectedAnnual = plan.annualPrice ? Number(plan.annualPrice.slice(1)) : null;
       const expectedAdditional = plan.additionalCreditPrice ? Number(plan.additionalCreditPrice.slice(1)) : null;
-      const planMoneyMatches = [...line.matchAll(/\$([\d,]+(?:\.\d+)?)/g)];
+      const planMoneyMatches = [...commercialLine.matchAll(/\$([\d,]+(?:\.\d+)?)/g)];
       for (const match of planMoneyMatches) {
-        const between = line.slice(
+        const between = commercialLine.slice(
           Math.min(planNameMatch.index, match.index),
           Math.max(planNameMatch.index + planNameMatch[0].length, match.index + match[0].length),
         );
         if (/[.!?]\s/.test(between)) continue;
         const amount = Number(match[1].replaceAll(",", ""));
-        const before = line.slice(Math.max(0, match.index - 35), match.index).toLowerCase();
-        const after = line.slice(match.index + match[0].length, match.index + match[0].length + 35).toLowerCase();
+        const before = commercialLine.slice(Math.max(0, match.index - 35), match.index).toLowerCase();
+        const after = commercialLine.slice(match.index + match[0].length, match.index + match[0].length + 35).toLowerCase();
         if (/^\s*(?:\/|per\s+)\s*month\b/.test(after) && amount !== expectedMonthly) {
           problems.push(`${page.relative}:${lineIndex + 1}: ${plan.name} monthly price is $${match[1]}`);
         } else if (/^\s*(?:\/|per\s+)\s*year\b/.test(after) && amount !== expectedAnnual) {
@@ -707,15 +726,15 @@ function distributedCommercialProblems(page) {
       }
       if (
         planMoneyMatches.length === 1 &&
-        !/(?:\/|per\s+)(?:month|year)|additional credit|\beach\b/i.test(line)
+        !/(?:\/|per\s+)(?:month|year)|additional credit|\beach\b/i.test(commercialLine)
       ) {
         const amount = Number(planMoneyMatches[0][1].replaceAll(",", ""));
         if (amount !== expectedMonthly) {
           problems.push(`${page.relative}:${lineIndex + 1}: ${plan.name} unlabeled price is $${planMoneyMatches[0][1]}`);
         }
       }
-      for (const match of line.matchAll(/\b(\d[\d,]*)\s+(?:included\s+)?credits?\b/gi)) {
-        const between = line.slice(
+      for (const match of commercialLine.matchAll(/\b(\d[\d,]*)\s+(?:included\s+)?credits?\b/gi)) {
+        const between = commercialLine.slice(
           Math.min(planNameMatch.index, match.index),
           Math.max(planNameMatch.index + planNameMatch[0].length, match.index + match[0].length),
         );
@@ -862,6 +881,366 @@ function normalizePublishedText(value) {
   return value.replaceAll("\r\n", "\n").trimEnd();
 }
 
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function normalizedIncludes(source, expected) {
+  return source.replace(/\s+/g, " ").toLowerCase().includes(
+    expected.replace(/\s+/g, " ").toLowerCase(),
+  );
+}
+
+function isReviewedIsoDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value ?? "")) return false;
+  const parsed = new Date(`${value}T00:00:00.000Z`);
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value) {
+    return false;
+  }
+  return value <= new Date().toISOString().slice(0, 10);
+}
+
+function isNormalizedProductSourcePath(value) {
+  if (
+    typeof value !== "string"
+    || !value
+    || value !== value.trim()
+    || value.startsWith("/")
+    || value.includes("\\")
+    || /[\0\r\n]/.test(value)
+  ) {
+    return false;
+  }
+  return value.split("/").every((segment) =>
+    segment && segment !== "." && segment !== ".."
+  );
+}
+
+function parseSourceLineRange(value) {
+  const match = String(value ?? "").match(/^(\d+)(?:-(\d+))?$/);
+  if (!match) return null;
+  const start = Number(match[1]);
+  const end = Number(match[2] ?? match[1]);
+  if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 1 || end < start) {
+    return null;
+  }
+  return { start, end };
+}
+
+function featureCoverageProblems(manifest, {
+  sourceRoutes: availableSourceRoutes,
+  navRoutes: availableNavRoutes,
+  pageSources,
+  aiSources,
+  docsBase,
+  requiredFeatureIds,
+  previousRequiredFeatureIds,
+  previousRequiredFeatureReference,
+}) {
+  const problems = [];
+  const stringArray = (value) =>
+    Array.isArray(value) && value.length > 0 &&
+    value.every((entry) => typeof entry === "string" && entry.trim());
+  if (!isPlainObject(manifest)) return ["feature coverage manifest must be a JSON object"];
+  if (manifest.schemaVersion !== 1) problems.push("schemaVersion must be 1");
+  if (!isReviewedIsoDate(manifest.reviewedAt)) {
+    problems.push("reviewedAt must be a real, non-future ISO date");
+  }
+  if (!isPlainObject(manifest.product)) {
+    problems.push("product must be an object");
+  } else {
+    if (manifest.product.repository !== "withlooksy/withlooksy") {
+      problems.push("product.repository must be withlooksy/withlooksy");
+    }
+    if (!/^[0-9a-f]{40}$/.test(manifest.product.commit ?? "")) {
+      problems.push("product.commit must be a pinned 40-character Git commit");
+    }
+  }
+  if (!Array.isArray(manifest.features) || !manifest.features.length) {
+    return [...problems, "features must be a nonempty array"];
+  }
+
+  const ids = new Set();
+  const routes = new Set();
+  const aiEntries = new Set();
+  for (const [index, feature] of manifest.features.entries()) {
+    if (!isPlainObject(feature)) {
+      problems.push(`features[${index}] must be an object`);
+      continue;
+    }
+    const label = feature.id || `features[${index}]`;
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(feature.id ?? "")) {
+      problems.push(`${label}: id must use lowercase kebab-case`);
+    } else if (ids.has(feature.id)) problems.push(`${label}: duplicate feature id`);
+    ids.add(feature.id);
+    if (typeof feature.name !== "string" || !feature.name.trim()) {
+      problems.push(`${label}: name must be nonempty`);
+    }
+    if (!["released", "gated"].includes(feature.status)) {
+      problems.push(`${label}: status must be released or gated`);
+    }
+
+    if (!Array.isArray(feature.sourceRefs) || !feature.sourceRefs.length) {
+      problems.push(`${label}: sourceRefs must be nonempty`);
+    } else {
+      for (const [sourceIndex, sourceRef] of feature.sourceRefs.entries()) {
+        const sourceLabel = `${label}: sourceRefs[${sourceIndex}]`;
+        if (
+          !isPlainObject(sourceRef) ||
+          sourceRef.commit !== manifest.product?.commit ||
+          !isNormalizedProductSourcePath(sourceRef.path) ||
+          !parseSourceLineRange(sourceRef.lines)
+        ) {
+          problems.push(`${sourceLabel} must include a normalized path, ascending positive line range, and product-pinned commit`);
+        }
+      }
+    }
+
+    const requiredDocs = Array.isArray(feature.requiredDocs) ? feature.requiredDocs : [];
+    if (!requiredDocs.length) {
+      problems.push(`${label}: requiredDocs must be nonempty`);
+    }
+    for (const requiredDoc of requiredDocs) {
+      const route = requiredDoc?.route;
+      const docLabel = `${label}: requiredDocs`;
+      if (
+        !isPlainObject(requiredDoc) ||
+        !/^[a-z0-9][a-z0-9/-]*$/.test(route ?? "") ||
+        route.includes("//") ||
+        route.endsWith("/") ||
+        !stringArray(requiredDoc.terms)
+      ) {
+        problems.push(`${docLabel} entries require a normalized route and nonempty terms`);
+        continue;
+      }
+      if (routes.has(route)) problems.push(`${docLabel} route duplicates ${route}`);
+      routes.add(route);
+      if (!availableSourceRoutes.includes(route)) {
+        problems.push(`${label}: ${feature.status} docs route ${route} is missing`);
+      }
+      const navCount = availableNavRoutes.filter((entry) => entry === route).length;
+      if (navCount !== 1) problems.push(`${label}: docs route ${route} appears ${navCount} times in navigation`);
+      const pageSource = pageSources.get(route);
+      for (const term of requiredDoc.terms) {
+        if (pageSource && !normalizedIncludes(pageSource, term)) {
+          problems.push(`${label}: docs route ${route} is missing required term ${JSON.stringify(term)}`);
+        }
+      }
+    }
+
+    const requiredAiIndexEntries = Array.isArray(feature.requiredAiIndexEntries)
+      ? feature.requiredAiIndexEntries
+      : [];
+    if (!requiredAiIndexEntries.length) {
+      problems.push(`${label}: requiredAiIndexEntries must be nonempty`);
+    }
+    const featureRoutes = new Set(requiredDocs.map((entry) => entry?.route));
+    for (const aiEntry of requiredAiIndexEntries) {
+      const aiLabel = `${label}: requiredAiIndexEntries`;
+      if (
+        !isPlainObject(aiEntry) ||
+        !["llms.txt", "skill.md"].includes(aiEntry.file) ||
+        !featureRoutes.has(aiEntry.route) ||
+        !stringArray(aiEntry.terms)
+      ) {
+        problems.push(`${aiLabel} entries require a known file, feature route, and nonempty terms`);
+        continue;
+      }
+      const entryKey = `${aiEntry.file}:${aiEntry.route}`;
+      if (aiEntries.has(entryKey)) problems.push(`${aiLabel} duplicates ${entryKey}`);
+      aiEntries.add(entryKey);
+      const aiSource = aiSources.get(aiEntry.file);
+      const urls = aiEntry.file === "llms.txt"
+        ? [`${docsBase}/${aiEntry.route}.md`]
+        : [`${docsBase}/${aiEntry.route}`, `${docsBase}/${aiEntry.route}.md`];
+      const matchingLine = aiSource?.split("\n").find(
+        (line) => urls.some((url) => line.includes(url)),
+      );
+      if (!matchingLine) {
+        problems.push(`${aiLabel}: ${aiEntry.file} is missing route ${aiEntry.route}`);
+      } else {
+        for (const term of aiEntry.terms) {
+          if (!normalizedIncludes(matchingLine, term)) {
+            problems.push(`${aiLabel}: route entry is missing required term ${JSON.stringify(term)}`);
+          }
+        }
+      }
+    }
+
+    if (feature.status === "gated") {
+      if (
+        typeof feature.availabilityNote !== "string"
+        || feature.availabilityNote.trim() !== "Coming soon"
+      ) {
+        problems.push(`${label}: gated features require the canonical availabilityNote "Coming soon"`);
+      }
+      const featureSubject = feature.name.replace(/\s+integration(?:s)?$/i, "").trim();
+      const contradiction = featureSubject
+        ? new RegExp(
+            `\\b${escapeRegExp(featureSubject)}\\b[^.!?\\n]{0,100}\\b(?:is|are|now|already)\\s+(?:generally\\s+)?(?:available|live|released|enabled)\\b|\\b(?:connect|enable|activate)\\b[^.!?\\n]{0,60}\\b(?:${escapeRegExp(featureSubject)}|it)\\b[^.!?\\n]{0,30}\\b(?:now|today)\\b`,
+            "i",
+          )
+        : null;
+      const positiveAvailability = /\b(?:is|are)\s+(?:generally\s+)?(?:available|live|released|enabled)\b(?:\s+(?:now|today))?|\b(?:now|already)\s+(?:available|live|released|enabled)\b|\bavailable\s+(?:now|today)\b/i;
+      const operationalAvailability = /\b(?:connect|enable|activate)\b[^.!?\n]{0,100}\b(?:now|today)\b/i;
+      for (const requiredDoc of requiredDocs) {
+        if (!requiredDoc?.terms?.some((term) => /^coming soon$/i.test(term))) {
+          problems.push(`${label}: every gated docs route must require the term "Coming soon"`);
+        }
+        const pageSource = pageSources.get(requiredDoc?.route);
+        const parsedPage = pageSource ? parseFrontmatter(pageSource) : null;
+        const pageAvailability = parsedPage?.data?.availability;
+        if (pageSource && pageAvailability !== feature.availabilityNote) {
+          problems.push(`${label}: gated docs route ${requiredDoc.route} must set frontmatter availability to ${JSON.stringify(feature.availabilityNote)}`);
+        }
+        const bodyAvailabilityStatement = `**Availability:** ${feature.availabilityNote}.`;
+        if (
+          parsedPage
+          && !parsedPage.body.split("\n").some((line) => line.trim() === bodyAvailabilityStatement)
+        ) {
+          problems.push(`${label}: gated docs route ${requiredDoc.route} must show the body disclosure ${JSON.stringify(bodyAvailabilityStatement)}`);
+        }
+        if (parsedPage && contradiction?.test(parsedPage.body)) {
+          problems.push(`${label}: gated docs route ${requiredDoc.route} contains a visible availability contradiction`);
+        }
+      }
+      for (const aiEntry of requiredAiIndexEntries) {
+        if (!aiEntry?.terms?.some((term) => /^coming soon$/i.test(term))) {
+          problems.push(`${label}: every gated AI-index entry must require the term "Coming soon"`);
+        }
+        const aiSource = aiSources.get(aiEntry?.file);
+        const matchingLine = aiSource?.split("\n").find((line) =>
+          line.includes(`${docsBase}/${aiEntry?.route}`)
+        );
+        const availabilityStatement = `Availability: ${feature.availabilityNote}.`;
+        if (matchingLine && !matchingLine.includes(availabilityStatement)) {
+          problems.push(`${label}: gated AI-index entry ${aiEntry.file}:${aiEntry.route} must include ${JSON.stringify(availabilityStatement)}`);
+        }
+        if (
+          matchingLine
+          && (
+            positiveAvailability.test(matchingLine)
+            || contradiction?.test(matchingLine)
+            || operationalAvailability.test(matchingLine)
+          )
+        ) {
+          problems.push(`${label}: gated AI-index entry ${aiEntry.file}:${aiEntry.route} contains an availability contradiction`);
+        }
+      }
+    }
+  }
+  if (!Array.isArray(requiredFeatureIds) || !requiredFeatureIds.length) {
+    problems.push("requiredFeatureIds baseline must be a nonempty array");
+  } else {
+    const requiredIds = new Set(requiredFeatureIds);
+    for (const requiredId of requiredIds) {
+      if (!ids.has(requiredId)) {
+        problems.push(`feature manifest is missing required feature id ${requiredId}`);
+      }
+    }
+    for (const id of ids) {
+      if (id && !requiredIds.has(id)) {
+        problems.push(`requiredFeatureIds baseline is missing manifest feature id ${id}`);
+      }
+    }
+    if (Array.isArray(previousRequiredFeatureIds)) {
+      for (const previousId of previousRequiredFeatureIds) {
+        if (!requiredIds.has(previousId)) {
+          problems.push(
+            `requiredFeatureIds baseline removed historical feature id ${previousId}`
+            + (previousRequiredFeatureReference ? ` recorded at ${previousRequiredFeatureReference}` : ""),
+          );
+        }
+      }
+    }
+  }
+  return problems;
+}
+
+async function resolveProductSourceReferences(manifest, repositoryPath) {
+  const problems = [];
+  const absoluteRepositoryPath = path.resolve(repositoryPath);
+  const manifestCommit = manifest.product.commit;
+  let currentMain = null;
+  let changedFiles = [];
+
+  try {
+    const { stdout } = await execFileAsync(
+      "git",
+      ["remote", "get-url", "origin"],
+      { cwd: absoluteRepositoryPath, maxBuffer: 2_000_000 },
+    );
+    if (!/(?:[:/])withlooksy\/withlooksy(?:\.git)?$/i.test(stdout.trim())) {
+      problems.push(`${absoluteRepositoryPath}: origin is not withlooksy/withlooksy`);
+    }
+  } catch (error) {
+    problems.push(`${absoluteRepositoryPath}: cannot read the product repository origin (${error.message})`);
+    return { problems, currentMain, changedFiles };
+  }
+
+  try {
+    await execFileAsync(
+      "git",
+      ["cat-file", "-e", `${manifestCommit}^{commit}`],
+      { cwd: absoluteRepositoryPath, maxBuffer: 2_000_000 },
+    );
+  } catch {
+    problems.push(`${manifestCommit}: pinned product commit does not exist`);
+    return { problems, currentMain, changedFiles };
+  }
+
+  try {
+    currentMain = (await execFileAsync(
+      "git",
+      ["rev-parse", "origin/main"],
+      { cwd: absoluteRepositoryPath, maxBuffer: 2_000_000 },
+    )).stdout.trim();
+    await execFileAsync(
+      "git",
+      ["merge-base", "--is-ancestor", manifestCommit, currentMain],
+      { cwd: absoluteRepositoryPath, maxBuffer: 2_000_000 },
+    );
+    if (currentMain !== manifestCommit) {
+      changedFiles = (await execFileAsync(
+        "git",
+        ["diff", "--name-only", `${manifestCommit}..${currentMain}`],
+        { cwd: absoluteRepositoryPath, maxBuffer: 10_000_000 },
+      )).stdout.split(/\r?\n/).filter(Boolean);
+    }
+  } catch (error) {
+    problems.push(`${manifestCommit}: pinned product commit is not an ancestor of product origin/main (${error.message})`);
+  }
+
+  for (const feature of manifest.features) {
+    for (const sourceRef of feature.sourceRefs) {
+      const range = parseSourceLineRange(sourceRef.lines);
+      if (!range || !isNormalizedProductSourcePath(sourceRef.path)) continue;
+      let source;
+      try {
+        source = (await execFileAsync(
+          "git",
+          ["show", `${manifestCommit}:${sourceRef.path}`],
+          { cwd: absoluteRepositoryPath, maxBuffer: 20_000_000 },
+        )).stdout;
+      } catch {
+        problems.push(`${feature.id}: ${sourceRef.path} does not exist at ${manifestCommit}`);
+        continue;
+      }
+      const lines = source.replaceAll("\r\n", "\n").split("\n");
+      if (lines.at(-1) === "") lines.pop();
+      if (range.end > lines.length) {
+        problems.push(`${feature.id}: ${sourceRef.path}:${sourceRef.lines} exceeds the ${lines.length}-line file at ${manifestCommit}`);
+        continue;
+      }
+      if (!lines.slice(range.start - 1, range.end).some((line) => line.trim())) {
+        problems.push(`${feature.id}: ${sourceRef.path}:${sourceRef.lines} resolves only to blank lines at ${manifestCommit}`);
+      }
+    }
+  }
+
+  return { problems, currentMain, changedFiles };
+}
+
 const productImageExperienceRequirements = new Map([
   ["index.mdx", [
     "Looksy automatically places the **Try On** button over the main product image",
@@ -961,6 +1340,221 @@ const sourceRoutes = mdxFiles.map((file) =>
 const navRoutes = navigationPages(config.navigation);
 
 const auditFixtureProblems = [];
+const featureCoverageFixtureCommit = "a".repeat(40);
+function validFeatureCoverageFixture() {
+  return {
+    schemaVersion: 1,
+    reviewedAt: "2026-07-23",
+    product: {
+      repository: "withlooksy/withlooksy",
+      commit: featureCoverageFixtureCommit,
+    },
+    features: [{
+      id: "current-feature",
+      name: "Current feature",
+      status: "released",
+      sourceRefs: [{
+        commit: featureCoverageFixtureCommit,
+        path: "web/current-feature.tsx",
+        lines: "10-20",
+      }],
+      requiredDocs: [{
+        route: "feature/current",
+        terms: ["Current feature"],
+      }],
+      requiredAiIndexEntries: [{
+        file: "llms.txt",
+        route: "feature/current",
+        terms: ["Current feature"],
+      }],
+    }],
+  };
+}
+function featureCoverageFixtureContext(overrides = {}) {
+  return {
+    sourceRoutes: ["feature/current"],
+    navRoutes: ["feature/current"],
+    pageSources: new Map([["feature/current", "# Current feature"]]),
+    aiSources: new Map([[
+      "llms.txt",
+      `- [Current feature](${baseline.site.docsBase}/feature/current.md): Current feature guidance.`,
+    ]]),
+    docsBase: baseline.site.docsBase,
+    requiredFeatureIds: ["current-feature"],
+    previousRequiredFeatureIds: ["current-feature"],
+    previousRequiredFeatureReference: "origin/main",
+    ...overrides,
+  };
+}
+if (featureCoverageProblems(
+  validFeatureCoverageFixture(),
+  featureCoverageFixtureContext(),
+).length) {
+  auditFixtureProblems.push("feature coverage validator rejected a complete released feature");
+}
+const staleFeatureCoverageFixture = validFeatureCoverageFixture();
+staleFeatureCoverageFixture.features[0].sourceRefs[0].commit = "b".repeat(40);
+if (!featureCoverageProblems(
+  staleFeatureCoverageFixture,
+  featureCoverageFixtureContext(),
+).some((problem) => problem.includes("product-pinned commit"))) {
+  auditFixtureProblems.push("feature coverage validator accepted an unpinned product source ref");
+}
+const invalidDateFeatureCoverageFixture = validFeatureCoverageFixture();
+invalidDateFeatureCoverageFixture.reviewedAt = "2026-99-99";
+if (!featureCoverageProblems(
+  invalidDateFeatureCoverageFixture,
+  featureCoverageFixtureContext(),
+).some((problem) => problem.includes("real, non-future ISO date"))) {
+  auditFixtureProblems.push("feature coverage validator accepted an impossible review date");
+}
+const backwardsRangeFeatureCoverageFixture = validFeatureCoverageFixture();
+backwardsRangeFeatureCoverageFixture.features[0].sourceRefs[0].lines = "99-2";
+if (!featureCoverageProblems(
+  backwardsRangeFeatureCoverageFixture,
+  featureCoverageFixtureContext(),
+).some((problem) => problem.includes("ascending positive line range"))) {
+  auditFixtureProblems.push("feature coverage validator accepted a backwards source line range");
+}
+const traversalPathFeatureCoverageFixture = validFeatureCoverageFixture();
+traversalPathFeatureCoverageFixture.features[0].sourceRefs[0].path = "../outside.tsx";
+if (!featureCoverageProblems(
+  traversalPathFeatureCoverageFixture,
+  featureCoverageFixtureContext(),
+).some((problem) => problem.includes("normalized path"))) {
+  auditFixtureProblems.push("feature coverage validator accepted a source path traversal");
+}
+const hostileDocsTypeFeatureCoverageFixture = validFeatureCoverageFixture();
+hostileDocsTypeFeatureCoverageFixture.features[0].requiredDocs = {};
+if (!featureCoverageProblems(
+  hostileDocsTypeFeatureCoverageFixture,
+  featureCoverageFixtureContext(),
+).some((problem) => problem.includes("requiredDocs must be nonempty"))) {
+  auditFixtureProblems.push("feature coverage validator did not report an object-valued requiredDocs field");
+}
+const hostileAiTypeFeatureCoverageFixture = validFeatureCoverageFixture();
+hostileAiTypeFeatureCoverageFixture.features[0].requiredAiIndexEntries = "llms.txt";
+if (!featureCoverageProblems(
+  hostileAiTypeFeatureCoverageFixture,
+  featureCoverageFixtureContext(),
+).some((problem) => problem.includes("requiredAiIndexEntries must be nonempty"))) {
+  auditFixtureProblems.push("feature coverage validator did not report a string-valued requiredAiIndexEntries field");
+}
+if (!featureCoverageProblems(
+  validFeatureCoverageFixture(),
+  featureCoverageFixtureContext({ navRoutes: [] }),
+).some((problem) => problem.includes("0 times in navigation"))) {
+  auditFixtureProblems.push("feature coverage validator accepted an unnavigated released feature");
+}
+if (!featureCoverageProblems(
+  validFeatureCoverageFixture(),
+  featureCoverageFixtureContext({
+    requiredFeatureIds: ["current-feature", "missing-feature"],
+  }),
+).some((problem) => problem.includes("missing required feature id missing-feature"))) {
+  auditFixtureProblems.push("feature coverage validator accepted deletion from the independent required feature inventory");
+}
+if (!featureCoverageProblems(
+  validFeatureCoverageFixture(),
+  featureCoverageFixtureContext({
+    requiredFeatureIds: ["current-feature"],
+    previousRequiredFeatureIds: ["current-feature", "historical-feature"],
+  }),
+).some((problem) => problem.includes("removed historical feature id historical-feature"))) {
+  auditFixtureProblems.push("feature coverage validator accepted coordinated deletion from the manifest and required feature inventory");
+}
+if (!featureCoverageProblems(
+  validFeatureCoverageFixture(),
+  featureCoverageFixtureContext({
+    pageSources: new Map([["feature/current", "# Unrelated page"]]),
+  }),
+).some((problem) => problem.includes("missing required term"))) {
+  auditFixtureProblems.push("feature coverage validator accepted a docs page without its expected feature term");
+}
+if (!featureCoverageProblems(
+  validFeatureCoverageFixture(),
+  featureCoverageFixtureContext({
+    aiSources: new Map([[
+      "llms.txt",
+      `- [Generic page](${baseline.site.docsBase}/feature/current.md): Generic guidance.`,
+    ]]),
+  }),
+).some((problem) => problem.includes("route entry is missing required term"))) {
+  auditFixtureProblems.push("feature coverage validator accepted an AI index entry without its expected feature term");
+}
+const duplicateFeatureCoverageFixture = validFeatureCoverageFixture();
+duplicateFeatureCoverageFixture.features.push(structuredClone(duplicateFeatureCoverageFixture.features[0]));
+if (!featureCoverageProblems(
+  duplicateFeatureCoverageFixture,
+  featureCoverageFixtureContext(),
+).some((problem) => problem.includes("duplicate feature id"))) {
+  auditFixtureProblems.push("feature coverage validator accepted a duplicate feature id");
+}
+const gatedFeatureCoverageFixture = validFeatureCoverageFixture();
+gatedFeatureCoverageFixture.features[0].status = "gated";
+gatedFeatureCoverageFixture.features[0].availabilityNote = "Not generally available.";
+if (!featureCoverageProblems(
+  gatedFeatureCoverageFixture,
+  featureCoverageFixtureContext(),
+).some((problem) => problem.includes('canonical availabilityNote "Coming soon"'))) {
+  auditFixtureProblems.push("feature coverage validator accepted gated coverage without a Coming soon disclosure");
+}
+const contradictoryGatedFeatureCoverageFixture = validFeatureCoverageFixture();
+const contradictoryGatedFeature = contradictoryGatedFeatureCoverageFixture.features[0];
+contradictoryGatedFeature.status = "gated";
+contradictoryGatedFeature.availabilityNote = "Coming soon";
+contradictoryGatedFeature.requiredDocs[0].terms.push("Coming soon");
+contradictoryGatedFeature.requiredDocs.push({
+  route: "feature/secondary",
+  terms: ["Current feature", "Coming soon"],
+});
+contradictoryGatedFeature.requiredAiIndexEntries[0].terms.push("Coming soon");
+contradictoryGatedFeature.requiredAiIndexEntries.push({
+  file: "skill.md",
+  route: "feature/secondary",
+  terms: ["Current feature", "Coming soon"],
+});
+const contradictoryGatedProblems = featureCoverageProblems(
+  contradictoryGatedFeatureCoverageFixture,
+  featureCoverageFixtureContext({
+    sourceRoutes: ["feature/current", "feature/secondary"],
+    navRoutes: ["feature/current", "feature/secondary"],
+    pageSources: new Map([
+      ["feature/current", '---\ntitle: "Current"\navailability: "Coming soon"\n---\n**Availability:** Coming soon.\n\n# Current feature'],
+      ["feature/secondary", '---\ntitle: "Secondary"\navailability: "Available today"\n---\n**Availability:** Coming soon.\n\n# Current feature is available today.'],
+    ]),
+    aiSources: new Map([
+      ["llms.txt", `- [Current feature](${baseline.site.docsBase}/feature/current.md): Current feature is available today. Availability: Coming soon.`],
+      ["skill.md", `- [Current feature](${baseline.site.docsBase}/feature/secondary): Connect Current feature today. Availability: Coming soon.`],
+    ]),
+  }),
+);
+if (
+  !contradictoryGatedProblems.some((problem) => problem.includes("frontmatter availability"))
+  || !contradictoryGatedProblems.some((problem) => problem.includes("visible availability contradiction"))
+  || !contradictoryGatedProblems.some((problem) => problem.includes("AI-index entry llms.txt:feature/current contains an availability contradiction"))
+  || !contradictoryGatedProblems.some((problem) => problem.includes("AI-index entry skill.md:feature/secondary contains an availability contradiction"))
+) {
+  auditFixtureProblems.push("feature coverage validator accepted inconsistent gated status across multiple docs and AI entries");
+}
+const missingGatedAiAvailabilityFixture = structuredClone(contradictoryGatedFeatureCoverageFixture);
+if (!featureCoverageProblems(
+  missingGatedAiAvailabilityFixture,
+  featureCoverageFixtureContext({
+    sourceRoutes: ["feature/current", "feature/secondary"],
+    navRoutes: ["feature/current", "feature/secondary"],
+    pageSources: new Map([
+      ["feature/current", '---\ntitle: "Current"\navailability: "Coming soon"\n---\n**Availability:** Coming soon.\n\n# Current feature'],
+      ["feature/secondary", '---\ntitle: "Secondary"\navailability: "Coming soon"\n---\n**Availability:** Coming soon.\n\n# Current feature'],
+    ]),
+    aiSources: new Map([
+      ["llms.txt", `- [Current feature](${baseline.site.docsBase}/feature/current.md): Current feature. Coming soon.`],
+      ["skill.md", `- [Current feature](${baseline.site.docsBase}/feature/secondary): Current feature. Availability: Coming soon.`],
+    ]),
+  }),
+).some((problem) => problem.includes('must include "Availability: Coming soon."'))) {
+  auditFixtureProblems.push("feature coverage validator accepted a gated AI entry without the canonical availability statement");
+}
 const productImageFixtureRequirements = new Map([
   ["fixture.mdx", [
     "Looksy automatically places the **Try On** button over the main product image.",
@@ -1398,6 +1992,47 @@ if (!distributedCommercialProblems({
 }).some((problem) => problem.includes("Starter prose allowance is 300"))) {
   auditFixtureProblems.push("distributed commercial validator assigned an approved allowance to the wrong plan");
 }
+if (distributedCommercialProblems({
+  relative: "product-setup/looksy-studio.mdx",
+  source: "Each successfully generated model image uses **1 credit**.",
+}).length) {
+  auditFixtureProblems.push("distributed commercial validator rejected approved route-scoped feature usage");
+}
+if (!distributedCommercialProblems({
+  relative: "product-setup/looksy-studio.mdx",
+  source: "Each successfully generated model image uses **2 credits**.",
+}).some((problem) => problem.includes("unapproved feature credit statement 2"))) {
+  auditFixtureProblems.push("distributed commercial validator accepted altered route-scoped feature usage");
+}
+if (distributedCommercialProblems({
+  relative: "shopper-features/live-video-try-on.mdx",
+  source: "| 10 seconds | 5 credits |",
+}).length) {
+  auditFixtureProblems.push("distributed commercial validator rejected an approved Live Video credit cap");
+}
+if (!distributedCommercialProblems({
+  relative: "shopper-features/live-video-try-on.mdx",
+  source: "| 10 seconds | 25 credits |",
+}).some((problem) => problem.includes("unapproved feature credit statement 25"))) {
+  auditFixtureProblems.push("distributed commercial validator accepted a plan allowance as an altered Live Video credit cap");
+}
+if (!distributedCommercialProblems({
+  relative: "shopper-features/live-video-try-on.mdx",
+  source: "A session has a 25-credit maximum.",
+}).some((problem) => problem.includes("unapproved feature credit statement 25"))) {
+  auditFixtureProblems.push("distributed commercial validator accepted an altered hyphenated feature credit claim");
+}
+for (const formattedCreditClaim of [
+  "A session uses **25** credits.",
+  "A session uses `25` credits.",
+]) {
+  if (!distributedCommercialProblems({
+    relative: "shopper-features/live-video-try-on.mdx",
+    source: formattedCreditClaim,
+  }).some((problem) => problem.includes("unapproved feature credit statement 25"))) {
+    auditFixtureProblems.push(`distributed commercial validator accepted formatted feature credit claim ${JSON.stringify(formattedCreditClaim)}`);
+  }
+}
 if (auditFixtureProblems.length) fail("Audit regression fixtures", auditFixtureProblems);
 else pass("Audit regression fixtures", "robots, metadata, JSON-LD, and relative-link edge cases are enforced");
 
@@ -1465,7 +2100,13 @@ function declaredPermanentRedirect(route) {
   return { redirect, destination };
 }
 const unregisteredCurrentRoutes = navRoutes.filter((route) => !(baseline.protectedRoutes ?? []).includes(route));
-const previousRouteInventory = await previousProtectedRouteInventory();
+const previousBaselineInventory = await previousAeoBaselineInventory();
+const previousRouteInventory = Array.isArray(previousBaselineInventory?.baseline?.protectedRoutes)
+  ? {
+      reference: previousBaselineInventory.reference,
+      routes: previousBaselineInventory.baseline.protectedRoutes,
+    }
+  : null;
 const prunedProtectedRoutes = previousRouteInventory
   ? previousRouteInventory.routes.filter((route) => !(baseline.protectedRoutes ?? []).includes(route))
   : [];
@@ -1586,6 +2227,90 @@ for (const problem of validateDocumentationLinks(sourceSkill, "skill.md", source
 if (aiSourceProblems.length) fail("AI discovery source", aiSourceProblems);
 else pass("AI discovery source", "reviewed llms.txt and skill.md agree with navigation and commercial facts");
 
+let featureCoverageManifest = null;
+const featureCoverageReadProblems = [];
+try {
+  featureCoverageManifest = JSON.parse(
+    await readFile(path.join(root, "facts", "feature-coverage.json"), "utf8"),
+  );
+} catch (error) {
+  featureCoverageReadProblems.push(`facts/feature-coverage.json: ${error.message}`);
+}
+const featureCoverageCheckProblems = featureCoverageManifest
+  ? featureCoverageProblems(featureCoverageManifest, {
+      sourceRoutes,
+      navRoutes,
+      pageSources: new Map(
+        parsedPages.map((page) => [
+          page.relative.replace(/\.mdx$/, ""),
+          page.source,
+        ]),
+      ),
+      aiSources: new Map([
+        ["llms.txt", sourceLlms],
+        ["skill.md", sourceSkill],
+      ]),
+      docsBase: baseline.site.docsBase,
+      requiredFeatureIds: baseline.requiredFeatureIds,
+      previousRequiredFeatureIds: previousBaselineInventory?.baseline?.requiredFeatureIds,
+      previousRequiredFeatureReference: previousBaselineInventory?.reference,
+    })
+  : [];
+const allFeatureCoverageProblems = [
+  ...featureCoverageReadProblems,
+  ...featureCoverageCheckProblems,
+];
+if (allFeatureCoverageProblems.length) {
+  fail("Manifest-declared product feature coverage", allFeatureCoverageProblems);
+} else {
+  const releasedCount = featureCoverageManifest.features.filter(
+    (feature) => feature.status === "released",
+  ).length;
+  const gatedCount = featureCoverageManifest.features.filter(
+    (feature) => feature.status === "gated",
+  ).length;
+  pass(
+    "Manifest-declared product feature coverage",
+    `${releasedCount} released and ${gatedCount} gated manifest entries have source-pinned, navigated docs and AI-index coverage`,
+  );
+}
+
+if (featureCoverageManifest && !allFeatureCoverageProblems.length && productRepoPath) {
+  const productSourceResolution = await resolveProductSourceReferences(
+    featureCoverageManifest,
+    productRepoPath,
+  );
+  if (productSourceResolution.problems.length) {
+    fail("Product source reference resolution", productSourceResolution.problems);
+  } else {
+    const sourceReferenceCount = featureCoverageManifest.features.reduce(
+      (count, feature) => count + feature.sourceRefs.length,
+      0,
+    );
+    pass(
+      "Product source reference resolution",
+      `${sourceReferenceCount} source references resolve to nonblank ranges at ${featureCoverageManifest.product.commit}`,
+    );
+  }
+  if (
+    !productSourceResolution.problems.length
+    && productSourceResolution.currentMain !== featureCoverageManifest.product.commit
+  ) {
+    warn("Product source drift review", {
+      pinnedCommit: featureCoverageManifest.product.commit,
+      currentOriginMain: productSourceResolution.currentMain,
+      changedFileCount: productSourceResolution.changedFiles.length,
+      changedFiles: productSourceResolution.changedFiles,
+      action: "Review merchant-facing changed files before advancing the manifest or publishing affected claims.",
+    });
+  }
+} else if (featureCoverageManifest && !allFeatureCoverageProblems.length) {
+  warn(
+    "Product source reference resolution",
+    "Private product source was not resolved in this public checkout; rerun with --product-repo <withlooksy checkout> or rely on the scheduled local cross-repository audit.",
+  );
+}
+
 const productImageTruthSources = new Map(
   parsedPages.map((page) => [page.relative, page.source]),
 );
@@ -1684,12 +2409,12 @@ if (!pricingPage) {
       pricingProblems.push(`${plan.name}: approved plan row is missing or its fields are not plan-scoped`);
     }
   }
-  for (const url of [baseline.site.homepage, baseline.site.shopifyListing]) {
-    if (!pricingPage.source.includes(url)) pricingProblems.push(`missing primary source link ${url}`);
+  if (!pricingPage.source.includes(baseline.site.shopifyListing)) {
+    pricingProblems.push(`missing public monthly-pricing source link ${baseline.site.shopifyListing}`);
   }
 }
 if (pricingProblems.length) fail("Canonical pricing answer", pricingProblems);
-else pass("Canonical pricing answer", "all current plans and primary source links are present");
+else pass("Canonical pricing answer", "product-catalog plan facts and the public monthly-pricing source are present");
 
 const distributedCommercialFactProblems = parsedPages.flatMap(distributedCommercialProblems);
 if (distributedCommercialFactProblems.length) fail("Distributed commercial facts", distributedCommercialFactProblems);
@@ -2081,7 +2806,7 @@ if (liveMode) {
     const missingPlanRows = baseline.plans
       .filter((plan) => !normalizedBody.includes(normalizedMarkdownBody(expectedPlanRow(plan))))
       .map((plan) => plan.name);
-    const missingPrimarySources = [baseline.site.homepage, baseline.site.shopifyListing]
+    const missingPrimarySources = [baseline.site.shopifyListing]
       .filter((url) => !body.includes(url));
     const retiredMatches = baseline.forbiddenContentPatterns
       .filter((entry) => new RegExp(entry.pattern, "i").test(body))
@@ -2094,7 +2819,7 @@ if (liveMode) {
         retiredMatches,
       });
     } else {
-      pass("Live pricing answer", "all plan-scoped monthly, annual, credit, and additional-credit facts are served");
+      pass("Live pricing answer", "plan-scoped catalog facts, cadence caveats, and the public monthly-pricing source are served");
     }
   } catch (error) {
     fail("Live pricing answer", error.message);

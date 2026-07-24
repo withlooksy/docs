@@ -70,13 +70,28 @@
     "getting-started/first-24-hours",
     "getting-started/understanding-credits",
     "product-setup/choosing-products",
+    "product-setup/configuring-products",
+    "product-setup/direct-try-on-links",
+    "product-setup/looksy-studio",
     "product-setup/image-requirements",
     "product-setup/best-practices",
     "product-setup/supported-products",
+    "shopper-features/size-recommendations",
+    "shopper-features/complete-the-look",
+    "shopper-features/live-video-try-on",
+    "shopper-features/results-and-history",
+    "fitting-room/overview",
+    "fitting-room/recommendations",
+    "integration/klaviyo",
+    "integration/shopify-flow",
     "integration/gorgias",
+    "integration/coming-soon",
     "integration/theme-setup",
     "integration/mobile-optimization",
     "integration/custom-styling",
+    "settings/product-defaults-and-language",
+    "settings/usage-and-access-controls",
+    "developers/api-and-webhooks",
     "analytics/dashboard-overview",
     "analytics/conversion-tracking",
     "analytics/calculating-roi",
@@ -106,6 +121,54 @@
     "solutions/increase-conversion-rate",
     "solutions/improve-customer-confidence"
   ],
+  "requiredFeatureIds": [
+    "onboarding-wizard",
+    "product-image-photo-try-on",
+    "automatic-product-image-placement",
+    "product-and-collection-targeting",
+    "product-image-button-customization",
+    "size-recommendations",
+    "complete-the-look",
+    "live-video-try-on",
+    "result-actions-and-history",
+    "virtual-fitting-room",
+    "fitting-room-recommendations",
+    "klaviyo",
+    "shopify-flow",
+    "gorgias",
+    "planned-integrations",
+    "looksy-studio",
+    "product-configuration",
+    "direct-try-on-links",
+    "usage-and-access-controls",
+    "product-defaults-and-admin-language",
+    "try-on-api-and-webhooks",
+    "merchant-analytics",
+    "billing-plans-and-migration",
+    "credits-and-overages"
+  ],
+  "approvedFeatureCreditLines": {
+    "getting-started/understanding-credits.mdx": [
+      "| Product-page photo try-on | 1 credit |",
+      "| Fitting Room outfit generation | 1 credit per generated outfit, regardless of garment count |",
+      "| Looksy Studio model-image generation | 1 credit |",
+      "| Live Video Try-On | 1 credit per 2 active seconds, rounded up |",
+      "Failed photo, Fitting Room, and Studio generations do not count as successful actions. Live Video is different: a session that never begins with the video provider uses 0 credits, but once the provider session begins it uses at least 1 credit even if the shopper disconnects immediately or no active seconds are recorded. A Studio generation and a shopper try-on are separate credit-using actions."
+    ],
+    "fitting-room/overview.mdx": [
+      "Each successful Fitting Room outfit generation uses **1 credit**, regardless of how many garments are included in that single generated outfit."
+    ],
+    "product-setup/looksy-studio.mdx": [
+      "Each successfully generated model image uses **1 credit**."
+    ],
+    "shopper-features/live-video-try-on.mdx": [
+      "Live Video is metered at **1 credit per 2 active seconds**, rounded up, with a 1-credit minimum once a provider session begins.",
+      "| 10 seconds | 5 credits |",
+      "| 30 seconds (default) | 15 credits |",
+      "| 60 seconds | 30 credits |",
+      "| 120 seconds | 60 credits |"
+    ]
+  },
   "forbiddenContentPatterns": [
     {
       "pattern": "\\$169(?:\\/month| per month|\\/mo)",

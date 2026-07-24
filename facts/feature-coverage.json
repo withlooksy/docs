@@ -1,0 +1,1209 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-07-24",
+  "product": {
+    "repository": "withlooksy/withlooksy",
+    "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579"
+  },
+  "features": [
+    {
+      "id": "onboarding-wizard",
+      "name": "Resumable onboarding wizard",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/utils/onboardingWizard.ts",
+          "lines": "19-63"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/utils/onboardingWizard.ts",
+          "lines": "311-367"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "getting-started/quick-setup",
+          "terms": [
+            "seven resumable steps",
+            "product placement",
+            "theme app embed",
+            "plan selection"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "getting-started/quick-setup",
+          "terms": [
+            "Quick Start"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-image-photo-try-on",
+      "name": "Product-page photo try-on",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-tryon.ts",
+          "lines": "124-188"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-tryon.ts",
+          "lines": "493-533"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-tryon.ts",
+          "lines": "704-748"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/tryonErrorMapping.ts",
+          "lines": "9-44"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "getting-started/first-try-on",
+          "terms": [
+            "main product image",
+            "clear photo",
+            "generated preview",
+            "visual preview"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "getting-started/first-try-on",
+          "terms": [
+            "Virtual Try-On"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "automatic-product-image-placement",
+      "name": "Automatic product-image placement",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/blocks/tryon-app-embed.liquid",
+          "lines": "43-136"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/blocks/tryon-app-embed.liquid",
+          "lines": "138-145"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-workflow.js",
+          "lines": "728-918"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-workflow.js",
+          "lines": "5673-5731"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-embed.js",
+          "lines": "258-275"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-embed.js",
+          "lines": "405-450"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "integration/theme-setup",
+          "terms": [
+            "automatically places",
+            "main product image",
+            "same product-image area",
+            "do not add an app block"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "integration/theme-setup",
+          "terms": [
+            "Theme Integration"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-and-collection-targeting",
+      "name": "Product and collection targeting",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/CollectionsWorkspace.tsx",
+          "lines": "1209-1268"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/ProductsWorkspace.tsx",
+          "lines": "487-536"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "product-setup/choosing-products",
+          "terms": [
+            "bulk product update",
+            "not a permanent collection rule",
+            "Products added to the collection later are not changed automatically"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "product-setup/choosing-products",
+          "terms": [
+            "Choosing Products"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-image-button-customization",
+      "name": "Product-image button customization",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/blocks/tryon-app-embed.liquid",
+          "lines": "19-40"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/blocks/tryon-app-embed.liquid",
+          "lines": "148-280"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-embed.js",
+          "lines": "258-275"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-embed.js",
+          "lines": "405-450"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "integration/custom-styling",
+          "terms": [
+            "over the main product image",
+            "corner and appearance",
+            "do not place"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "integration/custom-styling",
+          "terms": [
+            "Button Customization"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "size-recommendations",
+      "name": "Size recommendations",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/SettingsWorkspace.tsx",
+          "lines": "1084-1102"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-size-recommendation.ts",
+          "lines": "31-169"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/GET-size-recommendation.ts",
+          "lines": "12-122"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/shopperSizeProfile.ts",
+          "lines": "39-104"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/analyticsRetention.ts",
+          "lines": "1-13"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/purgeOldAnalyticsEvents.ts",
+          "lines": "13-74"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "shopper-features/size-recommendations",
+          "terms": [
+            "size recommendation",
+            "size chart",
+            "measurements they enter",
+            "save a size profile",
+            "hashed visitor identifier",
+            "180 days",
+            "defaults to dry-run",
+            "not be presented as a fit guarantee"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "shopper-features/size-recommendations",
+          "terms": [
+            "size recommendation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "complete-the-look",
+      "name": "Complete the Look",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/SettingsWorkspace.tsx",
+          "lines": "1073-1081"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-workflow.js",
+          "lines": "3827-4022"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-workflow.js",
+          "lines": "8458-8487"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/GET-showroom-catalog.ts",
+          "lines": "1160-1204"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "shopper-features/complete-the-look",
+          "terms": [
+            "Complete the Look",
+            "collections shared with the product",
+            "photo try-on"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "shopper-features/complete-the-look",
+          "terms": [
+            "Complete the Look"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "live-video-try-on",
+      "name": "Live Video Try-On",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/SettingsWorkspace.tsx",
+          "lines": "987-1015"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/DashboardActiveFeatures.tsx",
+          "lines": "453-498"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/videoTryonAvailability.ts",
+          "lines": "1-103"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/videoTryonCredits.ts",
+          "lines": "16-137"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/video-tryon/POST-start.ts",
+          "lines": "49-188"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-workflow.js",
+          "lines": "6700-7380"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "shopper-features/live-video-try-on",
+          "terms": [
+            "Live Video",
+            "1 credit per 2 active seconds",
+            "camera"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "shopper-features/live-video-try-on",
+          "terms": [
+            "Live Video"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "result-actions-and-history",
+      "name": "Result actions and previous try-ons",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-workflow.js",
+          "lines": "2683-3070"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/tryon-app-workflow.js",
+          "lines": "4487-4702"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/generatedTryonArtifacts.ts",
+          "lines": "6-20"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-tryon.ts",
+          "lines": "675-705"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/generatedTryonArtifacts.ts",
+          "lines": "67-255"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/generatedTryonArtifacts.ts",
+          "lines": "379-565"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/purgeGeneratedTryonArtifacts.ts",
+          "lines": "1-30"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "shopper-features/results-and-history",
+          "terms": [
+            "Try again",
+            "up to five earlier photo results",
+            "device-local browser history",
+            "private server storage",
+            "default is 30 days",
+            "default dry run"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "shopper-features/results-and-history",
+          "terms": [
+            "Result Actions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "virtual-fitting-room",
+      "name": "Virtual Fitting Room",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.showroom.tsx",
+          "lines": "134-207"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/blocks/virtual-showroom.liquid",
+          "lines": "33-192"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-outfit-tryon.ts",
+          "lines": "53-70"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-outfit-tryon.ts",
+          "lines": "515-539"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "fitting-room/overview",
+          "terms": [
+            "Virtual Fitting Room",
+            "app block",
+            "build an outfit",
+            "1 credit",
+            "Saved looks",
+            "current device",
+            "Email gate"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "fitting-room/overview",
+          "terms": [
+            "Virtual Fitting Room"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fitting-room-recommendations",
+      "name": "Virtual Fitting Room recommendations",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/blocks/virtual-showroom.liquid",
+          "lines": "145-166"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/bundleDeals/BundleTemplateGallery.tsx",
+          "lines": "26-87"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "extensions/with-looksy-try-on/assets/virtual-showroom.js",
+          "lines": "2391-2580"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/GET-showroom-catalog.ts",
+          "lines": "606-735"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "fitting-room/recommendations",
+          "terms": [
+            "recommendations",
+            "Shopify Search & Discovery",
+            "Looksy Recommendations"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "fitting-room/recommendations",
+          "terms": [
+            "recommendations"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "klaviyo",
+      "name": "Klaviyo integration",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.integrations._index.tsx",
+          "lines": "48-57"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.integrations.klaviyo.tsx",
+          "lines": "564-595"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/klaviyoEvents.ts",
+          "lines": "1-123"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "integration/klaviyo",
+          "terms": [
+            "Klaviyo",
+            "Tried On",
+            "Looksy Size Recommended",
+            "Looksy Product Added to Cart After Try-On"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "integration/klaviyo",
+          "terms": [
+            "Klaviyo"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shopify-flow",
+      "name": "Shopify Flow integration",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.integrations._index.tsx",
+          "lines": "59-67"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.integrations.shopify-segment.tsx",
+          "lines": "35-145"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/shopifyTryOnSegment.ts",
+          "lines": "3-199"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/tagTryOnCustomer.ts",
+          "lines": "1-120"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "integration/shopify-flow",
+          "terms": [
+            "Shopify Flow",
+            "Customer joined segment",
+            "Virtual Try-On Users by Looksy",
+            "successful try-on"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "integration/shopify-flow",
+          "terms": [
+            "Shopify Flow"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gorgias",
+      "name": "Gorgias integration",
+      "status": "gated",
+      "availabilityNote": "Coming soon",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.integrations._index.tsx",
+          "lines": "69-77"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.integrations._index.tsx",
+          "lines": "214-246"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "integration/gorgias",
+          "terms": [
+            "Gorgias",
+            "Coming soon"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "integration/gorgias",
+          "terms": [
+            "Gorgias",
+            "Coming soon"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "planned-integrations",
+      "name": "Planned integrations",
+      "status": "gated",
+      "availabilityNote": "Coming soon",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.integrations._index.tsx",
+          "lines": "79-109"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.integrations._index.tsx",
+          "lines": "214-246"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "integration/coming-soon",
+          "terms": [
+            "Coming soon",
+            "Mailchimp",
+            "Meta (Facebook & Instagram)",
+            "Google Analytics 4",
+            "SMS (Attentive & Postscript)"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "integration/coming-soon",
+          "terms": [
+            "Coming soon",
+            "Availability: Coming soon."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "looksy-studio",
+      "name": "Looksy Studio model images",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/ProductStudio.tsx",
+          "lines": "194-338"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/runOnboardingDemoTryOn.ts",
+          "lines": "78-117"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/runOnboardingDemoTryOn.ts",
+          "lines": "245-319"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "product-setup/looksy-studio",
+          "terms": [
+            "Looksy Studio",
+            "model image",
+            "1 credit"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "product-setup/looksy-studio",
+          "terms": [
+            "Looksy Studio"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-configuration",
+      "name": "Product configuration",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/ProductConfigureWorkspace.tsx",
+          "lines": "1090-1264"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/ProductSizeChartCard.tsx",
+          "lines": "612-648"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "product-setup/configuring-products",
+          "terms": [
+            "configure",
+            "featured image",
+            "size recommendations"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "product-setup/configuring-products",
+          "terms": [
+            "configure"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "direct-try-on-links",
+      "name": "Direct try-on links and QR codes",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/ProductTryOnLinkCard.tsx",
+          "lines": "116-154"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/tryon/GET-[handle].ts",
+          "lines": "1-70"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/utils/productTryOnLink.ts",
+          "lines": "41-113"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "product-setup/direct-try-on-links",
+          "terms": [
+            "try-on link",
+            "QR code",
+            "app embed",
+            "`unverified` theme status does not block",
+            "still checking, or it confirms the embed is disabled"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "product-setup/direct-try-on-links",
+          "terms": [
+            "try-on link"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "usage-and-access-controls",
+      "name": "Usage and shopper access controls",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/SettingsWorkspace.tsx",
+          "lines": "820-902"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/SettingsWorkspace.tsx",
+          "lines": "1111-1148"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/saveTryonSettings.ts",
+          "lines": "464-481"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "settings/usage-and-access-controls",
+          "terms": [
+            "safety limit",
+            "daily limit",
+            "logged-in customers",
+            "lifecycle and product emails",
+            "merchant emails, not shopper",
+            "essential service messages",
+            "wait one hour"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "settings/usage-and-access-controls",
+          "terms": [
+            "safety limit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product-defaults-and-admin-language",
+      "name": "Product defaults and admin language",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/SettingsWorkspace.tsx",
+          "lines": "784-812"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/SettingsWorkspace.tsx",
+          "lines": "1153-1170"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "settings/product-defaults-and-language",
+          "terms": [
+            "products added in future",
+            "featured image",
+            "Admin language",
+            "current Shopify staff account"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "settings/product-defaults-and-language",
+          "terms": [
+            "Product Defaults",
+            "Admin Language"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "try-on-api-and-webhooks",
+      "name": "Try-on API and merchant webhooks",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/SettingsWorkspace.tsx",
+          "lines": "1175-1315"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/deliverMerchantWebhookEvent.ts",
+          "lines": "1-125"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/merchantWebhook.ts",
+          "lines": "17-62"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/merchantWebhook.ts",
+          "lines": "65-83"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/merchantWebhook.ts",
+          "lines": "129-213"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-analytics-event.ts",
+          "lines": "1054-1086"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/v1/POST-try-on.ts",
+          "lines": "1-168"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "developers/api-and-webhooks",
+          "terms": [
+            "v1/try-on",
+            "Bearer",
+            "product_tried_on",
+            "HMAC",
+            "common literal local or private hostnames",
+            "Server-to-server generations through `POST /v1/try-on` do not emit"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "developers/api-and-webhooks",
+          "terms": [
+            "API",
+            "webhook"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "merchant-analytics",
+      "name": "Merchant analytics",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.analytics.tsx",
+          "lines": "518-690"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/looksySessionAnalytics.ts",
+          "lines": "67-76"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/looksySessionAnalytics.ts",
+          "lines": "187-205"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/assistedAddToCartAnalytics.ts",
+          "lines": "236-312"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/routes/_app.analytics.tsx",
+          "lines": "486-505"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "analytics/dashboard-overview",
+          "terms": [
+            "Conversion rate (CR)",
+            "Add to cart %",
+            "Added revenue",
+            "attributed revenue from purchased tried-on items divided by the number of attributed orders",
+            "not the full Shopify order value",
+            "not a unique-person count",
+            "attributed orders divided by Looksy-engaged buyer sessions",
+            "do not assume it is capped at 100%"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "analytics/dashboard-overview",
+          "terms": [
+            "Analytics"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "billing-plans-and-migration",
+      "name": "Billing plans, migration, and recovery states",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/billingCatalog.ts",
+          "lines": "44-78"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/shopifyBilling.ts",
+          "lines": "766-785"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/NativeBillingWorkspace.tsx",
+          "lines": "365-399"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/NativeBillingWorkspace.tsx",
+          "lines": "723-810"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/NativeBillingWorkspace.tsx",
+          "lines": "1001-1027"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/NativeBillingWorkspace.tsx",
+          "lines": "1146-1184"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/cancelPlanSubscription.ts",
+          "lines": "1-70"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/billing.ts",
+          "lines": "291-346"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "faq/pricing-and-plans",
+          "terms": [
+            "Plans screen starts monthly subscriptions",
+            "rolling 30-day usage window",
+            "Action needed: confirm your plan",
+            "Action needed: choose a plan",
+            "Plans couldn't load",
+            "Reconnect Shopify",
+            "usage already recorded in that window"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "faq/pricing-and-plans",
+          "terms": [
+            "Pricing and Plans",
+            "monthly Plans screen"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "credits-and-overages",
+      "name": "Credits and additional usage",
+      "status": "released",
+      "sourceRefs": [
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/SettingsWorkspace.tsx",
+          "lines": "820-902"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "web/components/DashboardActiveFeatures.tsx",
+          "lines": "453-498"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/videoTryonCredits.ts",
+          "lines": "78-85"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/videoTryonSession.ts",
+          "lines": "398-430"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/billingCatalog.ts",
+          "lines": "36-78"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/shopifyBilling.ts",
+          "lines": "468-503"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/shopifyBilling.ts",
+          "lines": "766-827"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/shared/billing.ts",
+          "lines": "441-478"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-tryon.ts",
+          "lines": "707-740"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/routes/POST-outfit-tryon.ts",
+          "lines": "515-550"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/runOnboardingDemoTryOn.ts",
+          "lines": "33-42"
+        },
+        {
+          "commit": "4eee52cc269a9fba34fe346f4ecc5d04add9c579",
+          "path": "api/actions/runOnboardingDemoTryOn.ts",
+          "lines": "245-315"
+        }
+      ],
+      "requiredDocs": [
+        {
+          "route": "getting-started/understanding-credits",
+          "terms": [
+            "credits",
+            "billing-period safety limit",
+            "additional credits",
+            "Product-page photo try-on",
+            "Fitting Room outfit generation",
+            "Looksy Studio model-image generation",
+            "1 credit per 2 active seconds",
+            "once the provider session begins it uses at least 1 credit",
+            "rolling 30-day usage window"
+          ]
+        }
+      ],
+      "requiredAiIndexEntries": [
+        {
+          "file": "llms.txt",
+          "route": "getting-started/understanding-credits",
+          "terms": [
+            "credits"
+          ]
+        }
+      ]
+    }
+  ]
+}

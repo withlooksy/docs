@@ -1,0 +1,74 @@
+---
+title: "Virtual Fitting Room"
+description: "Set up Looksy's optional storefront Fitting Room page for multi-product outfit building, virtual try-on, recommendations, and add-to-cart."
+---
+
+## What is the Virtual Fitting Room?
+
+The Virtual Fitting Room is an optional storefront page where shoppers can browse eligible products, build an outfit, try the combined look on with AI, and add the selected items to their cart.
+
+Each successful Fitting Room outfit generation uses **1 credit**, regardless of how many garments are included in that single generated outfit.
+
+<Warning>
+The Fitting Room is separate from Looksy's primary product-page experience. On an eligible product page, the Looksy app embed automatically places **Try On** over the main product image; you do not add an app block to each product template. Only the optional, standalone Fitting Room page needs the **Looksy Virtual Showroom** app block described below.
+</Warning>
+
+## Set up the Fitting Room
+
+1. In **Shopify Admin**, open **Looksy**.
+2. Select **Fitting Room**.
+3. Under **Create the fitting room page**, choose the page handle and select **Create page**.
+4. Under **Add the fitting room block to your theme**, select **Open theme editor**.
+5. In the theme editor, confirm that the **Looksy Virtual Showroom** block is present on the new page template.
+6. Select **Save** in the theme editor.
+7. Return to Looksy and select **Refresh status**.
+
+The setup is complete when Looksy detects both the storefront page and the saved app block.
+
+<Note>
+If **Fitting Room** is not shown in your Looksy navigation, or Looksy cannot verify the block, contact support before changing your live theme.
+</Note>
+
+## Configure the storefront experience
+
+The Fitting Room app block includes controls for:
+
+- the collections shoppers can browse;
+- the maximum number of products in an outfit;
+- product search;
+- theme colours, accent colour, and corner radius;
+- add-to-cart button text and whether to continue to the cart;
+- Shopify and Looksy recommendations;
+- saved looks for logged-in customers;
+- product-page try-on history on the shopper's current device;
+- the optional email gate tied to Looksy's Klaviyo capture settings.
+
+Preview changes on an unpublished or development theme when your workflow allows it, then verify the complete shopper journey before publishing.
+
+## Saved looks, previous try-ons, and the email gate
+
+- **Saved looks:** When enabled, logged-in customers can save an outfit and return to it across visits and devices. Logged-out shoppers are asked to sign in.
+- **Product-page try-on history:** When enabled, recent product-page photo try-ons can appear under **Previously tried on** as outfit starting points. This feed is stored only on the shopper's current device.
+- **Email gate:** When enabled, the Fitting Room uses Looksy's configured Klaviyo lead-capture list and free-generation threshold. Configure and test shopper consent in Looksy before using the gate.
+
+These controls belong to the dedicated Fitting Room app block. They do not change the automatic product-image Try On button on normal product pages.
+
+## What should I test?
+
+- The page opens at the expected storefront URL.
+- Collections, product search, products, variants, prices, and availability are correct.
+- Shoppers can select multiple eligible products and generate a combined look.
+- The selected items can be added to the cart.
+- Recommendations do not repeat products already in the outfit.
+- The layout and controls work on desktop and mobile.
+- Logged-in and logged-out behaviour matches your saved-look settings.
+- The product-page **Try On** button still appears over the main product image independently of the Fitting Room page.
+
+<CardGroup cols={2}>
+  <Card title="Fitting Room Recommendations" icon="sparkles" href="https://withlooksy.com/docs/fitting-room/recommendations">
+    Understand Shopify recommendations and merchant-curated Looksy offers.
+  </Card>
+  <Card title="Theme Integration" icon="window" href="https://withlooksy.com/docs/integration/theme-setup">
+    Set up the primary product-image try-on experience.
+  </Card>
+</CardGroup>

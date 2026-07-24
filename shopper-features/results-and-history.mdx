@@ -1,0 +1,53 @@
+---
+title: "Result Actions and Previous Try-Ons"
+description: "Understand how shoppers retry, share, download, clear, and revisit Looksy photo results on the current browser and device."
+---
+
+## What can a shopper do with a photo result?
+
+After a successful photo try-on, Looksy keeps the generated preview in the main product-image area and adds result actions around it.
+
+The available actions are:
+
+- **Try again:** choose another person image and create a new result;
+- **Share:** open the device's file-sharing sheet when the browser supports it;
+- **Download:** save the generated image when file sharing is unavailable, or use the additional desktop action;
+- **Find my size:** open the separate size-recommendation flow when the feature is enabled and that product has an available chart;
+- **Clear:** remove the active result and return to the normal product image and Try On action.
+
+The exact action layout can vary by browser and screen size. Share falls back to a download when the browser cannot share the generated image as a file.
+
+## How do previous photo try-ons work?
+
+Looksy keeps the active photo result and up to five earlier photo results for the relevant product or variant in the current browser's local storage. Shoppers can open the previous-try-on control, select an earlier result, and make it active again.
+
+This is device-local browser history. It is not a merchant account gallery and does not automatically follow a shopper to another browser or device. Browser storage controls, private browsing, clearing site data, or storage pressure can remove it.
+
+Selecting **Clear** removes the active result and its local history for that product or variant.
+
+The device-local history is separate from result delivery. When delivery storage is configured, Looksy can place a generated result in private server storage before returning it so supported events and integrations can use a signed delivery URL. Each stored copy gets an expiry between 1 and 365 days; the default is 30 days. Delivery treats an expired copy as inactive. Physical removal is handled separately by Looksy's cleanup operation, which requires deletion mode to be enabled rather than its default dry run. This storage does not turn browser history into a cross-device gallery.
+
+The current [Looksy privacy policy](https://withlooksy.com/legal/privacy-policy) does not yet describe this temporary delivery-storage path. Contact [caleb@withlooksy.com](mailto:caleb@withlooksy.com) for the effective retention and deletion schedule before making a customer-facing retention promise.
+
+## How does this relate to the Fitting Room?
+
+The optional Virtual Fitting Room can show a recent device-local feed of product-page photo try-ons under **Previously tried on**. That feed can provide outfit starting points, but it remains separate from server-side **Saved looks** for logged-in customers.
+
+Live Video replay is different: the recording is page-scoped unless the shopper explicitly saves or shares it. See [Live Video Try-On](https://withlooksy.com/docs/shopper-features/live-video-try-on).
+
+## What should I test?
+
+- Generate more than one photo result for the same product and variant.
+- Switch between the current result and previous results.
+- Test Share on a browser that supports file sharing and Download on one that does not.
+- Clear the result and confirm the original product media and Try On action return.
+- Repeat on mobile, desktop, and a private-browsing window so support expectations are clear.
+
+<CardGroup cols={2}>
+  <Card title="Your First Try-On" icon="sparkles" href="https://withlooksy.com/docs/getting-started/first-try-on">
+    Test the complete product-page shopper flow.
+  </Card>
+  <Card title="Size Recommendations" icon="ruler" href="https://withlooksy.com/docs/shopper-features/size-recommendations">
+    Configure the separate measurement-and-chart-based action.
+  </Card>
+</CardGroup>

@@ -1,19 +1,30 @@
 ---
 title: "Understanding Looksy Credits"
-description: "Learn how Looksy plan credits, included allowances, and additional-credit rates work."
+description: "Learn how Looksy credits, the Preview rolling window, monthly overage, annual limits, and merchant safety controls work."
 ---
 
 ## What are Looksy credits?
 
-Credits are the usage allowance included with a Looksy plan. Your Looksy account is the source of truth for your current balance and recorded usage.
+Credits are the usage allowance included with a Looksy plan. Your Looksy account is the source of truth for your current balance, billing interval, and recorded usage.
 
 Do not estimate the number of shopper sessions from a plan's credit count. Check the usage shown in Looksy because product behavior and billing rules can change.
 
+## Which actions use credits?
+
+| Successful action | Credit use |
+| --- | ---: |
+| Product-page photo try-on | 1 credit |
+| Fitting Room outfit generation | 1 credit per generated outfit, regardless of garment count |
+| Looksy Studio model-image generation | 1 credit |
+| Live Video Try-On | 1 credit per 2 active seconds, rounded up |
+
+Failed photo, Fitting Room, and Studio generations do not count as successful actions. Live Video is different: a session that never begins with the video provider uses 0 credits, but once the provider session begins it uses at least 1 credit even if the shopper disconnects immediately or no active seconds are recorded. A Studio generation and a shopper try-on are separate credit-using actions.
+
 ## How many credits does each plan include?
 
-| Plan | Included credits | Monthly price | Additional credits |
+| Plan | Included credits | Monthly price | Additional credits on monthly billing |
 | --- | ---: | ---: | ---: |
-| **Preview** | 25 | Free | Not listed |
+| **Preview** | 25 per rolling 30 days | Free | Not available |
 | **Starter** | 100 | $14.99/month | $0.14 each |
 | **Growth** | 300 | $29/month | $0.12 each |
 | **Scale** | 600 | $79/month | $0.10 each |
@@ -25,18 +36,35 @@ Do not estimate the number of shopper sessions from a plan's credit count. Check
 | **Scale** | $790/year |
 
 <Note>
-  Pricing can change. Confirm the offer shown in Looksy before subscribing. You can also check the [Looksy website](https://withlooksy.com/) and [Shopify App Store listing](https://apps.shopify.com/looksy).
+  The in-app **Plans** screen currently starts monthly subscriptions. Annual amounts remain in Looksy's billing catalog for annual subscriptions and migration of existing annual subscriptions, but they are not a self-service choice in the current Plans screen. Contact Looksy support before assuming an annual cadence is available for a new subscription.
 </Note>
+
+## How does the Preview allowance work?
+
+Preview is not a paid Shopify subscription. It allows up to 25 successful try-ons in a rolling 30-day window. It is not a one-time balance and does not reset on a fixed calendar date.
 
 ## What happens when I need more credits?
 
-Paid plans list a rate for additional credits beyond the included allowance:
+The answer depends on the paid plan's billing interval:
+
+- **Monthly subscription:** usage beyond the included allowance is billed through the Shopify-approved usage line at the plan's additional-credit rate.
+- **Annual subscription:** Shopify does not combine the annual subscription with Looksy's usage-overage line. Looksy evaluates the included allowance over a rolling 30-day usage window; new try-ons pause after that allowance is used.
+
+The monthly additional-credit rates are:
 
 - Starter: $0.14 per additional credit
 - Growth: $0.12 per additional credit
 - Scale: $0.10 per additional credit
 
-Review your usage in Looksy before changing plans. For account-specific billing questions, contact support from the app.
+Review the exact subscription and usage terms in Shopify before approving a plan. For account-specific billing questions, contact support from the app.
+
+<Warning>
+  Do not assume an annual plan includes paid overage. Annual subscriptions stop at their included credits for the rolling 30-day usage window.
+</Warning>
+
+## Can I set my own usage limits?
+
+Yes. Looksy includes a merchant-controlled billing-period safety limit and an optional daily limit for anonymous shoppers. See [Usage and Access Controls](https://withlooksy.com/docs/settings/usage-and-access-controls).
 
 ## What happens to unused credits?
 
@@ -46,8 +74,9 @@ Refer to the terms shown in Looksy for your subscription or ask support to confi
 
 1. Review the usage shown in Looksy.
 2. Compare it with the included credits in each plan.
-3. Consider the additional-credit rate if your usage regularly exceeds the allowance.
-4. Confirm the current price and billing terms before subscribing.
+3. Decide whether monthly overage or a support-confirmed annual cadence with a hard 30-day usage limit better matches your store.
+4. Set a safety limit if you need a lower merchant-controlled ceiling.
+5. Confirm the current price and Shopify approval terms before subscribing.
 
 <CardGroup cols={2}>
   <Card title="Compare Plans" icon="credit-card" href="https://withlooksy.com/docs/faq/pricing-and-plans">

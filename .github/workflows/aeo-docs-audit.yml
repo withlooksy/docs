@@ -14,6 +14,7 @@ on:
       - ".mintlify/skills/**"
       - "AEO_RUNBOOK.md"
       - "facts/aeo-baseline.json"
+      - "facts/feature-coverage.json"
       - "scripts/aeo-audit.mjs"
       - ".github/workflows/aeo-docs-audit.yml"
   push:
@@ -31,6 +32,7 @@ on:
       - ".mintlify/skills/**"
       - "AEO_RUNBOOK.md"
       - "facts/aeo-baseline.json"
+      - "facts/feature-coverage.json"
       - "scripts/aeo-audit.mjs"
       - ".github/workflows/aeo-docs-audit.yml"
   schedule:
@@ -57,7 +59,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Audit docs source
+      - name: Audit manifest-declared docs coverage
         run: node scripts/aeo-audit.mjs --json-output artifacts/aeo-source-audit.json
       - name: Validate Mintlify build
         run: npx --yes mintlify@4.2.715 validate
